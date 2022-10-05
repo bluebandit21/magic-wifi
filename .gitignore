@@ -1,0 +1,6 @@
+*.l#*
+*.b#*
+*.s#*
+.vscode/*
+.vscode
+*.o
