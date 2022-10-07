@@ -2787,6 +2787,16 @@ chip</description>
 <pin name="1" x="-5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1"/>
 <pin name="2" x="5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1" rot="R180"/>
 </symbol>
+<symbol name="FERRITE">
+<text x="-1.27" y="1.905" size="1.27" layer="95">&gt;NAME</text>
+<text x="-1.27" y="-3.175" size="1.27" layer="95">&gt;VALUE</text>
+<pin name="P$1" x="-2.54" y="0" visible="off" length="short" direction="pas"/>
+<pin name="P$2" x="2.54" y="0" visible="off" length="short" direction="pas" rot="R180"/>
+<wire x1="-1.27" y1="0.9525" x2="1.27" y2="0.9525" width="0.4064" layer="94"/>
+<wire x1="1.27" y1="0.9525" x2="1.27" y2="-0.9525" width="0.4064" layer="94"/>
+<wire x1="1.27" y1="-0.9525" x2="-1.27" y2="-0.9525" width="0.4064" layer="94"/>
+<wire x1="-1.27" y1="-0.9525" x2="-1.27" y2="0.9525" width="0.4064" layer="94"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="CAP_CERAMIC" prefix="C" uservalue="yes">
@@ -3317,6 +3327,124 @@ chip</description>
 </device>
 </devices>
 </deviceset>
+<deviceset name="FERRITE" prefix="FB" uservalue="yes">
+<description>&lt;p&gt;&lt;b&gt;Ferrite Bead&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;0603&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;MMZ1608B121C - 120 Ohm @ 100MHz, 600mA, 0.15 Ohm DC Resistance - Digikey: 445-2164-1-ND&lt;/li&gt;
+&lt;li&gt;BK1608HW121-T - 120 Ohm, 600mA Ferrite Chip - Digikey: 587-1876-2-ND&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;0805&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HZ0805B272R-10 - 2.7K Ohm @ 100MHz, 200mA, 0.8 Ohm DC Resistance - Digikey: 240-2504-1-ND (see also Murata BLM21BD272SN1L)&lt;/li&gt;
+&lt;li&gt;MMZ2012Y152B - 1.5K Ohm @ 100MHz, 500mA, 0.4 Ohm DC Resistance - Digikey: 445-1560-1-ND - Mainly for high frequency (80-400MHz)&lt;/li&gt;
+&lt;li&gt;MMZ2012R102A - 1K Ohm @ 100MHz, 500mA, 0.3 Ohm DC Resistance - Digikey: 445-1555-2-ND - More general purpose (10-200MHz)&lt;/li&gt;
+&lt;/ul&gt;</description>
+<gates>
+<gate name="G$1" symbol="FERRITE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="0603">
+<connects>
+<connect gate="G$1" pin="P$1" pad="1"/>
+<connect gate="G$1" pin="P$2" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="0805" package="0805">
+<connects>
+<connect gate="G$1" pin="P$1" pad="1"/>
+<connect gate="G$1" pin="P$2" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="_0402" package="_0402">
+<connects>
+<connect gate="G$1" pin="P$1" pad="1"/>
+<connect gate="G$1" pin="P$2" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="_0402MP" package="_0402MP">
+<connects>
+<connect gate="G$1" pin="P$1" pad="1"/>
+<connect gate="G$1" pin="P$2" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="_0603" package="_0603">
+<connects>
+<connect gate="G$1" pin="P$1" pad="1"/>
+<connect gate="G$1" pin="P$2" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="_0603MP" package="_0603MP">
+<connects>
+<connect gate="G$1" pin="P$1" pad="1"/>
+<connect gate="G$1" pin="P$2" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="_0805" package="_0805">
+<connects>
+<connect gate="G$1" pin="P$1" pad="1"/>
+<connect gate="G$1" pin="P$2" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="_0805MP" package="_0805MP">
+<connects>
+<connect gate="G$1" pin="P$1" pad="1"/>
+<connect gate="G$1" pin="P$2" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+<library name="NC_MARKER">
+<packages>
+</packages>
+<symbols>
+<symbol name="NO_CONNECT_MARKER">
+<pin name="P$1" x="5.08" y="0" visible="off" length="middle" rot="R180"/>
+<wire x1="-2.54" y1="2.54" x2="2.54" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="2.54" y1="2.54" x2="-2.54" y2="-2.54" width="0.254" layer="94"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="NC_MARKER">
+<gates>
+<gate name="G$1" symbol="NO_CONNECT_MARKER" x="-5.08" y="0"/>
+</gates>
+<devices>
+<device name="">
+<technologies>
+<technology name="">
+<attribute name="_EXTERNAL_" value="" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
 </devicesets>
 </library>
 </libraries>
@@ -3332,6 +3460,8 @@ chip</description>
 <schematic_group name="ANTENNA1"/>
 <schematic_group name="ANTENNA2"/>
 <schematic_group name="0402"/>
+<schematic_group name="ETH-TP"/>
+<schematic_group name="ETH-TP2"/>
 </groups>
 <parts>
 <part name="U1" library="473" deviceset="ATWINC1500-MR210PB1952-T" device=""/>
@@ -3368,6 +3498,21 @@ chip</description>
 <part name="ANT2-GND2" library="microbuilder" deviceset="CAP_CERAMIC" device="0402" value="4.7pF"/>
 <part name="ANT2-ANT1" library="microbuilder" deviceset="INDUCTOR" device="_0402" value="7.5nH"/>
 <part name="ANT2-GND3" library="microbuilder" deviceset="CAP_CERAMIC" device="0402" value="4.7pF"/>
+<part name="VC2PETH-GND" library="microbuilder" deviceset="RESISTOR" device="0402" value="75 Ohm"/>
+<part name="VC2ETH-GND" library="microbuilder" deviceset="RESISTOR" device="0402" value="75 Ohm"/>
+<part name="VC2ETH-GNDC" library="microbuilder" deviceset="CAP_CERAMIC" device="0402" value="1nF"/>
+<part name="VC2PETH-GNDC" library="microbuilder" deviceset="CAP_CERAMIC" device="0402" value="1nF"/>
+<part name="U$1" library="NC_MARKER" deviceset="NC_MARKER" device=""/>
+<part name="RDM-GND" library="microbuilder" deviceset="RESISTOR" device="0402" value="49.9 Ohm'"/>
+<part name="RDP-GND" library="microbuilder" deviceset="RESISTOR" device="0402" value="49.9 Ohm"/>
+<part name="RD-GND" library="microbuilder" deviceset="CAP_CERAMIC" device="0402" value="0.1 uF"/>
+<part name="RDM-GND1" library="microbuilder" deviceset="RESISTOR" device="0402" value="49.9 Ohm'"/>
+<part name="RDP-GND1" library="microbuilder" deviceset="RESISTOR" device="0402" value="49.9 Ohm"/>
+<part name="RD-GND1" library="microbuilder" deviceset="CAP_CERAMIC" device="0402" value="0.1 uF"/>
+<part name="TCT-3V3" library="microbuilder" deviceset="FERRITE" device=""/>
+<part name="VCAPCLOSE" library="microbuilder" deviceset="CAP_CERAMIC" device="0805" value="10 uF"/>
+<part name="LEDG" library="microbuilder" deviceset="RESISTOR" device="0402"/>
+<part name="LEDY" library="microbuilder" deviceset="RESISTOR" device="0402"/>
 </parts>
 <sheets>
 <sheet>
@@ -3399,9 +3544,9 @@ chip</description>
 <attribute name="NAME" x="-55.5244" y="110.7186" size="2.0828" layer="95" ratio="6" rot="SR0"/>
 <attribute name="VALUE" x="-56.1594" y="108.1786" size="2.0828" layer="96" ratio="6" rot="SR0"/>
 </instance>
-<instance part="U6" gate="A" x="294.64" y="40.64" smashed="yes">
-<attribute name="NAME" x="310.2356" y="49.7586" size="2.0828" layer="95" ratio="6" rot="SR0"/>
-<attribute name="VALUE" x="309.6006" y="47.2186" size="2.0828" layer="96" ratio="6" rot="SR0"/>
+<instance part="U6" gate="A" x="228.6" y="93.98" smashed="yes">
+<attribute name="NAME" x="244.1956" y="103.0986" size="2.0828" layer="95" ratio="6" rot="SR0"/>
+<attribute name="VALUE" x="243.5606" y="100.5586" size="2.0828" layer="96" ratio="6" rot="SR0"/>
 </instance>
 <instance part="J1" gate="A" x="-119.38" y="198.12" smashed="yes" rot="R180" grouprefs="ANTENNA1">
 <attribute name="NAME" x="-123.5456" y="192.8114" size="2.0828" layer="95" ratio="6" rot="SR180"/>
@@ -3509,6 +3654,63 @@ chip</description>
 <attribute name="NAME" x="-109.22" y="297.18" size="1.27" layer="95" font="vector"/>
 <attribute name="VALUE" x="-109.22" y="294.64" size="1.27" layer="96" font="vector"/>
 </instance>
+<instance part="VC2PETH-GND" gate="G$1" x="243.84" y="193.04" smashed="yes">
+<attribute name="NAME" x="241.3" y="195.072" size="1.27" layer="95" font="vector"/>
+<attribute name="VALUE" x="241.3" y="189.865" size="1.27" layer="96" font="vector"/>
+</instance>
+<instance part="VC2ETH-GND" gate="G$1" x="243.84" y="205.74" smashed="yes">
+<attribute name="NAME" x="241.3" y="207.772" size="1.27" layer="95" font="vector"/>
+<attribute name="VALUE" x="241.3" y="202.565" size="1.27" layer="96" font="vector"/>
+</instance>
+<instance part="VC2ETH-GNDC" gate="G$1" x="236.22" y="205.74" smashed="yes" rot="R90">
+<attribute name="NAME" x="233.68" y="208.28" size="1.27" layer="95" font="vector" rot="R90"/>
+<attribute name="VALUE" x="236.22" y="208.28" size="1.27" layer="96" font="vector" rot="R90"/>
+</instance>
+<instance part="VC2PETH-GNDC" gate="G$1" x="236.22" y="193.04" smashed="yes" rot="R90">
+<attribute name="NAME" x="233.68" y="195.58" size="1.27" layer="95" font="vector" rot="R90"/>
+<attribute name="VALUE" x="236.22" y="195.58" size="1.27" layer="96" font="vector" rot="R90"/>
+</instance>
+<instance part="U$1" gate="G$1" x="213.36" y="86.36" smashed="yes"/>
+<instance part="RDM-GND" gate="G$1" x="236.22" y="236.22" smashed="yes" rot="R270" grouprefs="ETH-TP">
+<attribute name="NAME" x="233.172" y="238.76" size="1.27" layer="95" font="vector" rot="R270"/>
+<attribute name="VALUE" x="238.125" y="241.3" size="1.27" layer="96" font="vector" rot="R270"/>
+</instance>
+<instance part="RDP-GND" gate="G$1" x="236.22" y="246.38" smashed="yes" rot="R90" grouprefs="ETH-TP">
+<attribute name="NAME" x="234.188" y="243.84" size="1.27" layer="95" font="vector" rot="R90"/>
+<attribute name="VALUE" x="238.125" y="251.46" size="1.27" layer="96" font="vector" rot="R270"/>
+</instance>
+<instance part="RD-GND" gate="G$1" x="210.82" y="241.3" smashed="yes" rot="R270" grouprefs="ETH-TP">
+<attribute name="NAME" x="213.36" y="238.76" size="1.27" layer="95" font="vector" rot="R270"/>
+<attribute name="VALUE" x="210.82" y="238.76" size="1.27" layer="96" font="vector" rot="R270"/>
+</instance>
+<instance part="RDM-GND1" gate="G$1" x="236.22" y="276.86" smashed="yes" rot="R270" grouprefs="ETH-TP2">
+<attribute name="NAME" x="233.172" y="279.4" size="1.27" layer="95" font="vector" rot="R270"/>
+<attribute name="VALUE" x="238.125" y="281.94" size="1.27" layer="96" font="vector" rot="R270"/>
+</instance>
+<instance part="RDP-GND1" gate="G$1" x="236.22" y="287.02" smashed="yes" rot="R90" grouprefs="ETH-TP2">
+<attribute name="NAME" x="234.188" y="284.48" size="1.27" layer="95" font="vector" rot="R90"/>
+<attribute name="VALUE" x="238.125" y="292.1" size="1.27" layer="96" font="vector" rot="R270"/>
+</instance>
+<instance part="RD-GND1" gate="G$1" x="210.82" y="274.32" smashed="yes" rot="R270" grouprefs="ETH-TP2">
+<attribute name="NAME" x="213.36" y="271.78" size="1.27" layer="95" font="vector" rot="R270"/>
+<attribute name="VALUE" x="210.82" y="271.78" size="1.27" layer="96" font="vector" rot="R270"/>
+</instance>
+<instance part="TCT-3V3" gate="G$1" x="213.36" y="289.56" smashed="yes" rot="R180">
+<attribute name="NAME" x="214.63" y="287.655" size="1.27" layer="95" rot="R180"/>
+<attribute name="VALUE" x="214.63" y="292.735" size="1.27" layer="95" rot="R180"/>
+</instance>
+<instance part="VCAPCLOSE" gate="G$1" x="210.82" y="48.26" smashed="yes" rot="R90">
+<attribute name="NAME" x="208.28" y="50.8" size="1.27" layer="95" font="vector" rot="R90"/>
+<attribute name="VALUE" x="210.82" y="50.8" size="1.27" layer="96" font="vector" rot="R90"/>
+</instance>
+<instance part="LEDG" gate="G$1" x="284.48" y="86.36" smashed="yes">
+<attribute name="NAME" x="281.94" y="88.392" size="1.27" layer="95" font="vector"/>
+<attribute name="VALUE" x="281.94" y="83.185" size="1.27" layer="96" font="vector"/>
+</instance>
+<instance part="LEDY" gate="G$1" x="284.48" y="91.44" smashed="yes">
+<attribute name="NAME" x="281.94" y="93.472" size="1.27" layer="95" font="vector"/>
+<attribute name="VALUE" x="281.94" y="88.265" size="1.27" layer="96" font="vector"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -3609,6 +3811,42 @@ chip</description>
 <wire x1="-119.38" y1="292.1" x2="-114.3" y2="292.1" width="0.1524" layer="91" grouprefs="ANTENNA2"/>
 <label x="-114.3" y="292.1" size="1.778" layer="95" rot="R180" grouprefs="ANTENNA2"/>
 <pinref part="J3" gate="A" pin="GND"/>
+</segment>
+<segment>
+<pinref part="VC2ETH-GNDC" gate="G$1" pin="P$1"/>
+<wire x1="231.14" y1="205.74" x2="226.06" y2="205.74" width="0.1524" layer="91"/>
+<pinref part="VC2PETH-GNDC" gate="G$1" pin="P$1"/>
+<wire x1="226.06" y1="205.74" x2="226.06" y2="200.66" width="0.1524" layer="91"/>
+<wire x1="226.06" y1="198.12" x2="226.06" y2="193.04" width="0.1524" layer="91"/>
+<wire x1="226.06" y1="193.04" x2="231.14" y2="193.04" width="0.1524" layer="91"/>
+<wire x1="226.06" y1="198.12" x2="226.06" y2="200.66" width="0.1524" layer="91"/>
+<wire x1="226.06" y1="200.66" x2="218.44" y2="200.66" width="0.1524" layer="91"/>
+<label x="218.44" y="200.66" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U6" gate="A" pin="VC1-"/>
+<wire x1="218.44" y1="91.44" x2="231.14" y2="91.44" width="0.1524" layer="91"/>
+<label x="226.06" y="91.44" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U6" gate="A" pin="VC1+"/>
+<wire x1="231.14" y1="78.74" x2="218.44" y2="78.74" width="0.1524" layer="91"/>
+<label x="226.06" y="78.74" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="RD-GND" gate="G$1" pin="P$2"/>
+<wire x1="208.28" y1="241.3" x2="198.12" y2="241.3" width="0.1524" layer="91" grouprefs="ETH-TP"/>
+<label x="203.2" y="241.3" size="1.778" layer="95" rot="R180" grouprefs="ETH-TP"/>
+</segment>
+<segment>
+<wire x1="208.28" y1="274.32" x2="198.12" y2="274.32" width="0.1524" layer="91" grouprefs="ETH-TP2"/>
+<label x="203.2" y="276.86" size="1.778" layer="95" rot="R180" grouprefs="ETH-TP2"/>
+<pinref part="RD-GND1" gate="G$1" pin="P$2"/>
+</segment>
+<segment>
+<pinref part="VCAPCLOSE" gate="G$1" pin="P$1"/>
+<wire x1="205.74" y1="48.26" x2="203.2" y2="48.26" width="0.1524" layer="91"/>
+<label x="200.66" y="48.26" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="RFI" class="0">
@@ -3811,6 +4049,210 @@ chip</description>
 <pinref part="LORA2" gate="A" pin="RFI"/>
 <wire x1="-27.94" y1="35.56" x2="-22.86" y2="35.56" width="0.1524" layer="91"/>
 <label x="-27.94" y="35.56" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="VC2PETH" class="0">
+<segment>
+<pinref part="U6" gate="A" pin="VC2+"/>
+<wire x1="231.14" y1="81.28" x2="223.52" y2="81.28" width="0.1524" layer="91"/>
+<label x="220.98" y="81.28" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="VC2PETH-GND" gate="G$1" pin="2"/>
+<wire x1="248.92" y1="193.04" x2="254" y2="193.04" width="0.1524" layer="91"/>
+<label x="254" y="193.04" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="VC2ETH" class="0">
+<segment>
+<pinref part="U6" gate="A" pin="VC2-"/>
+<wire x1="231.14" y1="93.98" x2="223.52" y2="93.98" width="0.1524" layer="91"/>
+<label x="220.98" y="93.98" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="VC2ETH-GND" gate="G$1" pin="2"/>
+<wire x1="248.92" y1="205.74" x2="254" y2="205.74" width="0.1524" layer="91"/>
+<label x="254" y="205.74" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$5" class="0">
+<segment>
+<pinref part="VC2ETH-GND" gate="G$1" pin="1"/>
+<pinref part="VC2ETH-GNDC" gate="G$1" pin="P$2"/>
+</segment>
+</net>
+<net name="N$6" class="0">
+<segment>
+<pinref part="VC2PETH-GND" gate="G$1" pin="1"/>
+<pinref part="VC2PETH-GNDC" gate="G$1" pin="P$2"/>
+</segment>
+</net>
+<net name="N$3" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="P$1"/>
+<pinref part="U6" gate="A" pin="RCT"/>
+<wire x1="218.44" y1="86.36" x2="231.14" y2="86.36" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="RDP" class="0">
+<segment>
+<pinref part="U6" gate="A" pin="RD+"/>
+<wire x1="231.14" y1="83.82" x2="223.52" y2="83.82" width="0.1524" layer="91"/>
+<label x="223.52" y="83.82" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="236.22" y1="251.46" x2="259.08" y2="251.46" width="0.1524" layer="91" grouprefs="ETH-TP"/>
+<pinref part="RDP-GND" gate="G$1" pin="2"/>
+<label x="254" y="251.46" size="1.778" layer="95" grouprefs="ETH-TP"/>
+</segment>
+<segment>
+<pinref part="U2" gate="A" pin="TPIN+"/>
+<wire x1="213.36" y1="17.78" x2="205.74" y2="17.78" width="0.1524" layer="91"/>
+<label x="205.74" y="17.78" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="RDM" class="0">
+<segment>
+<pinref part="U6" gate="A" pin="RD-"/>
+<wire x1="231.14" y1="88.9" x2="223.52" y2="88.9" width="0.1524" layer="91"/>
+<label x="223.52" y="88.9" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="259.08" y1="231.14" x2="236.22" y2="231.14" width="0.1524" layer="91" grouprefs="ETH-TP"/>
+<pinref part="RDM-GND" gate="G$1" pin="2"/>
+<label x="254" y="231.14" size="1.778" layer="95" grouprefs="ETH-TP"/>
+</segment>
+<segment>
+<pinref part="U2" gate="A" pin="TPIN-"/>
+<wire x1="213.36" y1="20.32" x2="205.74" y2="20.32" width="0.1524" layer="91"/>
+<label x="205.74" y="20.32" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$8" class="0">
+<segment>
+<pinref part="RDM-GND" gate="G$1" pin="1"/>
+<pinref part="RDP-GND" gate="G$1" pin="1"/>
+<pinref part="RD-GND" gate="G$1" pin="P$1"/>
+<junction x="236.22" y="241.3" grouprefs="ETH-TP"/>
+<wire x1="215.9" y1="241.3" x2="236.22" y2="241.3" width="0.1524" layer="91" grouprefs="ETH-TP"/>
+<junction x="215.9" y="241.3" grouprefs="ETH-TP"/>
+</segment>
+</net>
+<net name="TDP" class="0">
+<segment>
+<pinref part="U6" gate="A" pin="TD+"/>
+<wire x1="266.7" y1="83.82" x2="274.32" y2="83.82" width="0.1524" layer="91"/>
+<label x="269.24" y="83.82" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="236.22" y1="292.1" x2="259.08" y2="292.1" width="0.1524" layer="91" grouprefs="ETH-TP2"/>
+<label x="254" y="292.1" size="1.778" layer="95" grouprefs="ETH-TP2"/>
+<pinref part="RDP-GND1" gate="G$1" pin="2"/>
+</segment>
+<segment>
+<pinref part="U2" gate="A" pin="TPOUT+"/>
+<wire x1="279.4" y1="20.32" x2="287.02" y2="20.32" width="0.1524" layer="91"/>
+<label x="281.94" y="20.32" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="TDM" class="0">
+<segment>
+<pinref part="U6" gate="A" pin="TD-"/>
+<wire x1="266.7" y1="78.74" x2="274.32" y2="78.74" width="0.1524" layer="91"/>
+<label x="269.24" y="78.74" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="259.08" y1="271.78" x2="236.22" y2="271.78" width="0.1524" layer="91" grouprefs="ETH-TP2"/>
+<label x="254" y="271.78" size="1.778" layer="95" grouprefs="ETH-TP2"/>
+<pinref part="RDM-GND1" gate="G$1" pin="2"/>
+</segment>
+<segment>
+<pinref part="U2" gate="A" pin="TPOUT-"/>
+<wire x1="279.4" y1="17.78" x2="287.02" y2="17.78" width="0.1524" layer="91"/>
+<label x="281.94" y="17.78" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="TDC" class="0">
+<segment>
+<pinref part="U6" gate="A" pin="TCT"/>
+<wire x1="266.7" y1="81.28" x2="274.32" y2="81.28" width="0.1524" layer="91"/>
+<label x="269.24" y="81.28" size="1.778" layer="95"/>
+</segment>
+<segment>
+<junction x="236.22" y="281.94" grouprefs="ETH-TP2"/>
+<pinref part="RDM-GND1" gate="G$1" pin="1"/>
+<pinref part="RDP-GND1" gate="G$1" pin="1"/>
+<wire x1="236.22" y1="281.94" x2="259.08" y2="281.94" width="0.1524" layer="91"/>
+<label x="254" y="281.94" size="1.778" layer="95"/>
+<pinref part="RD-GND1" gate="G$1" pin="P$1"/>
+<pinref part="TCT-3V3" gate="G$1" pin="P$1"/>
+<wire x1="215.9" y1="289.56" x2="215.9" y2="281.94" width="0.1524" layer="91"/>
+<wire x1="215.9" y1="281.94" x2="215.9" y2="274.32" width="0.1524" layer="91"/>
+<wire x1="236.22" y1="281.94" x2="215.9" y2="281.94" width="0.1524" layer="91"/>
+<junction x="215.9" y="281.94"/>
+</segment>
+</net>
+<net name="3V3" class="0">
+<segment>
+<pinref part="TCT-3V3" gate="G$1" pin="P$2"/>
+<wire x1="210.82" y1="289.56" x2="198.12" y2="289.56" width="0.1524" layer="91"/>
+<label x="198.12" y="289.56" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="LEDY" gate="G$1" pin="2"/>
+<wire x1="289.56" y1="91.44" x2="297.18" y2="91.44" width="0.1524" layer="91"/>
+<label x="294.64" y="91.44" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="LEDG" gate="G$1" pin="2"/>
+<wire x1="289.56" y1="86.36" x2="297.18" y2="86.36" width="0.1524" layer="91"/>
+<label x="294.64" y="86.36" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$4" class="0">
+<segment>
+<pinref part="U2" gate="A" pin="VCAP"/>
+<pinref part="VCAPCLOSE" gate="G$1" pin="P$2"/>
+</segment>
+</net>
+<net name="LEDYN" class="0">
+<segment>
+<pinref part="U6" gate="A" pin="LED"/>
+<wire x1="266.7" y1="93.98" x2="274.32" y2="93.98" width="0.1524" layer="91"/>
+<label x="271.78" y="93.98" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LEDGN" class="0">
+<segment>
+<pinref part="U6" gate="A" pin="LED_3"/>
+<wire x1="266.7" y1="88.9" x2="274.32" y2="88.9" width="0.1524" layer="91"/>
+<label x="271.78" y="88.9" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U2" gate="A" pin="LEDA"/>
+<wire x1="279.4" y1="48.26" x2="287.02" y2="48.26" width="0.1524" layer="91"/>
+<label x="281.94" y="48.26" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$7" class="0">
+<segment>
+<pinref part="LEDY" gate="G$1" pin="1"/>
+<pinref part="U6" gate="A" pin="LED_4"/>
+<wire x1="279.4" y1="91.44" x2="266.7" y2="91.44" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$9" class="0">
+<segment>
+<pinref part="U6" gate="A" pin="LED_2"/>
+<pinref part="LEDG" gate="G$1" pin="1"/>
+<wire x1="266.7" y1="86.36" x2="279.4" y2="86.36" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="LEDYP" class="0">
+<segment>
+<pinref part="U2" gate="A" pin="LEDB"/>
+<wire x1="279.4" y1="45.72" x2="287.02" y2="45.72" width="0.1524" layer="91"/>
+<label x="281.94" y="45.72" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
