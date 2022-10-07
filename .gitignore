@@ -4,3 +4,6 @@
 .vscode/*
 .vscode
 *.o
+
+
+**/.DS_Store
