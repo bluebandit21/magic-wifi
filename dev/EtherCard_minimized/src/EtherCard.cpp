@@ -36,24 +36,6 @@ uint8_t EtherCard::begin (const uint16_t size,
     return initialize(size, mymac, csPin);
 }
 
-bool EtherCard::staticSetup (const uint8_t* my_ip,
-                             const uint8_t* gw_ip,
-                             const uint8_t* dns_ip,
-                             const uint8_t* mask) {
-    using_dhcp = false;
-
-    if (my_ip != 0)
-        copyIp(myip, my_ip);
-    if (gw_ip != 0)
-        setGwIp(gw_ip);
-    if (dns_ip != 0)
-        copyIp(dnsip, dns_ip);
-    if(mask != 0)
-        copyIp(netmask, mask);
-    updateBroadcastAddress();
-    delaycnt = 0; //request gateway ARP lookup
-    return true;
-}
 
 char* EtherCard::wtoa(uint16_t value, char* ptr)
 {

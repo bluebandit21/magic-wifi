@@ -49,23 +49,6 @@ unsigned char h2int(char c)
     return(0);
 }
 
-// decode a url string e.g "hello%20joe" or "hello+joe" becomes "hello joe"
-void EtherCard::urlDecode (char *urlbuf)
-{
-    char c;
-    char *dst = urlbuf;
-    while ((c = *urlbuf) != 0) {
-        if (c == '+') c = ' ';
-        if (c == '%') {
-            c = *++urlbuf;
-            c = (h2int(c) << 4) | h2int(*++urlbuf);
-        }
-        *dst++ = c;
-        urlbuf++;
-    }
-    *dst = '\0';
-}
-
 // convert a single character to a 2 digit hex str
 // a terminating '\0' is added
 void int2h(char c, char *hstr)
