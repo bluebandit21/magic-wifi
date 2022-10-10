@@ -46,16 +46,6 @@
 class EtherCard : public Ethernet {
 public:
     static uint8_t mymac[ETH_LEN];  ///< MAC address
-    static uint8_t myip[IP_LEN];    ///< IP address
-    static uint8_t netmask[IP_LEN]; ///< Netmask
-    static uint8_t broadcastip[IP_LEN]; ///< Subnet broadcast address
-    static uint8_t gwip[IP_LEN];   ///< Gateway
-    static uint8_t dhcpip[IP_LEN]; ///< DHCP server IP address
-    static uint8_t dnsip[IP_LEN];  ///< DNS server IP address
-    static uint8_t hisip[IP_LEN];  ///< DNS lookup result
-    static uint16_t hisport;  ///< TCP port to connect to (default 80)
-    static bool using_dhcp;   ///< True if using DHCP
-    static bool persist_tcp_connection; ///< False to break connections on first packet received
     static uint16_t delaycnt; ///< Counts number of cycles of packetLoop when no packet received - used to trigger periodic gateway ARP request
 
     // EtherCard.cpp
@@ -82,28 +72,6 @@ public:
     *     @note   There is no check of source or destination size. Ensure both are 6 bytes
     */
     static void copyMac (uint8_t *dst, const uint8_t *src);
-
-    /**   @brief  Output to serial port in dotted decimal IP format
-    *     @param  buf Pointer to 4 byte IP address
-    *     @note   There is no check of source or destination size. Ensure both are 4 bytes
-    */
-    static void printIp (const uint8_t *buf);
-
-    /**   @brief  Output message and IP address to serial port in dotted decimal IP format
-    *     @param  msg Pointer to null terminated string
-    *     @param  buf Pointer to 4 byte IP address
-    *     @note   There is no check of source or destination size. Ensure both are 4 bytes
-    */
-    static void printIp (const char* msg, const uint8_t *buf);
-
-    /**   @brief  Output Flash String Helper and IP address to serial port in dotted decimal IP format
-    *     @param  ifsh Pointer to Flash String Helper
-    *     @param  buf Pointer to 4 byte IP address
-    *     @note   There is no check of source or destination size. Ensure both are 4 bytes
-    *     @todo   What is a FlashStringHelper?
-    */
-    static void printIp (const __FlashStringHelper *ifsh, const uint8_t *buf);
-
 
     /**   @brief  Convert an IP address from dotted decimal formated string to 4 bytes
     *     @param  bytestr Pointer to the 4 byte array to store IP address
