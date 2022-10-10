@@ -1,1 +1,0 @@
-../../EtherCard_minimized/src/stash.h

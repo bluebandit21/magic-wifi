@@ -40,7 +40,6 @@
 #include "bufferfiller.h"
 #include "enc28j60.h"
 #include "net.h"
-#include "stash.h"
 
 /** Enable DHCP.
 *   Setting this to zero disables the use of DHCP; if a program uses DHCP it will
