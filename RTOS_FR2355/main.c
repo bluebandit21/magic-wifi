@@ -58,6 +58,7 @@ functionality in an interrupt. */
 /* Set mainCREATE_SIMPLE_BLINKY_DEMO_ONLY to one to run the simple blinky demo,
 or 0 to run the more comprehensive test and demo application. */
 #define mainCREATE_SIMPLE_BLINKY_DEMO_ONLY	1
+#define mainSPI_TEST 1
 
 /*-----------------------------------------------------------*/
 
@@ -70,12 +71,13 @@ static void prvSetupHardware( void );
  * main_blinky() is used when mainCREATE_SIMPLE_BLINKY_DEMO_ONLY is set to 1.
  * main_full() is used when mainCREATE_SIMPLE_BLINKY_DEMO_ONLY is set to 0.
  */
-#if( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 )
+#if (mainSPI_TEST == 1)
+    extern void SPImain(void);
+#elif( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 )
 	extern void main_blinky( void );
 #else
 	extern void main_full( void );
 #endif /* #if mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 */
-
 /* Prototypes for the standard FreeRTOS callback/hook functions implemented
 within this file. */
 void vApplicationMallocFailedHook( void );
@@ -97,23 +99,26 @@ uint8_t ucHeap[ configTOTAL_HEAP_SIZE ] = { 0 };
 
 int main( void )
 {
-	/* See http://www.FreeRTOS.org/MSP430FR5969_Free_RTOS_Demo.html */
-
-	/* Configure the hardware ready to run the demo. */
-	prvSetupHardware();
-
-	/* The mainCREATE_SIMPLE_BLINKY_DEMO_ONLY setting is described at the top
-	of this file. */
-	#if( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 )
+    #if( mainSPI_TEST == 1 )
+    {
+	    SPImain();
+    }
+    /* See http://www.FreeRTOS.org/MSP430FR5969_Free_RTOS_Demo.html */
+    /* The mainCREATE_SIMPLE_BLINKY_DEMO_ONLY setting is described at the top
+    of this file. */
+	#elif( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 )
 	{
+	    /* Configure the hardware ready to run the demo. */
+	        prvSetupHardware();
 		main_blinky();
 	}
 	#else
 	{
+	    /* Configure the hardware ready to run the demo. */
+	    prvSetupHardware();
 		main_full();
 	}
 	#endif
-
 	return 0;
 }
 
