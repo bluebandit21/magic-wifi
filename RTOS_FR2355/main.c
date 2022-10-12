@@ -116,6 +116,14 @@ int main( void )
 
 	return 0;
 }
+
+/*-----------------------------------------------------------*/
+
+void init_SPI(void){
+    //Initializes all 4 SPI lines as master.
+    EUSCI_A_SPI_initMasterParam param = {};
+}
+
 /*-----------------------------------------------------------*/
 
 void vApplicationMallocFailedHook( void )
@@ -273,6 +281,13 @@ static void prvSetupHardware( void )
 	GPIO_setAsOutputPin( GPIO_PORT_PJ, GPIO_PIN0 | GPIO_PIN1 | GPIO_PIN2 | GPIO_PIN3 | GPIO_PIN4 | GPIO_PIN5 | GPIO_PIN6 | GPIO_PIN7 | GPIO_PIN8 | GPIO_PIN9 | GPIO_PIN10 | GPIO_PIN11 | GPIO_PIN12 | GPIO_PIN13 | GPIO_PIN14 | GPIO_PIN15 );
 	GPIO_setAsOutputPin( GPIO_PORT_P6, GPIO_PIN6); //for second LED
 	GPIO_setOutputLowOnPin( GPIO_PORT_P6, GPIO_PIN6);
+
+
+	/* SPI initialization */
+
+
+
+
 	// /* Configure P2.0 - UCA0TXD and P2.1 - UCA0RXD. */
 	// GPIO_setOutputLowOnPin( GPIO_PORT_P2, GPIO_PIN0 );
 	// GPIO_setAsOutputPin( GPIO_PORT_P2, GPIO_PIN0 );
