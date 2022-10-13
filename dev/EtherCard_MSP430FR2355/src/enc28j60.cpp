@@ -648,6 +648,7 @@ void ENC28J60::disablePromiscuous (bool temporary) {
     }
 }
 
+/* Commented out for now so I don't have to port it
 uint8_t ENC28J60::doBIST ( byte csPin) {
 #define RANDOM_FILL     0b0000
 #define ADDRESS_FILL    0b0100
@@ -730,7 +731,7 @@ uint8_t ENC28J60::doBIST ( byte csPin) {
     // The checksum should be equal
     return macResult == bitsResult;
 }
-
+*/
 
 void ENC28J60::memcpy_to_enc(uint16_t dest, void* source, int16_t num) {
     writeReg(EWRPT, dest);
