@@ -23,6 +23,8 @@
 #include <stdint.h> //To get definitions for types used
 using byte = unsigned char;
 
+#include "driverlib.h" //For SPI drivers
+
 
 
 // buffer boundaries applied to internal 8K ram

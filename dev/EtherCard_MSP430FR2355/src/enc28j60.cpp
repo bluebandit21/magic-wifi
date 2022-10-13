@@ -244,8 +244,8 @@ void ENC28J60::initSPI () {
     digitalWrite(MOSI, LOW);
     digitalWrite(SCK, LOW);
 
-    SPCR = bit(SPE) | bit(MSTR); // 8 MHz @ 16
-    bitSet(SPSR, SPI2X);
+    SPCR = (0b1 << SPE) | (0b1 << MSTR); // 8 MHz @ 16
+    SPSR |= (0b1 << SPI2X);
 }
 
 static void enableChip () {
@@ -367,7 +367,7 @@ static void writePhy (byte address, uint16_t data) {
 
 byte ENC28J60::initialize (uint16_t size, const byte* macaddr, byte csPin) {
     bufferSize = size;
-    if (bitRead(SPCR, SPE) == 0)
+    if (((SPCR >> SPE) & 0b1) == 0)
         initSPI();
     selectPin = csPin;
     pinMode(selectPin, OUTPUT);
