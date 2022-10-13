@@ -4,3 +4,5 @@
 .vscode/*
 .vscode
 *.o
+/Debug
+.DS_Store
