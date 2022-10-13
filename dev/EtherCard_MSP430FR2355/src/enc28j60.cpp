@@ -231,18 +231,20 @@ bool ENC28J60::promiscuous_enabled = false;
 #define FULL_SPEED  1   // switch to full-speed SPI for bulk transfers
 
 static byte Enc28j60Bank;
-static byte selectPin;
 
 void ENC28J60::initSPI () {
-    pinMode(SS, OUTPUT);
-    digitalWrite(SS, HIGH);
-    pinMode(MOSI, OUTPUT);
-    pinMode(SCK, OUTPUT);
-    pinMode(MISO, INPUT);
 
-    digitalWrite(MOSI, HIGH);
-    digitalWrite(MOSI, LOW);
-    digitalWrite(SCK, LOW);
+    GPIO_setAsOutputPin(SS_Port, SS_Pin);
+    GPIO_setOutputHighOnPin(SS_Port, SS_Pin);
+
+    GPIO_setAsOutputPin(MOSI_Port, MOSI_Pin);
+    GPIO_setAsOutputPin(SCK_Port, SCK_Pin);
+    GPIO_setAsInputPin(MISO_Port, MISO_Pin);
+
+    GPIO_setOutputHighOnPin(MOSI_Port, MOSI_Pin);
+    GPIO_setOutputLowOnPin(MOSI_Port, MOSI_Pin);
+
+    GPIO_setOutputLowOnPin(SCK_Port, SCK_Pin);
 
     SPCR = (0b1 << SPE) | (0b1 << MSTR); // 8 MHz @ 16
     SPSR |= (0b1 << SPI2X);
@@ -250,11 +252,14 @@ void ENC28J60::initSPI () {
 
 static void enableChip () {
     cli();
-    digitalWrite(selectPin, LOW);
+
+    GPIO_setOutputLowOnPin(select_Port, select_Pin);
 }
 
 static void disableChip () {
-    digitalWrite(selectPin, HIGH);
+
+    GPIO_setOutputHighOnPin(select_Port, select_Pin);
+
     sei();
 }
 
@@ -365,12 +370,12 @@ static void writePhy (byte address, uint16_t data) {
         ;
 }
 
-byte ENC28J60::initialize (uint16_t size, const byte* macaddr, byte csPin) {
+byte ENC28J60::initialize (uint16_t size, const byte* macaddr) {
     bufferSize = size;
     if (((SPCR >> SPE) & 0b1) == 0)
         initSPI();
-    selectPin = csPin;
-    pinMode(selectPin, OUTPUT);
+
+    GPIO_setAsOutputPin(select_Port, select_Pin);
     disableChip();
 
     writeOp(ENC28J60_SOFT_RESET, 0, ENC28J60_SOFT_RESET);

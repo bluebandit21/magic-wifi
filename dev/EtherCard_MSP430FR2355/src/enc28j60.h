@@ -48,6 +48,11 @@ using byte = unsigned char;
 #define ENC_HEAP_START      SCRATCH_LIMIT
 #define ENC_HEAP_END        0x2000
 
+//TODO: Take as arguments instead of hardcoding.
+//TODO: Hardcode at all!
+static uint_fast8_t SS_Port, MOSI_Port, SCK_Port, MISO_Port, select_Port;
+static uint_fast16_t SS_Pin, MOSI_Pin, SCK_Pin, MISO_Pin, select_Pin;
+
 /** This class provide low-level interfacing with the ENC28J60 network interface. This is used by the EtherCard class and not intended for use by (normal) end users. */
 class ENC28J60 {
 public:
@@ -69,8 +74,7 @@ public:
     *     @param  csPin Arduino pin used for chip select (enable network interface SPI bus). Default = 8
     *     @return <i>uint8_t</i> ENC28J60 firmware version or zero on failure.
     */
-    static uint8_t initialize (const uint16_t size, const uint8_t* macaddr,
-                               uint8_t csPin = 8);
+    static uint8_t initialize (const uint16_t size, const uint8_t* macaddr);
 
     /**   @brief  Check if network link is connected
     *     @return <i>bool</i> True if link is up
