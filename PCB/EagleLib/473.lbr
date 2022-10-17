@@ -2064,10 +2064,10 @@
 <pin name="VSSOSC" x="68.58" y="-15.24" length="middle" direction="pas" rot="R180"/>
 <pin name="OSC1" x="68.58" y="-12.7" length="middle" direction="pas" rot="R180"/>
 <pin name="OSC2" x="68.58" y="-10.16" length="middle" direction="pas" rot="R180"/>
-<pin name="25" x="68.58" y="-7.62" length="middle" direction="pas" rot="R180"/>
-<pin name="VDDOSC" x="68.58" y="-5.08" length="middle" direction="pas" rot="R180"/>
-<pin name="LEDB" x="68.58" y="-2.54" length="middle" direction="pas" rot="R180"/>
-<pin name="LEDA" x="68.58" y="0" length="middle" direction="pas" rot="R180"/>
+<pin name="VDDOSC" x="68.58" y="-7.62" length="middle" direction="pas" rot="R180"/>
+<pin name="LEDB" x="68.58" y="-5.08" length="middle" direction="pas" rot="R180"/>
+<pin name="LEDA" x="68.58" y="-2.54" length="middle" direction="pas" rot="R180"/>
+<pin name="VDD" x="68.58" y="0" length="middle" direction="pas" rot="R180"/>
 <wire x1="7.62" y1="5.08" x2="7.62" y2="-38.1" width="0.1524" layer="94"/>
 <wire x1="7.62" y1="-38.1" x2="63.5" y2="-38.1" width="0.1524" layer="94"/>
 <wire x1="63.5" y1="-38.1" x2="63.5" y2="5.08" width="0.1524" layer="94"/>
@@ -2433,10 +2433,9 @@
 <connect gate="A" pin="!CS" pad="9"/>
 <connect gate="A" pin="!INT" pad="4"/>
 <connect gate="A" pin="!RESET" pad="10"/>
-<connect gate="A" pin="25" pad="25"/>
 <connect gate="A" pin="CLKOUT" pad="3"/>
-<connect gate="A" pin="LEDA" pad="28"/>
-<connect gate="A" pin="LEDB" pad="27"/>
+<connect gate="A" pin="LEDA" pad="27"/>
+<connect gate="A" pin="LEDB" pad="26"/>
 <connect gate="A" pin="NC" pad="5"/>
 <connect gate="A" pin="OSC1" pad="23"/>
 <connect gate="A" pin="OSC2" pad="24"/>
@@ -2449,7 +2448,8 @@
 <connect gate="A" pin="TPOUT+" pad="17"/>
 <connect gate="A" pin="TPOUT-" pad="16"/>
 <connect gate="A" pin="VCAP" pad="1"/>
-<connect gate="A" pin="VDDOSC" pad="26"/>
+<connect gate="A" pin="VDD" pad="28"/>
+<connect gate="A" pin="VDDOSC" pad="25"/>
 <connect gate="A" pin="VDDPLL" pad="20"/>
 <connect gate="A" pin="VDDRX" pad="19"/>
 <connect gate="A" pin="VDDTX" pad="15"/>
