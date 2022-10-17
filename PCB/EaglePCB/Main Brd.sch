@@ -3697,8 +3697,8 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <part name="VSSOSC-VDDOSC" library="microbuilder" deviceset="CAP_CERAMIC" device="0603" value="0.1 uF"/>
 <part name="VSSPLL-VDDPLL" library="microbuilder" deviceset="CAP_CERAMIC" device="0603" value="0.1 uF"/>
 <part name="U$2" library="473" deviceset="CRYSTAL" device=""/>
-<part name="OSC2-GND" library="microbuilder" deviceset="CAP_CERAMIC" device="0603" value="16 pF"/>
-<part name="OSC1-GND" library="microbuilder" deviceset="CAP_CERAMIC" device="0603" value="16 pF"/>
+<part name="OSC2-GND" library="microbuilder" deviceset="CAP_CERAMIC" device="0603" value="180 pF"/>
+<part name="OSC1-GND" library="microbuilder" deviceset="CAP_CERAMIC" device="0603" value="14pF"/>
 </parts>
 <sheets>
 <sheet>

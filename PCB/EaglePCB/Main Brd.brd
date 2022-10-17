@@ -1871,11 +1871,11 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="-7.112" y="-167.132" size="0.4064" layer="27" font="vector" ratio="10"/>
 </element>
 <element name="U$2" library="473" package="4-SMD-PACKAGE" value="CRYSTAL" x="-8.89" y="-168.91" smashed="yes"/>
-<element name="OSC2-GND" library="microbuilder" package="0603" value="16 pF" x="-8.89" y="-171.45" smashed="yes">
+<element name="OSC2-GND" library="microbuilder" package="0603" value="180 pF" x="-8.89" y="-171.45" smashed="yes">
 <attribute name="NAME" x="-7.112" y="-171.577" size="0.8128" layer="25" font="vector" ratio="18"/>
 <attribute name="VALUE" x="-7.112" y="-172.212" size="0.4064" layer="27" font="vector" ratio="10"/>
 </element>
-<element name="OSC1-GND" library="microbuilder" package="0603" value="16 pF" x="-8.89" y="-173.99" smashed="yes">
+<element name="OSC1-GND" library="microbuilder" package="0603" value="14pF" x="-8.89" y="-173.99" smashed="yes">
 <attribute name="NAME" x="-7.112" y="-174.117" size="0.8128" layer="25" font="vector" ratio="18"/>
 <attribute name="VALUE" x="-7.112" y="-174.752" size="0.4064" layer="27" font="vector" ratio="10"/>
 </element>
