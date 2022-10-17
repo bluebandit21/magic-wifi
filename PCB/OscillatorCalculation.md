@@ -1,7 +1,7 @@
 # Oscillator Calculations
-#### Derived from (ecsxtal.com)[https://ecsxtal.com/oscillator-circuit-design]
+#### Derived from [ecsxtal.com](https://ecsxtal.com/oscillator-circuit-design)
 
-according to (the crystal datasheet)[http://txccrystal.com/images/pdf/8q-accuracy.pdf], 
+according to [the crystal datasheet](http://txccrystal.com/images/pdf/8q-accuracy.pdf), 
 for our crystal (8Q-25.000MAHI-T)
 we need to have a circuit capacitance of 16 pF
 
