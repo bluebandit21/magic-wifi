@@ -1,13 +1,13 @@
 #include <SX127x_driver.h>
 
-uint32_t baseAddress = &SX127X_SPI;
+uint16_t baseAddress = SX127X_SPI;
 EUSCI_A_SPI_initMasterParam* sx127x_spi_params;
 uint32_t sx127x_spiFrequency = SX127X_SPI_FREQUENCY;
 int8_t sx127x_nss_port = SX127X_PORT_NSS;
 int8_t sx127x_nss_pin = SX127X_PIN_NSS;
 
 // TODO:: REPLACE with RTOS block function to eliminate busy wait, for TEST use ONLY
-void delay() {
+void delay(int i) {
     for(volatile int i = 0; i < 100000; ++i);
 }
 
