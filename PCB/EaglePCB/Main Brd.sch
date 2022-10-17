@@ -8,20 +8,20 @@
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
-<layer number="20" name="Dimension" color="24" fill="1" visible="no" active="no"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="no" active="no"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="no" active="no"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="no" active="no"/>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="no"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="no"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="no"/>
+<layer number="20" name="Dimension" color="24" fill="1" visible="yes" active="no"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="no"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="no"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="no"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="no"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="no"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="no"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="no"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="no"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="no"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="no"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="no"/>
@@ -30,8 +30,8 @@
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="no"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="no"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="no"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="no" active="no"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="no" active="no"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="no"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="no"/>
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="no"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="no"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="no"/>
@@ -39,19 +39,19 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="no"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="no"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="no"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="no" active="no"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="no" active="no"/>
-<layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
-<layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="no"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
-<layer number="53" name="tGND_GNDA" color="7" fill="9" visible="no" active="no"/>
-<layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
-<layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
-<layer number="57" name="tCAD" color="7" fill="1" visible="no" active="no"/>
-<layer number="59" name="tCarbon" color="7" fill="1" visible="no" active="no"/>
-<layer number="60" name="bCarbon" color="7" fill="1" visible="no" active="no"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="no"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="no"/>
+<layer number="48" name="Document" color="7" fill="1" visible="yes" active="no"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="no"/>
+<layer number="50" name="dxf" color="7" fill="1" visible="yes" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="no"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="no"/>
+<layer number="53" name="tGND_GNDA" color="7" fill="9" visible="yes" active="no"/>
+<layer number="54" name="bGND_GNDA" color="1" fill="9" visible="yes" active="no"/>
+<layer number="56" name="wert" color="7" fill="1" visible="yes" active="no"/>
+<layer number="57" name="tCAD" color="7" fill="1" visible="yes" active="no"/>
+<layer number="59" name="tCarbon" color="7" fill="1" visible="yes" active="no"/>
+<layer number="60" name="bCarbon" color="7" fill="1" visible="yes" active="no"/>
 <layer number="88" name="SimResults" color="9" fill="1" visible="yes" active="yes"/>
 <layer number="89" name="SimProbes" color="9" fill="1" visible="yes" active="yes"/>
 <layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
@@ -1627,6 +1627,35 @@
 <wire x1="-0.0762" y1="-0.889" x2="0.0762" y2="-0.889" width="0" layer="51" curve="-180"/>
 <text x="-3.2766" y="-0.635" size="1.27" layer="27" ratio="6" rot="SR0">&gt;Name</text>
 </package>
+<package name="4-SMD-PACKAGE">
+<wire x1="-0.15" y1="0.1" x2="-0.9" y2="0.1" width="0" layer="1"/>
+<wire x1="-0.9" y1="0.1" x2="-0.9" y2="0.7" width="0" layer="1"/>
+<wire x1="-0.9" y1="0.7" x2="-0.15" y2="0.7" width="0" layer="1"/>
+<wire x1="-0.15" y1="0.7" x2="-0.15" y2="0.1" width="0" layer="1"/>
+<wire x1="0.15" y1="0.1" x2="0.15" y2="0.7" width="0" layer="1"/>
+<wire x1="0.15" y1="0.7" x2="0.9" y2="0.7" width="0" layer="1"/>
+<wire x1="0.9" y1="0.7" x2="0.9" y2="0.1" width="0" layer="1"/>
+<wire x1="0.9" y1="0.1" x2="0.15" y2="0.1" width="0" layer="1"/>
+<wire x1="-0.15" y1="-0.7" x2="-0.15" y2="-0.1" width="0" layer="1"/>
+<wire x1="-0.15" y1="-0.1" x2="-0.9" y2="-0.1" width="0" layer="1"/>
+<wire x1="-0.9" y1="-0.1" x2="-0.9" y2="-0.7" width="0" layer="1"/>
+<wire x1="-0.9" y1="-0.7" x2="-0.15" y2="-0.7" width="0" layer="1"/>
+<wire x1="0.15" y1="-0.1" x2="0.15" y2="-0.7" width="0" layer="1"/>
+<wire x1="0.15" y1="-0.7" x2="0.9" y2="-0.7" width="0" layer="1"/>
+<wire x1="0.9" y1="-0.7" x2="0.9" y2="-0.1" width="0" layer="1"/>
+<wire x1="0.9" y1="-0.1" x2="0.15" y2="-0.1" width="0" layer="1"/>
+<smd name="P$3" x="-0.53" y="0.4" dx="0.76" dy="0.6" layer="1"/>
+<smd name="P$4" x="0.53" y="0.4" dx="0.76" dy="0.6" layer="1"/>
+<smd name="P$2" x="0.53" y="-0.4" dx="0.76" dy="0.6" layer="1"/>
+<smd name="P$1" x="-0.53" y="-0.4" dx="0.76" dy="0.6" layer="1"/>
+<wire x1="0" y1="0.9" x2="-0.01" y2="0.9" width="0.1016" layer="21"/>
+<wire x1="-0.01" y1="0.9" x2="-1.22" y2="0.9" width="0.1016" layer="21"/>
+<wire x1="-1.22" y1="0.9" x2="-1.22" y2="-0.49" width="0.1016" layer="21"/>
+<wire x1="-1.22" y1="-0.49" x2="-0.7" y2="-1.01" width="0.1016" layer="21"/>
+<wire x1="-0.7" y1="-1.01" x2="1.1" y2="-1.01" width="0.1016" layer="21"/>
+<wire x1="1.1" y1="-1.01" x2="1.1" y2="0.9" width="0.1016" layer="21"/>
+<wire x1="1.1" y1="0.9" x2="0" y2="0.9" width="0.1016" layer="21"/>
+</package>
 </packages>
 <symbols>
 <symbol name="ATWINC15X0-MR210">
@@ -1691,10 +1720,10 @@
 <pin name="VSSOSC" x="68.58" y="-15.24" length="middle" direction="pas" rot="R180"/>
 <pin name="OSC1" x="68.58" y="-12.7" length="middle" direction="pas" rot="R180"/>
 <pin name="OSC2" x="68.58" y="-10.16" length="middle" direction="pas" rot="R180"/>
-<pin name="25" x="68.58" y="-7.62" length="middle" direction="pas" rot="R180"/>
-<pin name="VDDOSC" x="68.58" y="-5.08" length="middle" direction="pas" rot="R180"/>
-<pin name="LEDB" x="68.58" y="-2.54" length="middle" direction="pas" rot="R180"/>
-<pin name="LEDA" x="68.58" y="0" length="middle" direction="pas" rot="R180"/>
+<pin name="VDDOSC" x="68.58" y="-7.62" length="middle" direction="pas" rot="R180"/>
+<pin name="LEDB" x="68.58" y="-5.08" length="middle" direction="pas" rot="R180"/>
+<pin name="LEDA" x="68.58" y="-2.54" length="middle" direction="pas" rot="R180"/>
+<pin name="VDD" x="68.58" y="0" length="middle" direction="pas" rot="R180"/>
 <wire x1="7.62" y1="5.08" x2="7.62" y2="-38.1" width="0.1524" layer="94"/>
 <wire x1="7.62" y1="-38.1" x2="63.5" y2="-38.1" width="0.1524" layer="94"/>
 <wire x1="63.5" y1="-38.1" x2="63.5" y2="5.08" width="0.1524" layer="94"/>
@@ -1907,6 +1936,13 @@
 <wire x1="12.7" y1="2.54" x2="5.08" y2="2.54" width="0.1524" layer="94"/>
 <text x="4.1656" y="5.3086" size="2.0828" layer="95" ratio="6" rot="SR0">&gt;Name</text>
 </symbol>
+<symbol name="CRYSTAL_OSC">
+<description>Crystal Oscillator Symbol for connecting fast running crystals</description>
+<wire x1="-2.54" y1="5.08" x2="-2.54" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="2.54" y1="5.08" x2="2.54" y2="-5.08" width="0.254" layer="94"/>
+<pin name="P$1" x="-7.62" y="0" length="middle"/>
+<pin name="P$2" x="7.62" y="0" length="middle" rot="R180"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="ATWINC1500-MR210PB1952-T" prefix="U">
@@ -1969,10 +2005,9 @@
 <connect gate="A" pin="!CS" pad="9"/>
 <connect gate="A" pin="!INT" pad="4"/>
 <connect gate="A" pin="!RESET" pad="10"/>
-<connect gate="A" pin="25" pad="25"/>
 <connect gate="A" pin="CLKOUT" pad="3"/>
-<connect gate="A" pin="LEDA" pad="28"/>
-<connect gate="A" pin="LEDB" pad="27"/>
+<connect gate="A" pin="LEDA" pad="27"/>
+<connect gate="A" pin="LEDB" pad="26"/>
 <connect gate="A" pin="NC" pad="5"/>
 <connect gate="A" pin="OSC1" pad="23"/>
 <connect gate="A" pin="OSC2" pad="24"/>
@@ -1985,7 +2020,8 @@
 <connect gate="A" pin="TPOUT+" pad="17"/>
 <connect gate="A" pin="TPOUT-" pad="16"/>
 <connect gate="A" pin="VCAP" pad="1"/>
-<connect gate="A" pin="VDDOSC" pad="26"/>
+<connect gate="A" pin="VDD" pad="28"/>
+<connect gate="A" pin="VDDOSC" pad="25"/>
 <connect gate="A" pin="VDDPLL" pad="20"/>
 <connect gate="A" pin="VDDRX" pad="19"/>
 <connect gate="A" pin="VDDTX" pad="15"/>
@@ -2393,6 +2429,22 @@
 <attribute name="MFR_NAME" value="TE Connectivity" constant="no"/>
 <attribute name="TYPE" value="Jack" constant="no"/>
 </technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CRYSTAL">
+<gates>
+<gate name="G$1" symbol="CRYSTAL_OSC" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="4-SMD-PACKAGE">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$4"/>
+</connects>
+<technologies>
+<technology name=""/>
 </technologies>
 </device>
 </devices>
@@ -3447,6 +3499,286 @@ chip</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="Resistor_Capacitor" urn="urn:adsk.eagle:library:15122775">
+<description>&lt;h3&gt; PCBLayout.com - Frequently Used &lt;i&gt;Resistors and Capacitors &lt;/i&gt;&lt;/h3&gt;
+
+Visit us at &lt;a href="http://www.PCBLayout.com"&gt;PCBLayout.com&lt;/a&gt; for quick and hassle-free PCB Layout/Manufacturing ordering experience.
+&lt;BR&gt;
+&lt;BR&gt;
+This library has been generated by our experienced pcb layout engineers using current IPC and/or industry standards. We &lt;b&gt;believe&lt;/b&gt; the content to be accurate, complete and current. But, this content is provided as a courtesy and &lt;u&gt;user assumes all risk and responsiblity of it's usage&lt;/u&gt;.
+&lt;BR&gt;
+&lt;BR&gt;
+Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@PCBLayout.com&lt;/a&gt; if you have any questions/concerns regarding any of our content or services.</description>
+<packages>
+<package name="RES_0603" urn="urn:adsk.eagle:footprint:10872879/2" library_version="1">
+<description>Resistor, Chip; 1.60 mm L X 0.80 mm W X 0.45 mm H body&lt;p&gt;&lt;i&gt;PCB Libraries Packages&lt;/i&gt;</description>
+<smd name="1" x="-0.795" y="0" dx="0.74" dy="0.93" layer="1" roundness="51" rot="R180"/>
+<smd name="2" x="0.795" y="0" dx="0.74" dy="0.93" layer="1" roundness="51"/>
+<polygon width="0.01" layer="29">
+<vertex x="-0.795" y="0.465"/>
+<vertex x="-0.615" y="0.465"/>
+<vertex x="-0.5853" y="0.4627"/>
+<vertex x="-0.5563" y="0.4557"/>
+<vertex x="-0.5287" y="0.4443"/>
+<vertex x="-0.5033" y="0.4287"/>
+<vertex x="-0.4806" y="0.4094"/>
+<vertex x="-0.4613" y="0.3867"/>
+<vertex x="-0.4457" y="0.3613"/>
+<vertex x="-0.4343" y="0.3337"/>
+<vertex x="-0.4273" y="0.3047"/>
+<vertex x="-0.425" y="-0.275"/>
+<vertex x="-0.4273" y="-0.3047"/>
+<vertex x="-0.4343" y="-0.3337"/>
+<vertex x="-0.4457" y="-0.3613"/>
+<vertex x="-0.4613" y="-0.3867"/>
+<vertex x="-0.4806" y="-0.4094"/>
+<vertex x="-0.5033" y="-0.4287"/>
+<vertex x="-0.5287" y="-0.4443"/>
+<vertex x="-0.5563" y="-0.4557"/>
+<vertex x="-0.5853" y="-0.4627"/>
+<vertex x="-0.615" y="-0.465"/>
+<vertex x="-0.975" y="-0.465"/>
+<vertex x="-1.0047" y="-0.4627"/>
+<vertex x="-1.0337" y="-0.4557"/>
+<vertex x="-1.0613" y="-0.4443"/>
+<vertex x="-1.0867" y="-0.4287"/>
+<vertex x="-1.1094" y="-0.4094"/>
+<vertex x="-1.1287" y="-0.3867"/>
+<vertex x="-1.1443" y="-0.3613"/>
+<vertex x="-1.1557" y="-0.3337"/>
+<vertex x="-1.1627" y="-0.3047"/>
+<vertex x="-1.165" y="0.275"/>
+<vertex x="-1.1627" y="0.3047"/>
+<vertex x="-1.1557" y="0.3337"/>
+<vertex x="-1.1443" y="0.3613"/>
+<vertex x="-1.1287" y="0.3867"/>
+<vertex x="-1.1094" y="0.4094"/>
+<vertex x="-1.0867" y="0.4287"/>
+<vertex x="-1.0613" y="0.4443"/>
+<vertex x="-1.0337" y="0.4557"/>
+<vertex x="-1.0047" y="0.4627"/>
+<vertex x="-0.975" y="0.465"/>
+</polygon>
+<polygon width="0.01" layer="31">
+<vertex x="-0.795" y="0.465"/>
+<vertex x="-0.615" y="0.465"/>
+<vertex x="-0.5853" y="0.4627"/>
+<vertex x="-0.5563" y="0.4557"/>
+<vertex x="-0.5287" y="0.4443"/>
+<vertex x="-0.5033" y="0.4287"/>
+<vertex x="-0.4806" y="0.4094"/>
+<vertex x="-0.4613" y="0.3867"/>
+<vertex x="-0.4457" y="0.3613"/>
+<vertex x="-0.4343" y="0.3337"/>
+<vertex x="-0.4273" y="0.3047"/>
+<vertex x="-0.425" y="-0.275"/>
+<vertex x="-0.4273" y="-0.3047"/>
+<vertex x="-0.4343" y="-0.3337"/>
+<vertex x="-0.4457" y="-0.3613"/>
+<vertex x="-0.4613" y="-0.3867"/>
+<vertex x="-0.4806" y="-0.4094"/>
+<vertex x="-0.5033" y="-0.4287"/>
+<vertex x="-0.5287" y="-0.4443"/>
+<vertex x="-0.5563" y="-0.4557"/>
+<vertex x="-0.5853" y="-0.4627"/>
+<vertex x="-0.615" y="-0.465"/>
+<vertex x="-0.975" y="-0.465"/>
+<vertex x="-1.0047" y="-0.4627"/>
+<vertex x="-1.0337" y="-0.4557"/>
+<vertex x="-1.0613" y="-0.4443"/>
+<vertex x="-1.0867" y="-0.4287"/>
+<vertex x="-1.1094" y="-0.4094"/>
+<vertex x="-1.1287" y="-0.3867"/>
+<vertex x="-1.1443" y="-0.3613"/>
+<vertex x="-1.1557" y="-0.3337"/>
+<vertex x="-1.1627" y="-0.3047"/>
+<vertex x="-1.165" y="0.275"/>
+<vertex x="-1.1627" y="0.3047"/>
+<vertex x="-1.1557" y="0.3337"/>
+<vertex x="-1.1443" y="0.3613"/>
+<vertex x="-1.1287" y="0.3867"/>
+<vertex x="-1.1094" y="0.4094"/>
+<vertex x="-1.0867" y="0.4287"/>
+<vertex x="-1.0613" y="0.4443"/>
+<vertex x="-1.0337" y="0.4557"/>
+<vertex x="-1.0047" y="0.4627"/>
+<vertex x="-0.975" y="0.465"/>
+</polygon>
+<polygon width="0.01" layer="29">
+<vertex x="0.795" y="-0.465"/>
+<vertex x="0.615" y="-0.465"/>
+<vertex x="0.5853" y="-0.4627"/>
+<vertex x="0.5563" y="-0.4557"/>
+<vertex x="0.5287" y="-0.4443"/>
+<vertex x="0.5033" y="-0.4287"/>
+<vertex x="0.4806" y="-0.4094"/>
+<vertex x="0.4613" y="-0.3867"/>
+<vertex x="0.4457" y="-0.3613"/>
+<vertex x="0.4343" y="-0.3337"/>
+<vertex x="0.4273" y="-0.3047"/>
+<vertex x="0.425" y="0.275"/>
+<vertex x="0.4273" y="0.3047"/>
+<vertex x="0.4343" y="0.3337"/>
+<vertex x="0.4457" y="0.3613"/>
+<vertex x="0.4613" y="0.3867"/>
+<vertex x="0.4806" y="0.4094"/>
+<vertex x="0.5033" y="0.4287"/>
+<vertex x="0.5287" y="0.4443"/>
+<vertex x="0.5563" y="0.4557"/>
+<vertex x="0.5853" y="0.4627"/>
+<vertex x="0.615" y="0.465"/>
+<vertex x="0.975" y="0.465"/>
+<vertex x="1.0047" y="0.4627"/>
+<vertex x="1.0337" y="0.4557"/>
+<vertex x="1.0613" y="0.4443"/>
+<vertex x="1.0867" y="0.4287"/>
+<vertex x="1.1094" y="0.4094"/>
+<vertex x="1.1287" y="0.3867"/>
+<vertex x="1.1443" y="0.3613"/>
+<vertex x="1.1557" y="0.3337"/>
+<vertex x="1.1627" y="0.3047"/>
+<vertex x="1.165" y="-0.275"/>
+<vertex x="1.1627" y="-0.3047"/>
+<vertex x="1.1557" y="-0.3337"/>
+<vertex x="1.1443" y="-0.3613"/>
+<vertex x="1.1287" y="-0.3867"/>
+<vertex x="1.1094" y="-0.4094"/>
+<vertex x="1.0867" y="-0.4287"/>
+<vertex x="1.0613" y="-0.4443"/>
+<vertex x="1.0337" y="-0.4557"/>
+<vertex x="1.0047" y="-0.4627"/>
+<vertex x="0.975" y="-0.465"/>
+</polygon>
+<polygon width="0.01" layer="31">
+<vertex x="0.795" y="-0.465"/>
+<vertex x="0.615" y="-0.465"/>
+<vertex x="0.5853" y="-0.4627"/>
+<vertex x="0.5563" y="-0.4557"/>
+<vertex x="0.5287" y="-0.4443"/>
+<vertex x="0.5033" y="-0.4287"/>
+<vertex x="0.4806" y="-0.4094"/>
+<vertex x="0.4613" y="-0.3867"/>
+<vertex x="0.4457" y="-0.3613"/>
+<vertex x="0.4343" y="-0.3337"/>
+<vertex x="0.4273" y="-0.3047"/>
+<vertex x="0.425" y="0.275"/>
+<vertex x="0.4273" y="0.3047"/>
+<vertex x="0.4343" y="0.3337"/>
+<vertex x="0.4457" y="0.3613"/>
+<vertex x="0.4613" y="0.3867"/>
+<vertex x="0.4806" y="0.4094"/>
+<vertex x="0.5033" y="0.4287"/>
+<vertex x="0.5287" y="0.4443"/>
+<vertex x="0.5563" y="0.4557"/>
+<vertex x="0.5853" y="0.4627"/>
+<vertex x="0.615" y="0.465"/>
+<vertex x="0.975" y="0.465"/>
+<vertex x="1.0047" y="0.4627"/>
+<vertex x="1.0337" y="0.4557"/>
+<vertex x="1.0613" y="0.4443"/>
+<vertex x="1.0867" y="0.4287"/>
+<vertex x="1.1094" y="0.4094"/>
+<vertex x="1.1287" y="0.3867"/>
+<vertex x="1.1443" y="0.3613"/>
+<vertex x="1.1557" y="0.3337"/>
+<vertex x="1.1627" y="0.3047"/>
+<vertex x="1.165" y="-0.275"/>
+<vertex x="1.1627" y="-0.3047"/>
+<vertex x="1.1557" y="-0.3337"/>
+<vertex x="1.1443" y="-0.3613"/>
+<vertex x="1.1287" y="-0.3867"/>
+<vertex x="1.1094" y="-0.4094"/>
+<vertex x="1.0867" y="-0.4287"/>
+<vertex x="1.0613" y="-0.4443"/>
+<vertex x="1.0337" y="-0.4557"/>
+<vertex x="1.0047" y="-0.4627"/>
+<vertex x="0.975" y="-0.465"/>
+</polygon>
+<wire x1="-0.55" y1="0.4" x2="-0.55" y2="-0.4" width="0.025" layer="51"/>
+<wire x1="-0.55" y1="-0.4" x2="-0.8" y2="-0.4" width="0.025" layer="51"/>
+<wire x1="-0.8" y1="-0.4" x2="-0.8" y2="0.4" width="0.025" layer="51"/>
+<wire x1="-0.8" y1="0.4" x2="-0.55" y2="0.4" width="0.025" layer="51"/>
+<wire x1="0.55" y1="-0.4" x2="0.55" y2="0.4" width="0.025" layer="51"/>
+<wire x1="0.55" y1="0.4" x2="0.8" y2="0.4" width="0.025" layer="51"/>
+<wire x1="0.8" y1="0.4" x2="0.8" y2="-0.4" width="0.025" layer="51"/>
+<wire x1="0.8" y1="-0.4" x2="0.55" y2="-0.4" width="0.025" layer="51"/>
+<wire x1="-0.8" y1="-0.4" x2="-0.8" y2="0.4" width="0.025" layer="51"/>
+<wire x1="-0.8" y1="0.4" x2="0.8" y2="0.4" width="0.025" layer="51"/>
+<wire x1="0.8" y1="0.4" x2="0.8" y2="-0.4" width="0.025" layer="51"/>
+<wire x1="0.8" y1="-0.4" x2="-0.8" y2="-0.4" width="0.025" layer="51"/>
+<wire x1="-0.85" y1="-0.45" x2="-0.85" y2="0.45" width="0.12" layer="51"/>
+<wire x1="-0.85" y1="0.45" x2="0.85" y2="0.45" width="0.12" layer="51"/>
+<wire x1="0.85" y1="0.45" x2="0.85" y2="-0.45" width="0.12" layer="51"/>
+<wire x1="0.85" y1="-0.45" x2="-0.85" y2="-0.45" width="0.12" layer="51"/>
+<wire x1="-0.245" y1="0.45" x2="0.245" y2="0.45" width="0.12" layer="21"/>
+<wire x1="-0.245" y1="-0.45" x2="0.245" y2="-0.45" width="0.12" layer="21"/>
+<wire x1="-1.37" y1="-0.67" x2="-1.37" y2="0.67" width="0.05" layer="39"/>
+<wire x1="-1.37" y1="0.67" x2="1.37" y2="0.67" width="0.05" layer="39"/>
+<wire x1="1.37" y1="0.67" x2="1.37" y2="-0.67" width="0.05" layer="39"/>
+<wire x1="1.37" y1="-0.67" x2="-1.37" y2="-0.67" width="0.05" layer="39"/>
+<wire x1="0.335" y1="0" x2="-0.335" y2="0" width="0.05" layer="39"/>
+<wire x1="0" y1="0.335" x2="0" y2="-0.335" width="0.05" layer="39"/>
+<circle x="0" y="0" radius="0.25" width="0.05" layer="39"/>
+<text x="-1.27" y="-1.27" size="0.5" layer="27" ratio="10">&gt;VALUE</text>
+<text x="-1.27" y="0.762" size="0.5" layer="25" ratio="10">&gt;NAME</text>
+</package>
+</packages>
+<packages3d>
+<package3d name="RES_0603" urn="urn:adsk.eagle:package:10872900/3" type="model" library_version="1">
+<description>Resistor, Chip; 1.60 mm L X 0.80 mm W X 0.45 mm H body&lt;p&gt;&lt;i&gt;PCB Libraries Packages&lt;/i&gt;</description>
+<packageinstances>
+<packageinstance name="RES_0603"/>
+</packageinstances>
+</package3d>
+</packages3d>
+<symbols>
+<symbol name="R-US" urn="urn:adsk.eagle:symbol:10872894/1" library_version="1">
+<wire x1="-2.54" y1="0" x2="-2.159" y2="1.016" width="0.2032" layer="94"/>
+<wire x1="-2.159" y1="1.016" x2="-1.524" y2="-1.016" width="0.2032" layer="94"/>
+<wire x1="-1.524" y1="-1.016" x2="-0.889" y2="1.016" width="0.2032" layer="94"/>
+<wire x1="-0.889" y1="1.016" x2="-0.254" y2="-1.016" width="0.2032" layer="94"/>
+<wire x1="-0.254" y1="-1.016" x2="0.381" y2="1.016" width="0.2032" layer="94"/>
+<wire x1="0.381" y1="1.016" x2="1.016" y2="-1.016" width="0.2032" layer="94"/>
+<wire x1="1.016" y1="-1.016" x2="1.651" y2="1.016" width="0.2032" layer="94"/>
+<wire x1="1.651" y1="1.016" x2="2.286" y2="-1.016" width="0.2032" layer="94"/>
+<wire x1="2.286" y1="-1.016" x2="2.54" y2="0" width="0.2032" layer="94"/>
+<text x="-3.81" y="1.4986" size="1.778" layer="95">&gt;NAME</text>
+<text x="-3.81" y="-3.302" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="2" x="5.08" y="0" visible="off" length="short" direction="pas" rot="R180"/>
+<pin name="1" x="-5.08" y="0" visible="off" length="short" direction="pas"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="RC0603JR-070RL" urn="urn:adsk.eagle:component:10872917/9" prefix="R" library_version="1">
+<description>&lt;h3&gt; RES SMD 0 OHM JUMPER 1/10W 0603&lt;/h3&gt;
+&lt;BR&gt;
+&lt;a href="http://www.yageo.com/documents/recent/PYu-RC_Group_51_RoHS_L_10.pdf"&gt; Manufacturer's datasheet&lt;/a&gt;</description>
+<gates>
+<gate name="G$1" symbol="R-US" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="RES_0603">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:10872900/3"/>
+</package3dinstances>
+<technologies>
+<technology name="">
+<attribute name="CREATED_BY" value="PCBLayout.com" constant="no"/>
+<attribute name="DIGIKEY_PART_NUMBER" value="311-0.0GRTR-ND" constant="no"/>
+<attribute name="MANUFACTURER" value="Yageo" constant="no"/>
+<attribute name="MPN" value="RC0603JR-070RL" constant="no"/>
+<attribute name="PACKAGE" value="SMD 0603" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -3462,10 +3794,12 @@ chip</description>
 <schematic_group name="0402"/>
 <schematic_group name="ETH-TP"/>
 <schematic_group name="ETH-TP2"/>
+<schematic_group name="ETH_POWER_BIAS"/>
+<schematic_group name="ETH_OSC_CIRCUIT"/>
 </groups>
 <parts>
 <part name="U1" library="473" deviceset="ATWINC1500-MR210PB1952-T" device=""/>
-<part name="U2" library="473" deviceset="ENC28J60-I/SP" device=""/>
+<part name="ETH" library="473" deviceset="ENC28J60-I/SP" device=""/>
 <part name="U3" library="473" deviceset="MSP430FR2355TDBTR" device="DBT0038A_M"/>
 <part name="LORA2" library="473" deviceset="SX1272IMLTRT" device=""/>
 <part name="D1" library="473" deviceset="5700100132F" device=""/>
@@ -3505,14 +3839,23 @@ chip</description>
 <part name="U$1" library="NC_MARKER" deviceset="NC_MARKER" device=""/>
 <part name="RDM-GND" library="microbuilder" deviceset="RESISTOR" device="0402" value="49.9 Ohm'"/>
 <part name="RDP-GND" library="microbuilder" deviceset="RESISTOR" device="0402" value="49.9 Ohm"/>
-<part name="RD-GND" library="microbuilder" deviceset="CAP_CERAMIC" device="0402" value="0.1 uF"/>
+<part name="RD-GND" library="microbuilder" deviceset="CAP_CERAMIC" device="0603" value="0.1 uF"/>
 <part name="RDM-GND1" library="microbuilder" deviceset="RESISTOR" device="0402" value="49.9 Ohm'"/>
 <part name="RDP-GND1" library="microbuilder" deviceset="RESISTOR" device="0402" value="49.9 Ohm"/>
-<part name="RD-GND1" library="microbuilder" deviceset="CAP_CERAMIC" device="0402" value="0.1 uF"/>
+<part name="RD-GND1" library="microbuilder" deviceset="CAP_CERAMIC" device="0603" value="0.1 uF"/>
 <part name="TCT-3V3" library="microbuilder" deviceset="FERRITE" device=""/>
 <part name="VCAPCLOSE" library="microbuilder" deviceset="CAP_CERAMIC" device="0805" value="10 uF"/>
 <part name="LEDG" library="microbuilder" deviceset="RESISTOR" device="0402"/>
 <part name="LEDY" library="microbuilder" deviceset="RESISTOR" device="0402"/>
+<part name="RBIAS-GNDCLOSE" library="Resistor_Capacitor" library_urn="urn:adsk.eagle:library:15122775" deviceset="RC0603JR-070RL" device="" package3d_urn="urn:adsk.eagle:package:10872900/3" value="2.32K 1%"/>
+<part name="VSSTX-VDDTX" library="microbuilder" deviceset="CAP_CERAMIC" device="0603" value="0.1 uF"/>
+<part name="VSSRX-VDDRX" library="microbuilder" deviceset="CAP_CERAMIC" device="0603" value="0.1 uF"/>
+<part name="VSS-VDD_ETH" library="microbuilder" deviceset="CAP_CERAMIC" device="0603" value="0.1 uF"/>
+<part name="VSSOSC-VDDOSC" library="microbuilder" deviceset="CAP_CERAMIC" device="0603" value="0.1 uF"/>
+<part name="VSSPLL-VDDPLL" library="microbuilder" deviceset="CAP_CERAMIC" device="0603" value="0.1 uF"/>
+<part name="U$2" library="473" deviceset="CRYSTAL" device=""/>
+<part name="OSC2-GND" library="microbuilder" deviceset="CAP_CERAMIC" device="0603" value="16 pF"/>
+<part name="OSC1-GND" library="microbuilder" deviceset="CAP_CERAMIC" device="0603" value="16 pF"/>
 </parts>
 <sheets>
 <sheet>
@@ -3523,7 +3866,7 @@ chip</description>
 <attribute name="NAME" x="-55.5244" y="-59.4614" size="2.0828" layer="95" ratio="6" rot="SR0"/>
 <attribute name="VALUE" x="-56.1594" y="-62.0014" size="2.0828" layer="96" ratio="6" rot="SR0"/>
 </instance>
-<instance part="U2" gate="A" x="210.82" y="48.26" smashed="yes">
+<instance part="ETH" gate="A" x="210.82" y="48.26" smashed="yes">
 <attribute name="NAME" x="241.6556" y="57.3786" size="2.0828" layer="95" ratio="6" rot="SR0"/>
 <attribute name="VALUE" x="241.0206" y="54.8386" size="2.0828" layer="96" ratio="6" rot="SR0"/>
 </instance>
@@ -3711,6 +4054,39 @@ chip</description>
 <attribute name="NAME" x="281.94" y="93.472" size="1.27" layer="95" font="vector"/>
 <attribute name="VALUE" x="281.94" y="88.265" size="1.27" layer="96" font="vector"/>
 </instance>
+<instance part="RBIAS-GNDCLOSE" gate="G$1" x="185.42" y="15.24" smashed="yes">
+<attribute name="NAME" x="181.61" y="16.7386" size="1.778" layer="95"/>
+<attribute name="VALUE" x="181.61" y="11.938" size="1.778" layer="96"/>
+</instance>
+<instance part="VSSTX-VDDTX" gate="G$1" x="340.36" y="25.4" smashed="yes" grouprefs="ETH_POWER_BIAS">
+<attribute name="NAME" x="342.9" y="27.94" size="1.27" layer="95" font="vector"/>
+<attribute name="VALUE" x="342.9" y="25.4" size="1.27" layer="96" font="vector"/>
+</instance>
+<instance part="VSSRX-VDDRX" gate="G$1" x="320.04" y="25.4" smashed="yes" grouprefs="ETH_POWER_BIAS">
+<attribute name="NAME" x="322.58" y="27.94" size="1.27" layer="95" font="vector"/>
+<attribute name="VALUE" x="322.58" y="25.4" size="1.27" layer="96" font="vector"/>
+</instance>
+<instance part="VSS-VDD_ETH" gate="G$1" x="320.04" y="40.64" smashed="yes" grouprefs="ETH_POWER_BIAS">
+<attribute name="NAME" x="322.58" y="43.18" size="1.27" layer="95" font="vector"/>
+<attribute name="VALUE" x="322.58" y="40.64" size="1.27" layer="96" font="vector"/>
+</instance>
+<instance part="VSSOSC-VDDOSC" gate="G$1" x="340.36" y="43.18" smashed="yes" rot="R180" grouprefs="ETH_POWER_BIAS">
+<attribute name="NAME" x="337.82" y="40.64" size="1.27" layer="95" font="vector" rot="R180"/>
+<attribute name="VALUE" x="337.82" y="43.18" size="1.27" layer="96" font="vector" rot="R180"/>
+</instance>
+<instance part="VSSPLL-VDDPLL" gate="G$1" x="365.76" y="27.94" smashed="yes" rot="R180" grouprefs="ETH_POWER_BIAS">
+<attribute name="NAME" x="363.22" y="25.4" size="1.27" layer="95" font="vector" rot="R180"/>
+<attribute name="VALUE" x="363.22" y="27.94" size="1.27" layer="96" font="vector" rot="R180"/>
+</instance>
+<instance part="U$2" gate="G$1" x="353.06" y="-2.54" smashed="yes" rot="R180" grouprefs="ETH_OSC_CIRCUIT"/>
+<instance part="OSC2-GND" gate="G$1" x="345.44" y="-17.78" smashed="yes" grouprefs="ETH_OSC_CIRCUIT">
+<attribute name="NAME" x="347.98" y="-15.24" size="1.27" layer="95" font="vector"/>
+<attribute name="VALUE" x="347.98" y="-17.78" size="1.27" layer="96" font="vector"/>
+</instance>
+<instance part="OSC1-GND" gate="G$1" x="360.68" y="-17.78" smashed="yes" grouprefs="ETH_OSC_CIRCUIT">
+<attribute name="NAME" x="363.22" y="-15.24" size="1.27" layer="95" font="vector"/>
+<attribute name="VALUE" x="363.22" y="-17.78" size="1.27" layer="96" font="vector"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -3847,6 +4223,22 @@ chip</description>
 <pinref part="VCAPCLOSE" gate="G$1" pin="P$1"/>
 <wire x1="205.74" y1="48.26" x2="203.2" y2="48.26" width="0.1524" layer="91"/>
 <label x="200.66" y="48.26" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="RBIAS-GNDCLOSE" gate="G$1" pin="1"/>
+<wire x1="180.34" y1="15.24" x2="175.26" y2="15.24" width="0.1524" layer="91"/>
+<label x="172.72" y="15.24" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="OSC2-GND" gate="G$1" pin="P$2"/>
+<wire x1="345.44" y1="-20.32" x2="345.44" y2="-25.4" width="0.1524" layer="91" grouprefs="ETH_OSC_CIRCUIT"/>
+<pinref part="OSC1-GND" gate="G$1" pin="P$2"/>
+<wire x1="345.44" y1="-25.4" x2="353.06" y2="-25.4" width="0.1524" layer="91" grouprefs="ETH_OSC_CIRCUIT"/>
+<wire x1="353.06" y1="-25.4" x2="360.68" y2="-25.4" width="0.1524" layer="91" grouprefs="ETH_OSC_CIRCUIT"/>
+<wire x1="360.68" y1="-25.4" x2="360.68" y2="-20.32" width="0.1524" layer="91" grouprefs="ETH_OSC_CIRCUIT"/>
+<wire x1="353.06" y1="-25.4" x2="353.06" y2="-30.48" width="0.1524" layer="91" grouprefs="ETH_OSC_CIRCUIT"/>
+<junction x="353.06" y="-25.4" grouprefs="ETH_OSC_CIRCUIT"/>
+<label x="353.06" y="-30.48" size="1.778" layer="95" grouprefs="ETH_OSC_CIRCUIT"/>
 </segment>
 </net>
 <net name="RFI" class="0">
@@ -4106,7 +4498,7 @@ chip</description>
 <label x="254" y="251.46" size="1.778" layer="95" grouprefs="ETH-TP"/>
 </segment>
 <segment>
-<pinref part="U2" gate="A" pin="TPIN+"/>
+<pinref part="ETH" gate="A" pin="TPIN+"/>
 <wire x1="213.36" y1="17.78" x2="205.74" y2="17.78" width="0.1524" layer="91"/>
 <label x="205.74" y="17.78" size="1.778" layer="95"/>
 </segment>
@@ -4123,7 +4515,7 @@ chip</description>
 <label x="254" y="231.14" size="1.778" layer="95" grouprefs="ETH-TP"/>
 </segment>
 <segment>
-<pinref part="U2" gate="A" pin="TPIN-"/>
+<pinref part="ETH" gate="A" pin="TPIN-"/>
 <wire x1="213.36" y1="20.32" x2="205.74" y2="20.32" width="0.1524" layer="91"/>
 <label x="205.74" y="20.32" size="1.778" layer="95"/>
 </segment>
@@ -4150,7 +4542,7 @@ chip</description>
 <pinref part="RDP-GND1" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<pinref part="U2" gate="A" pin="TPOUT+"/>
+<pinref part="ETH" gate="A" pin="TPOUT+"/>
 <wire x1="279.4" y1="20.32" x2="287.02" y2="20.32" width="0.1524" layer="91"/>
 <label x="281.94" y="20.32" size="1.778" layer="95"/>
 </segment>
@@ -4167,7 +4559,7 @@ chip</description>
 <pinref part="RDM-GND1" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<pinref part="U2" gate="A" pin="TPOUT-"/>
+<pinref part="ETH" gate="A" pin="TPOUT-"/>
 <wire x1="279.4" y1="17.78" x2="287.02" y2="17.78" width="0.1524" layer="91"/>
 <label x="281.94" y="17.78" size="1.778" layer="95"/>
 </segment>
@@ -4211,7 +4603,7 @@ chip</description>
 </net>
 <net name="N$4" class="0">
 <segment>
-<pinref part="U2" gate="A" pin="VCAP"/>
+<pinref part="ETH" gate="A" pin="VCAP"/>
 <pinref part="VCAPCLOSE" gate="G$1" pin="P$2"/>
 </segment>
 </net>
@@ -4229,9 +4621,9 @@ chip</description>
 <label x="271.78" y="88.9" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U2" gate="A" pin="LEDA"/>
-<wire x1="279.4" y1="48.26" x2="287.02" y2="48.26" width="0.1524" layer="91"/>
-<label x="281.94" y="48.26" size="1.778" layer="95"/>
+<pinref part="ETH" gate="A" pin="LEDA"/>
+<wire x1="279.4" y1="45.72" x2="287.02" y2="45.72" width="0.1524" layer="91"/>
+<label x="281.94" y="45.72" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$7" class="0">
@@ -4250,9 +4642,166 @@ chip</description>
 </net>
 <net name="LEDYP" class="0">
 <segment>
-<pinref part="U2" gate="A" pin="LEDB"/>
-<wire x1="279.4" y1="45.72" x2="287.02" y2="45.72" width="0.1524" layer="91"/>
-<label x="281.94" y="45.72" size="1.778" layer="95"/>
+<pinref part="ETH" gate="A" pin="LEDB"/>
+<wire x1="279.4" y1="43.18" x2="287.02" y2="43.18" width="0.1524" layer="91"/>
+<label x="281.94" y="43.18" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$10" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="RBIAS"/>
+<pinref part="RBIAS-GNDCLOSE" gate="G$1" pin="2"/>
+<wire x1="190.5" y1="15.24" x2="213.36" y2="15.24" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="VDDTX_ETH" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="VDDTX"/>
+<wire x1="279.4" y1="15.24" x2="287.02" y2="15.24" width="0.1524" layer="91"/>
+<label x="281.94" y="15.24" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="VSSTX-VDDTX" gate="G$1" pin="P$2"/>
+<wire x1="340.36" y1="22.86" x2="345.44" y2="22.86" width="0.1524" layer="91" grouprefs="ETH_POWER_BIAS"/>
+<label x="342.9" y="22.86" size="1.778" layer="95" grouprefs="ETH_POWER_BIAS"/>
+</segment>
+</net>
+<net name="VSSTX_ETH" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="VSSTX"/>
+<wire x1="279.4" y1="22.86" x2="287.02" y2="22.86" width="0.1524" layer="91"/>
+<label x="281.94" y="22.86" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="VSSTX-VDDTX" gate="G$1" pin="P$1"/>
+<wire x1="340.36" y1="30.48" x2="345.44" y2="30.48" width="0.1524" layer="91" grouprefs="ETH_POWER_BIAS"/>
+<label x="340.36" y="30.48" size="1.778" layer="95" grouprefs="ETH_POWER_BIAS"/>
+</segment>
+</net>
+<net name="VDDRX_ETH" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="VDDRX"/>
+<wire x1="279.4" y1="25.4" x2="287.02" y2="25.4" width="0.1524" layer="91"/>
+<label x="281.94" y="25.4" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="VSSRX-VDDRX" gate="G$1" pin="P$2"/>
+<wire x1="320.04" y1="22.86" x2="325.12" y2="22.86" width="0.1524" layer="91" grouprefs="ETH_POWER_BIAS"/>
+<label x="322.58" y="22.86" size="1.778" layer="95" grouprefs="ETH_POWER_BIAS"/>
+</segment>
+</net>
+<net name="VDDPLL_ETH" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="VDDPLL"/>
+<wire x1="279.4" y1="27.94" x2="287.02" y2="27.94" width="0.1524" layer="91"/>
+<label x="281.94" y="27.94" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="VSSPLL-VDDPLL" gate="G$1" pin="P$1"/>
+<wire x1="365.76" y1="22.86" x2="370.84" y2="22.86" width="0.1524" layer="91" grouprefs="ETH_POWER_BIAS"/>
+<label x="368.3" y="22.86" size="1.778" layer="95" grouprefs="ETH_POWER_BIAS"/>
+</segment>
+</net>
+<net name="VSSPLL_ETH" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="VSSPLL"/>
+<wire x1="279.4" y1="30.48" x2="287.02" y2="30.48" width="0.1524" layer="91"/>
+<label x="281.94" y="30.48" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="VSSPLL-VDDPLL" gate="G$1" pin="P$2"/>
+<wire x1="365.76" y1="30.48" x2="370.84" y2="30.48" width="0.1524" layer="91" grouprefs="ETH_POWER_BIAS"/>
+<label x="365.76" y="30.48" size="1.778" layer="95" grouprefs="ETH_POWER_BIAS"/>
+</segment>
+</net>
+<net name="VSSOSC_ETH" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="VSSOSC"/>
+<wire x1="279.4" y1="33.02" x2="287.02" y2="33.02" width="0.1524" layer="91"/>
+<label x="281.94" y="33.02" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="VSSOSC-VDDOSC" gate="G$1" pin="P$2"/>
+<wire x1="340.36" y1="45.72" x2="345.44" y2="45.72" width="0.1524" layer="91" grouprefs="ETH_POWER_BIAS"/>
+<label x="340.36" y="45.72" size="1.778" layer="95" grouprefs="ETH_POWER_BIAS"/>
+</segment>
+</net>
+<net name="VDDOSC_ETH" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="VDDOSC"/>
+<wire x1="279.4" y1="40.64" x2="287.02" y2="40.64" width="0.1524" layer="91"/>
+<label x="281.94" y="40.64" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="VSSOSC-VDDOSC" gate="G$1" pin="P$1"/>
+<wire x1="340.36" y1="38.1" x2="345.44" y2="38.1" width="0.1524" layer="91" grouprefs="ETH_POWER_BIAS"/>
+<label x="342.9" y="38.1" size="1.778" layer="95" grouprefs="ETH_POWER_BIAS"/>
+</segment>
+</net>
+<net name="VSSRX_ETH" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="VSSRX"/>
+<wire x1="213.36" y1="22.86" x2="205.74" y2="22.86" width="0.1524" layer="91"/>
+<label x="195.58" y="22.86" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="VSSRX-VDDRX" gate="G$1" pin="P$1"/>
+<wire x1="320.04" y1="30.48" x2="325.12" y2="30.48" width="0.1524" layer="91" grouprefs="ETH_POWER_BIAS"/>
+<label x="320.04" y="30.48" size="1.778" layer="95" grouprefs="ETH_POWER_BIAS"/>
+</segment>
+</net>
+<net name="VSS_ETH" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="VSS"/>
+<wire x1="213.36" y1="45.72" x2="205.74" y2="45.72" width="0.1524" layer="91"/>
+<label x="195.58" y="45.72" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="VSS-VDD_ETH" gate="G$1" pin="P$1"/>
+<wire x1="320.04" y1="45.72" x2="325.12" y2="45.72" width="0.1524" layer="91" grouprefs="ETH_POWER_BIAS"/>
+<label x="322.58" y="45.72" size="1.778" layer="95" grouprefs="ETH_POWER_BIAS"/>
+</segment>
+</net>
+<net name="VDD_ETH" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="VDD"/>
+<wire x1="279.4" y1="48.26" x2="287.02" y2="48.26" width="0.1524" layer="91"/>
+<label x="281.94" y="48.26" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="VSS-VDD_ETH" gate="G$1" pin="P$2"/>
+<wire x1="320.04" y1="38.1" x2="325.12" y2="38.1" width="0.1524" layer="91" grouprefs="ETH_POWER_BIAS"/>
+<label x="322.58" y="38.1" size="1.778" layer="95" grouprefs="ETH_POWER_BIAS"/>
+</segment>
+</net>
+<net name="OSC1_ETH" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="OSC1"/>
+<wire x1="279.4" y1="35.56" x2="287.02" y2="35.56" width="0.1524" layer="91"/>
+<label x="281.94" y="35.56" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="P$1"/>
+<wire x1="360.68" y1="-2.54" x2="368.3" y2="-2.54" width="0.1524" layer="91" grouprefs="ETH_OSC_CIRCUIT"/>
+<label x="365.76" y="-2.54" size="1.778" layer="95" grouprefs="ETH_OSC_CIRCUIT"/>
+<wire x1="360.68" y1="-2.54" x2="360.68" y2="-12.7" width="0.1524" layer="91" grouprefs="ETH_OSC_CIRCUIT"/>
+<junction x="360.68" y="-2.54" grouprefs="ETH_OSC_CIRCUIT"/>
+<pinref part="OSC1-GND" gate="G$1" pin="P$1"/>
+</segment>
+</net>
+<net name="OSC2_ETH" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="OSC2"/>
+<wire x1="279.4" y1="38.1" x2="287.02" y2="38.1" width="0.1524" layer="91"/>
+<label x="281.94" y="38.1" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="P$2"/>
+<wire x1="345.44" y1="-2.54" x2="340.36" y2="-2.54" width="0.1524" layer="91" grouprefs="ETH_OSC_CIRCUIT"/>
+<label x="330.2" y="-2.54" size="1.778" layer="95" grouprefs="ETH_OSC_CIRCUIT"/>
+<wire x1="345.44" y1="-2.54" x2="345.44" y2="-12.7" width="0.1524" layer="91" grouprefs="ETH_OSC_CIRCUIT"/>
+<junction x="345.44" y="-2.54" grouprefs="ETH_OSC_CIRCUIT"/>
+<pinref part="OSC2-GND" gate="G$1" pin="P$1"/>
 </segment>
 </net>
 </nets>
@@ -4261,6 +4810,21 @@ chip</description>
 </schematic>
 </drawing>
 <compatibility>
+<note version="8.2" severity="warning">
+Since Version 8.2, EAGLE supports online libraries. The ids
+of those online libraries will not be understood (or retained)
+with this version.
+</note>
+<note version="8.3" severity="warning">
+Since Version 8.3, EAGLE supports URNs for individual library
+assets (packages, symbols, and devices). The URNs of those assets
+will not be understood (or retained) with this version.
+</note>
+<note version="8.3" severity="warning">
+Since Version 8.3, EAGLE supports the association of 3D packages
+with devices in libraries, schematics, and board files. Those 3D
+packages will not be understood (or retained) with this version.
+</note>
 <note version="9.5" severity="warning">
 Since Version 9.5, EAGLE supports persistent groups with
 schematics, and board files. Those persistent groups
