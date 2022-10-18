@@ -172,16 +172,12 @@
 </layers>
 <board>
 <plain>
-<wire x1="0" y1="34.29" x2="0" y2="5.08" width="0" layer="20"/>
-<wire x1="46.99" y1="48.26" x2="91.44" y2="48.26" width="0" layer="20"/>
-<wire x1="91.44" y1="48.26" x2="91.44" y2="0" width="0" layer="20"/>
-<wire x1="91.44" y1="0" x2="29.21" y2="0" width="0" layer="20"/>
+<wire x1="0" y1="66.04" x2="0" y2="5.08" width="0" layer="20"/>
+<wire x1="109.22" y1="66.04" x2="109.22" y2="0" width="0" layer="20"/>
+<wire x1="109.22" y1="0" x2="29.21" y2="0" width="0" layer="20"/>
 <wire x1="29.21" y1="0" x2="24.13" y2="5.08" width="0" layer="20"/>
 <wire x1="24.13" y1="5.08" x2="0" y2="5.08" width="0" layer="20"/>
-<wire x1="0" y1="34.29" x2="16.51" y2="34.29" width="0" layer="20"/>
-<wire x1="16.51" y1="34.29" x2="22.86" y2="40.64" width="0" layer="20"/>
-<wire x1="22.86" y1="40.64" x2="39.37" y2="40.64" width="0" layer="20"/>
-<wire x1="39.37" y1="40.64" x2="46.99" y2="48.26" width="0" layer="20"/>
+<wire x1="0" y1="66.04" x2="109.22" y2="66.04" width="0" layer="20"/>
 </plain>
 <libraries>
 <library name="473">
@@ -1421,7 +1417,7 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <class number="0" name="default" width="0" drill="0">
 </class>
 </classes>
-<designrules name="default">
+<designrules name="default *">
 <description language="de">&lt;b&gt;EAGLE Design Rules&lt;/b&gt;
 &lt;p&gt;
 Die Standard-Design-Rules sind so gewählt, dass sie für 
@@ -1436,7 +1432,7 @@ a wide range of applications. Your particular design
 may have different requirements, so please make the
 necessary adjustments and save your customized
 design rules under a new name.</description>
-<param name="layerSetup" value="(1*16)"/>
+<param name="layerSetup" value="(1+2*15+16)"/>
 <param name="mtCopper" value="0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm"/>
 <param name="mtIsolate" value="1.5mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm"/>
 <param name="mdWireWire" value="6mil"/>
@@ -1604,16 +1600,20 @@ design rules under a new name.</description>
 <param name="cfChangeDir" value="25"/>
 </pass>
 </autorouter>
+<groups>
+<board_group name="ANT1"/>
+<board_group name="ANT2"/>
+</groups>
 <elements>
-<element name="U1" library="473" package="ATWINC15X0-MR210_MCH" value="ATWINC1500-MR210PB1952-T" x="80.01" y="38.1" smashed="yes" rot="R270">
-<attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="80.01" y="38.1" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_1" value="ATWINC1500-MR210PB1952-TTR-ND" x="80.01" y="38.1" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_2" value="ATWINC1500-MR210PB1952-TCT-ND" x="80.01" y="38.1" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_3" value="ATWINC1500-MR210PB1952-TDKR-ND" x="80.01" y="38.1" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="ATWINC1500-MR210PB1952-T" x="80.01" y="38.1" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="MFR_NAME" value="Microchip" x="80.01" y="38.1" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="NAME" x="79.375" y="41.3766" size="1.27" layer="27" ratio="6" rot="SR270"/>
-<attribute name="VALUE" x="79.375" y="39.8272" size="1.27" layer="21" ratio="6" rot="SR270"/>
+<element name="U1" library="473" package="ATWINC15X0-MR210_MCH" value="ATWINC1500-MR210PB1952-T" x="95.25" y="57.15" smashed="yes" rot="R270">
+<attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="95.25" y="57.15" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_1" value="ATWINC1500-MR210PB1952-TTR-ND" x="95.25" y="57.15" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_2" value="ATWINC1500-MR210PB1952-TCT-ND" x="95.25" y="57.15" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_3" value="ATWINC1500-MR210PB1952-TDKR-ND" x="95.25" y="57.15" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="ATWINC1500-MR210PB1952-T" x="95.25" y="57.15" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MFR_NAME" value="Microchip" x="95.25" y="57.15" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="NAME" x="94.615" y="60.4266" size="1.27" layer="27" ratio="6" rot="SR270"/>
+<attribute name="VALUE" x="94.615" y="58.8772" size="1.27" layer="21" ratio="6" rot="SR270"/>
 </element>
 <element name="ETH" library="473" package="SPDIP28_300MC_MCH" value="ENC28J60-I/SP" x="30.48" y="36.83" smashed="yes">
 <attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="30.48" y="36.83" size="1.778" layer="27" display="off"/>
@@ -1622,37 +1622,37 @@ design rules under a new name.</description>
 <attribute name="NAME" x="31.0134" y="19.685" size="1.27" layer="27" ratio="6" rot="SR0"/>
 <attribute name="VALUE" x="34.925" y="22.4028" size="1.27" layer="21" ratio="6" rot="SR90"/>
 </element>
-<element name="U3" library="473" package="DBT0038A_M" value="MSP430FR2355TDBTRDBT0038A_M" x="53.34" y="29.21" smashed="yes">
-<attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="53.34" y="29.21" size="1.778" layer="27" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_1" value="296-50259-1-ND" x="53.34" y="29.21" size="1.778" layer="27" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_2" value="296-50259-2-ND" x="53.34" y="29.21" size="1.778" layer="27" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_3" value="296-50259-6-ND" x="53.34" y="29.21" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="MSP430FR2355TDBTR" x="53.34" y="29.21" size="1.778" layer="27" display="off"/>
-<attribute name="MFR_NAME" value="Texas Instruments" x="53.34" y="29.21" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="47.5234" y="28.575" size="1.27" layer="27" ratio="6" rot="SR0"/>
-<attribute name="REFDES" value="RefDes" x="53.34" y="29.21" size="1.778" layer="27" display="off"/>
-<attribute name="TYPE" value="TYPE" x="53.34" y="29.21" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="45.2628" y="20.955" size="1.27" layer="21" ratio="6" rot="SR0"/>
+<element name="U3" library="473" package="DBT0038A_M" value="MSP430FR2355TDBTRDBT0038A_M" x="52.07" y="52.07" smashed="yes">
+<attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="52.07" y="52.07" size="1.778" layer="27" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_1" value="296-50259-1-ND" x="52.07" y="52.07" size="1.778" layer="27" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_2" value="296-50259-2-ND" x="52.07" y="52.07" size="1.778" layer="27" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_3" value="296-50259-6-ND" x="52.07" y="52.07" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="MSP430FR2355TDBTR" x="52.07" y="52.07" size="1.778" layer="27" display="off"/>
+<attribute name="MFR_NAME" value="Texas Instruments" x="52.07" y="52.07" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="46.2534" y="51.435" size="1.27" layer="27" ratio="6" rot="SR0"/>
+<attribute name="REFDES" value="RefDes" x="52.07" y="52.07" size="1.778" layer="27" display="off"/>
+<attribute name="TYPE" value="TYPE" x="52.07" y="52.07" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="43.9928" y="43.815" size="1.27" layer="21" ratio="6" rot="SR0"/>
 </element>
-<element name="LORA2" library="473" package="QFN28_6X6_SEM" value="SX1272IMLTRT" x="64.77" y="7.62" smashed="yes">
-<attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="64.77" y="7.62" size="1.778" layer="27" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_1" value="SX1272IMLTRTTR-ND" x="64.77" y="7.62" size="1.778" layer="27" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_2" value="SX1272IMLTRTCT-ND" x="64.77" y="7.62" size="1.778" layer="27" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_3" value="SX1272IMLTRTDKR-ND" x="64.77" y="7.62" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="SX1272IMLTRT" x="64.77" y="7.62" size="1.778" layer="27" display="off"/>
-<attribute name="MFR_NAME" value="Semtech" x="64.77" y="7.62" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="58.9534" y="5.715" size="1.27" layer="27" ratio="6" rot="SR0"/>
-<attribute name="VALUE" x="69.3928" y="8.255" size="1.27" layer="21" ratio="6" rot="SR0"/>
+<element name="LORA2" library="473" package="QFN28_6X6_SEM" value="SX1272IMLTRT" x="87.63" y="5.08" smashed="yes">
+<attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="87.63" y="5.08" size="1.778" layer="27" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_1" value="SX1272IMLTRTTR-ND" x="87.63" y="5.08" size="1.778" layer="27" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_2" value="SX1272IMLTRTCT-ND" x="87.63" y="5.08" size="1.778" layer="27" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_3" value="SX1272IMLTRTDKR-ND" x="87.63" y="5.08" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="SX1272IMLTRT" x="87.63" y="5.08" size="1.778" layer="27" display="off"/>
+<attribute name="MFR_NAME" value="Semtech" x="87.63" y="5.08" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="81.8134" y="3.175" size="1.27" layer="27" ratio="6" rot="SR0"/>
+<attribute name="VALUE" x="92.2528" y="5.715" size="1.27" layer="21" ratio="6" rot="SR0"/>
 </element>
-<element name="LORA1" library="473" package="QFN28_6X6_SEM" value="SX1272IMLTRT" x="64.77" y="20.32" smashed="yes">
-<attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="64.77" y="20.32" size="1.778" layer="27" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_1" value="SX1272IMLTRTTR-ND" x="64.77" y="20.32" size="1.778" layer="27" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_2" value="SX1272IMLTRTCT-ND" x="64.77" y="20.32" size="1.778" layer="27" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_3" value="SX1272IMLTRTDKR-ND" x="64.77" y="20.32" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="SX1272IMLTRT" x="64.77" y="20.32" size="1.778" layer="27" display="off"/>
-<attribute name="MFR_NAME" value="Semtech" x="64.77" y="20.32" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="56.4134" y="19.685" size="1.27" layer="27" ratio="6" rot="SR0"/>
-<attribute name="VALUE" x="69.3928" y="19.685" size="1.27" layer="21" ratio="6" rot="SR0"/>
+<element name="LORA1" library="473" package="QFN28_6X6_SEM" value="SX1272IMLTRT" x="87.63" y="24.13" smashed="yes">
+<attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="87.63" y="24.13" size="1.778" layer="27" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_1" value="SX1272IMLTRTTR-ND" x="87.63" y="24.13" size="1.778" layer="27" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_2" value="SX1272IMLTRTCT-ND" x="87.63" y="24.13" size="1.778" layer="27" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_3" value="SX1272IMLTRTDKR-ND" x="87.63" y="24.13" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="SX1272IMLTRT" x="87.63" y="24.13" size="1.778" layer="27" display="off"/>
+<attribute name="MFR_NAME" value="Semtech" x="87.63" y="24.13" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="79.2734" y="23.495" size="1.27" layer="27" ratio="6" rot="SR0"/>
+<attribute name="VALUE" x="92.2528" y="23.495" size="1.27" layer="21" ratio="6" rot="SR0"/>
 </element>
 <element name="U6" library="473" package="ARJM11C7-114-BA-EW2_ABR" value="ARJM11C7-114-BA-EW2" x="17.78" y="11.43" smashed="yes" rot="R90">
 <attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="17.78" y="11.43" size="1.778" layer="27" rot="R90" display="off"/>
@@ -1663,36 +1663,36 @@ design rules under a new name.</description>
 <attribute name="NAME" x="20.955" y="13.8684" size="1.27" layer="27" ratio="6" rot="SR90"/>
 <attribute name="VALUE" x="20.955" y="15.4178" size="1.27" layer="21" ratio="6" rot="SR90"/>
 </element>
-<element name="J1" library="473" package="CONN3_1909763_TEC" value="1909763-1" x="85.09" y="20.32" smashed="yes">
-<attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="85.09" y="20.32" size="1.778" layer="27" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_1" value="A118077CT-ND" x="85.09" y="20.32" size="1.778" layer="27" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_2" value="A118077DKR-ND" x="85.09" y="20.32" size="1.778" layer="27" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_3" value="A118077TR-ND" x="85.09" y="20.32" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="1909763-1" x="85.09" y="20.32" size="1.778" layer="27" display="off"/>
-<attribute name="MFR_NAME" value="TE Connectivity" x="85.09" y="20.32" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="81.8134" y="19.685" size="1.27" layer="27" ratio="6" rot="SR0"/>
-<attribute name="TYPE" value="Jack" x="85.09" y="20.32" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="83.3628" y="19.685" size="1.27" layer="21" ratio="6" rot="SR0"/>
+<element name="J1" library="473" package="CONN3_1909763_TEC" value="1909763-1" x="101.6" y="29.21" smashed="yes" rot="R270" grouprefs="ANT1">
+<attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="101.6" y="29.21" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_1" value="A118077CT-ND" x="101.6" y="29.21" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_2" value="A118077DKR-ND" x="101.6" y="29.21" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_3" value="A118077TR-ND" x="101.6" y="29.21" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="1909763-1" x="101.6" y="29.21" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MFR_NAME" value="TE Connectivity" x="101.6" y="29.21" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="NAME" x="100.965" y="32.4866" size="1.27" layer="27" ratio="6" rot="SR270"/>
+<attribute name="TYPE" value="Jack" x="101.6" y="29.21" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="VALUE" x="100.965" y="30.9372" size="1.27" layer="21" ratio="6" rot="SR270"/>
 </element>
-<element name="RFI-RFO" library="microbuilder" package="0402" value="1.5pF 50v Cer" x="-8.89" y="-12.7" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-12.8905" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-13.335" size="0.4064" layer="27" ratio="10"/>
+<element name="RFI-RFO" library="microbuilder" package="0402" value="1.5pF 50v Cer" x="88.9" y="30.48" smashed="yes" grouprefs="ANT1">
+<attribute name="NAME" x="90.297" y="30.2895" size="0.8128" layer="25" ratio="18"/>
+<attribute name="VALUE" x="90.297" y="29.845" size="0.4064" layer="27" ratio="10"/>
 </element>
-<element name="RFI-GND" library="microbuilder" package="_0402" value="5.6 nH" x="-8.89" y="-16.51" smashed="yes">
-<attribute name="NAME" x="-9.8425" y="-15.7161" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-9.8425" y="-17.8436" size="0.4064" layer="27" ratio="10"/>
+<element name="RFI-GND" library="microbuilder" package="_0402" value="5.6 nH" x="87.63" y="29.21" smashed="yes" rot="R180" grouprefs="ANT1">
+<attribute name="NAME" x="88.5825" y="28.4161" size="0.8128" layer="25" ratio="18" rot="R180"/>
+<attribute name="VALUE" x="88.5825" y="30.5436" size="0.4064" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="RFO-VR_PA" library="microbuilder" package="_0402" value="33nH" x="-8.89" y="-20.32" smashed="yes">
-<attribute name="NAME" x="-9.8425" y="-19.5261" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-9.8425" y="-21.6536" size="0.4064" layer="27" ratio="10"/>
+<element name="RFO-VR_PA" library="microbuilder" package="_0402" value="33nH" x="88.9" y="33.02" smashed="yes" grouprefs="ANT1">
+<attribute name="NAME" x="87.9475" y="33.8139" size="0.8128" layer="25" ratio="18"/>
+<attribute name="VALUE" x="87.9475" y="31.6864" size="0.4064" layer="27" ratio="10"/>
 </element>
-<element name="VR_PA-PA_BOOST" library="microbuilder" package="_0402" value="33nH" x="-8.89" y="-24.13" smashed="yes">
-<attribute name="NAME" x="-9.8425" y="-23.3361" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-9.8425" y="-25.4636" size="0.4064" layer="27" ratio="10"/>
+<element name="VR_PA-PA_BOOST" library="microbuilder" package="_0402" value="33nH" x="87.63" y="31.75" smashed="yes" grouprefs="ANT1">
+<attribute name="NAME" x="86.6775" y="32.5439" size="0.8128" layer="25" ratio="18"/>
+<attribute name="VALUE" x="86.6775" y="30.4164" size="0.4064" layer="27" ratio="10"/>
 </element>
-<element name="RFO-33PF" library="microbuilder" package="_0402" value="10nH" x="-8.89" y="-27.94" smashed="yes">
-<attribute name="NAME" x="-9.8425" y="-27.1461" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-9.8425" y="-29.2736" size="0.4064" layer="27" ratio="10"/>
+<element name="RFO-33PF" library="microbuilder" package="_0402" value="10nH" x="91.44" y="33.02" smashed="yes" rot="R180" grouprefs="ANT1">
+<attribute name="NAME" x="92.3925" y="32.2261" size="0.8128" layer="25" ratio="18" rot="R180"/>
+<attribute name="VALUE" x="92.3925" y="34.3536" size="0.4064" layer="27" ratio="10" rot="R180"/>
 </element>
 <element name="L2" library="microbuilder" package="_0402" value="" x="-8.89" y="-31.75" smashed="yes">
 <attribute name="NAME" x="-9.8425" y="-30.9561" size="0.8128" layer="25" ratio="18"/>
@@ -1706,84 +1706,84 @@ design rules under a new name.</description>
 <attribute name="NAME" x="-7.493" y="-37.0205" size="0.8128" layer="25" ratio="18"/>
 <attribute name="VALUE" x="-7.493" y="-37.465" size="0.4064" layer="27" ratio="10"/>
 </element>
-<element name="10NH-ANT1" library="microbuilder" package="0402" value="" x="-8.89" y="-39.37" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-39.5605" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-40.005" size="0.4064" layer="27" ratio="10"/>
+<element name="10NH-ANT1" library="microbuilder" package="0402" value="" x="92.71" y="31.75" smashed="yes" rot="R180" grouprefs="ANT1">
+<attribute name="NAME" x="91.313" y="31.9405" size="0.8128" layer="25" ratio="18" rot="R180"/>
+<attribute name="VALUE" x="91.313" y="32.385" size="0.4064" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="ANT1-GND" library="microbuilder" package="0402" value="4.7pF" x="-8.89" y="-41.91" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-42.1005" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-42.545" size="0.4064" layer="27" ratio="10"/>
+<element name="ANT1-GND" library="microbuilder" package="0402" value="4.7pF" x="95.25" y="31.75" smashed="yes" rot="R270" grouprefs="ANT1">
+<attribute name="NAME" x="95.0595" y="30.353" size="0.8128" layer="25" ratio="18" rot="R270"/>
+<attribute name="VALUE" x="94.615" y="30.353" size="0.4064" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="ANT1-ANT2\" library="microbuilder" package="_0402" value="8.2nH" x="-8.89" y="-45.72" smashed="yes">
-<attribute name="NAME" x="-9.8425" y="-44.9261" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-9.8425" y="-47.0536" size="0.4064" layer="27" ratio="10"/>
+<element name="ANT1-ANT2\" library="microbuilder" package="_0402" value="8.2nH" x="95.25" y="29.21" smashed="yes" rot="R180" grouprefs="ANT1">
+<attribute name="NAME" x="96.2025" y="28.4161" size="0.8128" layer="25" ratio="18" rot="R180"/>
+<attribute name="VALUE" x="96.2025" y="30.5436" size="0.4064" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="ANT2-GND" library="microbuilder" package="0402" value="4.7pF" x="-8.89" y="-49.53" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-49.7205" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-50.165" size="0.4064" layer="27" ratio="10"/>
+<element name="ANT2-GND" library="microbuilder" package="0402" value="4.7pF" x="96.52" y="31.75" smashed="yes" rot="R270" grouprefs="ANT1">
+<attribute name="NAME" x="96.3295" y="30.353" size="0.8128" layer="25" ratio="18" rot="R270"/>
+<attribute name="VALUE" x="95.885" y="30.353" size="0.4064" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="ANT2-ANT3" library="microbuilder" package="_0402" value="7.5nH" x="-8.89" y="-53.34" smashed="yes">
-<attribute name="NAME" x="-9.8425" y="-52.5461" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-9.8425" y="-54.6736" size="0.4064" layer="27" ratio="10"/>
+<element name="ANT2-ANT3" library="microbuilder" package="_0402" value="7.5nH" x="97.79" y="29.21" smashed="yes" rot="R180" grouprefs="ANT1">
+<attribute name="NAME" x="98.7425" y="28.4161" size="0.8128" layer="25" ratio="18" rot="R180"/>
+<attribute name="VALUE" x="98.7425" y="30.5436" size="0.4064" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="ANT2-GND1" library="microbuilder" package="0402" value="4.7pF" x="-8.89" y="-57.15" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-57.3405" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-57.785" size="0.4064" layer="27" ratio="10"/>
+<element name="ANT2-GND1" library="microbuilder" package="0402" value="4.7pF" x="99.06" y="31.75" smashed="yes" rot="R270" grouprefs="ANT1">
+<attribute name="NAME" x="112.8395" y="8.763" size="0.8128" layer="25" ratio="18" rot="R270"/>
+<attribute name="VALUE" x="98.425" y="30.353" size="0.4064" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="J3" library="473" package="CONN3_1909763_TEC" value="1909763-1" x="8.89" y="-66.04" smashed="yes">
-<attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="8.89" y="-66.04" size="1.778" layer="27" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_1" value="A118077CT-ND" x="8.89" y="-66.04" size="1.778" layer="27" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_2" value="A118077DKR-ND" x="8.89" y="-66.04" size="1.778" layer="27" display="off"/>
-<attribute name="DIGI-KEY_PART_NUMBER_3" value="A118077TR-ND" x="8.89" y="-66.04" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="1909763-1" x="8.89" y="-66.04" size="1.778" layer="27" display="off"/>
-<attribute name="MFR_NAME" value="TE Connectivity" x="8.89" y="-66.04" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="5.6134" y="-66.675" size="1.27" layer="27" ratio="6" rot="SR0"/>
-<attribute name="TYPE" value="Jack" x="8.89" y="-66.04" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="7.1628" y="-66.675" size="1.27" layer="21" ratio="6" rot="SR0"/>
+<element name="J3" library="473" package="CONN3_1909763_TEC" value="1909763-1" x="101.6" y="10.16" smashed="yes" rot="R270" grouprefs="ANT2">
+<attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="101.6" y="10.16" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_1" value="A118077CT-ND" x="101.6" y="10.16" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_2" value="A118077DKR-ND" x="101.6" y="10.16" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="DIGI-KEY_PART_NUMBER_3" value="A118077TR-ND" x="101.6" y="10.16" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="1909763-1" x="101.6" y="10.16" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MFR_NAME" value="TE Connectivity" x="101.6" y="10.16" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="NAME" x="100.965" y="13.4366" size="1.27" layer="27" ratio="6" rot="SR270"/>
+<attribute name="TYPE" value="Jack" x="101.6" y="10.16" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="VALUE" x="100.965" y="11.8872" size="1.27" layer="21" ratio="6" rot="SR270"/>
 </element>
-<element name="RFI-RFO1" library="microbuilder" package="0402" value="1.5pF 50v Cer" x="-8.89" y="-90.17" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-90.3605" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-90.805" size="0.4064" layer="27" ratio="10"/>
+<element name="RFI-RFO1" library="microbuilder" package="0402" value="1.5pF 50v Cer" x="88.9" y="11.43" smashed="yes" grouprefs="ANT2">
+<attribute name="NAME" x="90.297" y="11.2395" size="0.8128" layer="25" ratio="18"/>
+<attribute name="VALUE" x="90.297" y="10.795" size="0.4064" layer="27" ratio="10"/>
 </element>
-<element name="RFI-GND1" library="microbuilder" package="_0402" value="5.6 nH" x="6.35" y="-83.82" smashed="yes">
-<attribute name="NAME" x="5.3975" y="-83.0261" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="5.3975" y="-85.1536" size="0.4064" layer="27" ratio="10"/>
+<element name="RFI-GND1" library="microbuilder" package="_0402" value="5.6 nH" x="87.63" y="10.16" smashed="yes" grouprefs="ANT2">
+<attribute name="NAME" x="86.6775" y="10.9539" size="0.8128" layer="25" ratio="18"/>
+<attribute name="VALUE" x="86.6775" y="8.8264" size="0.4064" layer="27" ratio="10"/>
 </element>
-<element name="RFO-VR_PA1" library="microbuilder" package="_0402" value="33nH" x="12.7" y="-80.01" smashed="yes">
-<attribute name="NAME" x="11.7475" y="-79.2161" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="11.7475" y="-81.3436" size="0.4064" layer="27" ratio="10"/>
+<element name="RFO-VR_PA1" library="microbuilder" package="_0402" value="33nH" x="88.9" y="13.97" smashed="yes" grouprefs="ANT2">
+<attribute name="NAME" x="87.9475" y="14.7639" size="0.8128" layer="25" ratio="18"/>
+<attribute name="VALUE" x="87.9475" y="12.6364" size="0.4064" layer="27" ratio="10"/>
 </element>
-<element name="VR_PA-PA_BOOST1" library="microbuilder" package="_0402" value="33nH" x="-8.89" y="-80.01" smashed="yes">
-<attribute name="NAME" x="-9.8425" y="-79.2161" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-9.8425" y="-81.3436" size="0.4064" layer="27" ratio="10"/>
+<element name="VR_PA-PA_BOOST1" library="microbuilder" package="_0402" value="33nH" x="87.63" y="12.7" smashed="yes" grouprefs="ANT2">
+<attribute name="NAME" x="86.6775" y="13.4939" size="0.8128" layer="25" ratio="18"/>
+<attribute name="VALUE" x="86.6775" y="11.3664" size="0.4064" layer="27" ratio="10"/>
 </element>
-<element name="RFO-33PF1" library="microbuilder" package="_0402" value="10nH" x="-1.27" y="-83.82" smashed="yes">
-<attribute name="NAME" x="-2.2225" y="-83.0261" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-2.2225" y="-85.1536" size="0.4064" layer="27" ratio="10"/>
+<element name="RFO-33PF1" library="microbuilder" package="_0402" value="10nH" x="91.44" y="13.97" smashed="yes" rot="R180" grouprefs="ANT2">
+<attribute name="NAME" x="92.3925" y="13.1761" size="0.8128" layer="25" ratio="18" rot="R180"/>
+<attribute name="VALUE" x="92.3925" y="20.3836" size="0.4064" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="10NH-ANT2" library="microbuilder" package="0402" value="" x="0" y="-90.17" smashed="yes">
-<attribute name="NAME" x="1.397" y="-90.3605" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="1.397" y="-90.805" size="0.4064" layer="27" ratio="10"/>
+<element name="10NH-ANT2" library="microbuilder" package="0402" value="" x="92.71" y="12.7" smashed="yes" rot="R180" grouprefs="ANT2">
+<attribute name="NAME" x="91.313" y="12.8905" size="0.8128" layer="25" ratio="18" rot="R180"/>
+<attribute name="VALUE" x="91.313" y="13.335" size="0.4064" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="ANT1-GND1" library="microbuilder" package="0402" value="4.7pF" x="-8.89" y="-87.63" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-87.8205" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-88.265" size="0.4064" layer="27" ratio="10"/>
+<element name="ANT1-GND1" library="microbuilder" package="0402" value="4.7pF" x="95.25" y="12.7" smashed="yes" rot="R270" grouprefs="ANT2">
+<attribute name="NAME" x="95.0595" y="11.303" size="0.8128" layer="25" ratio="18" rot="R270"/>
+<attribute name="VALUE" x="94.615" y="11.303" size="0.4064" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="ANT1-ANT2\1" library="microbuilder" package="_0402" value="8.2nH" x="3.81" y="-80.01" smashed="yes">
-<attribute name="NAME" x="2.8575" y="-79.2161" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="2.8575" y="-81.3436" size="0.4064" layer="27" ratio="10"/>
+<element name="ANT1-ANT2\1" library="microbuilder" package="_0402" value="8.2nH" x="95.25" y="10.16" smashed="yes" rot="R180" grouprefs="ANT2">
+<attribute name="NAME" x="96.2025" y="9.3661" size="0.8128" layer="25" ratio="18" rot="R180"/>
+<attribute name="VALUE" x="96.2025" y="11.4936" size="0.4064" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="ANT2-GND2" library="microbuilder" package="0402" value="4.7pF" x="1.27" y="-87.63" smashed="yes">
-<attribute name="NAME" x="2.667" y="-87.8205" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="2.667" y="-88.265" size="0.4064" layer="27" ratio="10"/>
+<element name="ANT2-GND2" library="microbuilder" package="0402" value="4.7pF" x="96.52" y="12.7" smashed="yes" rot="R270" grouprefs="ANT2">
+<attribute name="NAME" x="96.3295" y="11.303" size="0.8128" layer="25" ratio="18" rot="R270"/>
+<attribute name="VALUE" x="95.885" y="11.303" size="0.4064" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="ANT2-ANT1" library="microbuilder" package="_0402" value="7.5nH" x="-8.89" y="-83.82" smashed="yes">
-<attribute name="NAME" x="-9.8425" y="-83.0261" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-9.8425" y="-85.1536" size="0.4064" layer="27" ratio="10"/>
+<element name="ANT2-ANT1" library="microbuilder" package="_0402" value="7.5nH" x="97.79" y="10.16" smashed="yes" rot="R180" grouprefs="ANT2">
+<attribute name="NAME" x="98.7425" y="9.3661" size="0.8128" layer="25" ratio="18" rot="R180"/>
+<attribute name="VALUE" x="98.7425" y="11.4936" size="0.4064" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="ANT2-GND3" library="microbuilder" package="0402" value="4.7pF" x="11.43" y="-87.63" smashed="yes">
-<attribute name="NAME" x="12.827" y="-87.8205" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="12.827" y="-88.265" size="0.4064" layer="27" ratio="10"/>
+<element name="ANT2-GND3" library="microbuilder" package="0402" value="4.7pF" x="99.06" y="12.7" smashed="yes" rot="R270" grouprefs="ANT2">
+<attribute name="NAME" x="98.8695" y="11.303" size="0.8128" layer="25" ratio="18" rot="R270"/>
+<attribute name="VALUE" x="98.425" y="11.303" size="0.4064" layer="27" ratio="10" rot="R270"/>
 </element>
 <element name="VC2PETH-GND" library="microbuilder" package="0402" value="75 Ohm" x="-8.89" y="-92.71" smashed="yes">
 <attribute name="NAME" x="-7.493" y="-92.9005" size="0.8128" layer="25" ratio="18"/>
@@ -1896,22 +1896,22 @@ design rules under a new name.</description>
 <signal name="VBAT1">
 <contactref element="LORA2" pad="1"/>
 <contactref element="LORA1" pad="1"/>
-<wire x1="61.8236" y1="22.27" x2="61.8236" y2="9.57" width="0" layer="19" extent="1-1"/>
+<wire x1="84.6836" y1="26.08" x2="84.6836" y2="7.03" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VR_ANA">
 <contactref element="LORA2" pad="2"/>
 <contactref element="LORA1" pad="2"/>
-<wire x1="61.8236" y1="21.62" x2="61.8236" y2="8.92" width="0" layer="19" extent="1-1"/>
+<wire x1="84.6836" y1="25.43" x2="84.6836" y2="6.38" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VR_DIG">
 <contactref element="LORA2" pad="3"/>
 <contactref element="LORA1" pad="3"/>
-<wire x1="61.8236" y1="20.97" x2="61.8236" y2="8.27" width="0" layer="19" extent="1-1"/>
+<wire x1="84.6836" y1="24.78" x2="84.6836" y2="5.73" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VBAT2">
 <contactref element="LORA2" pad="15"/>
 <contactref element="LORA1" pad="15"/>
-<wire x1="67.7164" y1="18.37" x2="67.7164" y2="5.67" width="0" layer="19" extent="1-1"/>
+<wire x1="90.5764" y1="22.18" x2="90.5764" y2="3.13" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GND">
 <contactref element="RFI-GND" pad="2"/>
@@ -1951,136 +1951,136 @@ design rules under a new name.</description>
 <wire x1="-9.84" y1="-120.65" x2="-9.685" y2="-128.27" width="0" layer="19" extent="1-1"/>
 <wire x1="-9.54" y1="-100.33" x2="-9.84" y2="-120.65" width="0" layer="19" extent="1-1"/>
 <wire x1="-9.54" y1="-97.79" x2="-9.54" y2="-100.33" width="0" layer="19" extent="1-1"/>
-<wire x1="-9.54" y1="-87.63" x2="-9.54" y2="-97.79" width="0" layer="19" extent="1-1"/>
-<wire x1="0.62" y1="-87.63" x2="-9.54" y2="-87.63" width="0" layer="19" extent="1-1"/>
-<wire x1="6.858" y1="-83.82" x2="0.62" y2="-87.63" width="0" layer="19" extent="1-1"/>
-<wire x1="10.78" y1="-87.63" x2="6.858" y2="-83.82" width="0" layer="19" extent="1-1"/>
-<wire x1="7.4107" y1="-66.04" x2="6.858" y2="-83.82" width="0" layer="19" extent="1-1"/>
-<wire x1="10.3693" y1="-66.04" x2="7.4107" y2="-66.04" width="0" layer="19" extent="1-1"/>
-<wire x1="-9.54" y1="-57.15" x2="7.4107" y2="-66.04" width="0" layer="19" extent="1-1"/>
-<wire x1="-9.54" y1="-49.53" x2="-9.54" y2="-57.15" width="0" layer="19" extent="1-1"/>
-<wire x1="-9.54" y1="-41.91" x2="-9.54" y2="-49.53" width="0" layer="19" extent="1-1"/>
-<wire x1="-8.382" y1="-16.51" x2="-9.54" y2="-41.91" width="0" layer="19" extent="1-1"/>
-<wire x1="20.32" y1="12.7" x2="-8.382" y2="-16.51" width="0" layer="19" extent="1-1"/>
+<wire x1="95.25" y1="13.35" x2="-9.54" y2="-97.79" width="0" layer="19" extent="1-1"/>
+<wire x1="96.52" y1="13.35" x2="95.25" y2="13.35" width="0" layer="19" extent="1-1"/>
+<wire x1="88.138" y1="10.16" x2="96.52" y2="13.35" width="0" layer="19" extent="1-1"/>
+<wire x1="99.06" y1="13.35" x2="88.138" y2="10.16" width="0" layer="19" extent="1-1"/>
+<wire x1="101.6" y1="11.6393" x2="88.138" y2="10.16" width="0" layer="19" extent="1-1"/>
+<wire x1="101.6" y1="8.6807" x2="101.6" y2="11.6393" width="0" layer="19" extent="1-1"/>
+<wire x1="99.06" y1="32.4" x2="101.6" y2="11.6393" width="0" layer="19" extent="1-1"/>
+<wire x1="96.52" y1="32.4" x2="99.06" y2="32.4" width="0" layer="19" extent="1-1"/>
+<wire x1="95.25" y1="32.4" x2="96.52" y2="32.4" width="0" layer="19" extent="1-1"/>
+<wire x1="87.122" y1="29.21" x2="95.25" y2="32.4" width="0" layer="19" extent="1-1"/>
+<wire x1="20.32" y1="12.7" x2="87.122" y2="29.21" width="0" layer="19" extent="1-1"/>
 <wire x1="17.78" y1="19.05" x2="20.32" y2="12.7" width="0" layer="19" extent="1-1"/>
-<wire x1="64.12" y1="10.5664" x2="20.32" y2="12.7" width="0" layer="19" extent="1-1"/>
-<wire x1="66.72" y1="10.5664" x2="64.12" y2="10.5664" width="0" layer="19" extent="1-1"/>
-<wire x1="64.77" y1="7.62" x2="64.12" y2="10.5664" width="0" layer="19" extent="1-1"/>
-<wire x1="67.7164" y1="6.32" x2="64.77" y2="7.62" width="0" layer="19" extent="1-1"/>
-<wire x1="67.7164" y1="19.02" x2="66.72" y2="10.5664" width="0" layer="19" extent="1-1"/>
-<wire x1="64.77" y1="20.32" x2="67.7164" y2="19.02" width="0" layer="19" extent="1-1"/>
-<wire x1="64.12" y1="23.2664" x2="64.77" y2="20.32" width="0" layer="19" extent="1-1"/>
-<wire x1="66.72" y1="23.2664" x2="64.12" y2="23.2664" width="0" layer="19" extent="1-1"/>
-<wire x1="83.6107" y1="20.32" x2="67.7164" y2="19.02" width="0" layer="19" extent="1-1"/>
-<wire x1="86.5693" y1="20.32" x2="83.6107" y2="20.32" width="0" layer="19" extent="1-1"/>
+<wire x1="86.98" y1="8.0264" x2="20.32" y2="12.7" width="0" layer="19" extent="1-1"/>
+<wire x1="89.58" y1="8.0264" x2="86.98" y2="8.0264" width="0" layer="19" extent="1-1"/>
+<wire x1="87.63" y1="5.08" x2="86.98" y2="8.0264" width="0" layer="19" extent="1-1"/>
+<wire x1="90.5764" y1="3.78" x2="87.63" y2="5.08" width="0" layer="19" extent="1-1"/>
+<wire x1="90.5764" y1="22.83" x2="89.58" y2="8.0264" width="0" layer="19" extent="1-1"/>
+<wire x1="87.63" y1="24.13" x2="90.5764" y2="22.83" width="0" layer="19" extent="1-1"/>
+<wire x1="86.98" y1="27.0764" x2="87.63" y2="24.13" width="0" layer="19" extent="1-1"/>
+<wire x1="89.58" y1="27.0764" x2="86.98" y2="27.0764" width="0" layer="19" extent="1-1"/>
+<wire x1="101.6" y1="30.6893" x2="90.5764" y2="22.83" width="0" layer="19" extent="1-1"/>
+<wire x1="101.6" y1="30.6893" x2="101.6" y2="27.7307" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="RFI">
 <contactref element="LORA1" pad="25"/>
 <contactref element="RFI-RFO" pad="1"/>
 <contactref element="RFI-GND" pad="1"/>
-<wire x1="-9.54" y1="-12.7" x2="64.77" y2="23.2664" width="0" layer="19" extent="1-1"/>
-<wire x1="-9.398" y1="-16.51" x2="-9.54" y2="-12.7" width="0" layer="19" extent="1-1"/>
+<wire x1="88.25" y1="30.48" x2="87.63" y2="27.0764" width="0" layer="19" extent="1-1"/>
+<wire x1="88.138" y1="29.21" x2="88.25" y2="30.48" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="RFO">
 <contactref element="LORA1" pad="24"/>
 <contactref element="RFI-RFO" pad="2"/>
 <contactref element="RFO-VR_PA" pad="2"/>
 <contactref element="RFO-33PF" pad="2"/>
-<wire x1="-8.24" y1="-12.7" x2="65.42" y2="23.2664" width="0" layer="19" extent="1-1"/>
-<wire x1="-8.382" y1="-20.32" x2="-8.24" y2="-12.7" width="0" layer="19" extent="1-1"/>
-<wire x1="-8.382" y1="-27.94" x2="-8.382" y2="-20.32" width="0" layer="19" extent="1-1"/>
+<wire x1="89.55" y1="30.48" x2="88.28" y2="27.0764" width="0" layer="19" extent="1-1"/>
+<wire x1="89.408" y1="33.02" x2="89.55" y2="30.48" width="0" layer="19" extent="1-1"/>
+<wire x1="90.932" y1="33.02" x2="89.408" y2="33.02" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VR_PA">
 <contactref element="LORA1" pad="28"/>
 <contactref element="RFO-VR_PA" pad="1"/>
 <contactref element="VR_PA-PA_BOOST" pad="2"/>
-<wire x1="-9.398" y1="-20.32" x2="62.82" y2="23.2664" width="0" layer="19" extent="1-1"/>
-<wire x1="-8.382" y1="-24.13" x2="-9.398" y2="-20.32" width="0" layer="19" extent="1-1"/>
+<wire x1="88.392" y1="33.02" x2="85.68" y2="27.0764" width="0" layer="19" extent="1-1"/>
+<wire x1="88.138" y1="31.75" x2="88.392" y2="33.02" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="PA_BOOST">
 <contactref element="VR_PA-PA_BOOST" pad="1"/>
 <contactref element="LORA1" pad="27"/>
-<wire x1="-9.398" y1="-24.13" x2="63.47" y2="23.2664" width="0" layer="19" extent="1-1"/>
+<wire x1="87.122" y1="31.75" x2="86.33" y2="27.0764" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$1">
 <contactref element="RFO-33PF" pad="1"/>
 <contactref element="10NH-ANT1" pad="2"/>
-<wire x1="-9.398" y1="-27.94" x2="-8.24" y2="-39.37" width="0" layer="19" extent="1-1"/>
+<wire x1="91.948" y1="33.02" x2="92.06" y2="31.75" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="ANT1">
 <contactref element="10NH-ANT1" pad="1"/>
 <contactref element="ANT1-GND" pad="2"/>
 <contactref element="ANT1-ANT2\" pad="2"/>
-<wire x1="-8.24" y1="-41.91" x2="-8.382" y2="-45.72" width="0" layer="19" extent="1-1"/>
-<wire x1="-9.54" y1="-39.37" x2="-8.24" y2="-41.91" width="0" layer="19" extent="1-1"/>
+<wire x1="95.25" y1="31.1" x2="94.742" y2="29.21" width="0" layer="19" extent="1-1"/>
+<wire x1="93.36" y1="31.75" x2="95.25" y2="31.1" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="ANT2">
 <contactref element="ANT1-ANT2\" pad="1"/>
 <contactref element="ANT2-GND" pad="2"/>
 <contactref element="ANT2-ANT3" pad="2"/>
-<wire x1="-8.24" y1="-49.53" x2="-8.382" y2="-53.34" width="0" layer="19" extent="1-1"/>
-<wire x1="-9.398" y1="-45.72" x2="-8.24" y2="-49.53" width="0" layer="19" extent="1-1"/>
+<wire x1="96.52" y1="31.1" x2="97.282" y2="29.21" width="0" layer="19" extent="1-1"/>
+<wire x1="95.758" y1="29.21" x2="96.52" y2="31.1" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="ANT3">
 <contactref element="ANT2-ANT3" pad="1"/>
 <contactref element="ANT2-GND1" pad="2"/>
 <contactref element="J1" pad="1"/>
-<wire x1="-9.398" y1="-53.34" x2="85.09" y2="18.7992" width="0" layer="19" extent="1-1"/>
-<wire x1="-8.24" y1="-57.15" x2="-9.398" y2="-53.34" width="0" layer="19" extent="1-1"/>
+<wire x1="98.298" y1="29.21" x2="100.0792" y2="29.21" width="0" layer="19" extent="1-1"/>
+<wire x1="99.06" y1="31.1" x2="98.298" y2="29.21" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$2">
 <contactref element="RFO-33PF1" pad="1"/>
 <contactref element="10NH-ANT2" pad="2"/>
-<wire x1="-1.778" y1="-83.82" x2="0.65" y2="-90.17" width="0" layer="19" extent="1-1"/>
+<wire x1="91.948" y1="13.97" x2="92.06" y2="12.7" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="ANT3-2">
 <contactref element="J3" pad="1"/>
 <contactref element="ANT2-ANT1" pad="1"/>
 <contactref element="ANT2-GND3" pad="2"/>
-<wire x1="12.08" y1="-87.63" x2="-9.398" y2="-83.82" width="0" layer="19" extent="1-1"/>
-<wire x1="8.89" y1="-67.5608" x2="12.08" y2="-87.63" width="0" layer="19" extent="1-1"/>
+<wire x1="99.06" y1="12.05" x2="98.298" y2="10.16" width="0" layer="19" extent="1-1"/>
+<wire x1="100.0792" y1="10.16" x2="99.06" y2="12.05" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="ANT2-2">
 <contactref element="ANT1-ANT2\1" pad="1"/>
 <contactref element="ANT2-GND2" pad="2"/>
 <contactref element="ANT2-ANT1" pad="2"/>
-<wire x1="1.92" y1="-87.63" x2="-8.382" y2="-83.82" width="0" layer="19" extent="1-1"/>
-<wire x1="3.302" y1="-80.01" x2="1.92" y2="-87.63" width="0" layer="19" extent="1-1"/>
+<wire x1="96.52" y1="12.05" x2="97.282" y2="10.16" width="0" layer="19" extent="1-1"/>
+<wire x1="95.758" y1="10.16" x2="96.52" y2="12.05" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="ANT1-2">
 <contactref element="10NH-ANT2" pad="1"/>
 <contactref element="ANT1-GND1" pad="2"/>
 <contactref element="ANT1-ANT2\1" pad="2"/>
-<wire x1="-0.65" y1="-90.17" x2="-8.24" y2="-87.63" width="0" layer="19" extent="1-1"/>
-<wire x1="4.318" y1="-80.01" x2="-0.65" y2="-90.17" width="0" layer="19" extent="1-1"/>
+<wire x1="93.36" y1="12.7" x2="95.25" y2="12.05" width="0" layer="19" extent="1-1"/>
+<wire x1="94.742" y1="10.16" x2="93.36" y2="12.7" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="PA_BOOST2">
 <contactref element="VR_PA-PA_BOOST1" pad="1"/>
 <contactref element="LORA2" pad="27"/>
-<wire x1="63.47" y1="10.5664" x2="-9.398" y2="-80.01" width="0" layer="19" extent="1-1"/>
+<wire x1="86.33" y1="8.0264" x2="87.122" y2="12.7" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VR_PA2">
 <contactref element="RFO-VR_PA1" pad="1"/>
 <contactref element="VR_PA-PA_BOOST1" pad="2"/>
 <contactref element="LORA2" pad="28"/>
-<wire x1="12.192" y1="-80.01" x2="-8.382" y2="-80.01" width="0" layer="19" extent="1-1"/>
-<wire x1="62.82" y1="10.5664" x2="12.192" y2="-80.01" width="0" layer="19" extent="1-1"/>
+<wire x1="88.392" y1="13.97" x2="88.138" y2="12.7" width="0" layer="19" extent="1-1"/>
+<wire x1="85.68" y1="8.0264" x2="88.392" y2="13.97" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="RFO2">
 <contactref element="RFI-RFO1" pad="2"/>
 <contactref element="RFO-VR_PA1" pad="2"/>
 <contactref element="RFO-33PF1" pad="2"/>
 <contactref element="LORA2" pad="24"/>
-<wire x1="-0.762" y1="-83.82" x2="-8.24" y2="-90.17" width="0" layer="19" extent="1-1"/>
-<wire x1="13.208" y1="-80.01" x2="-0.762" y2="-83.82" width="0" layer="19" extent="1-1"/>
-<wire x1="65.42" y1="10.5664" x2="13.208" y2="-80.01" width="0" layer="19" extent="1-1"/>
+<wire x1="90.932" y1="13.97" x2="89.55" y2="11.43" width="0" layer="19" extent="1-1"/>
+<wire x1="89.408" y1="13.97" x2="90.932" y2="13.97" width="0" layer="19" extent="1-1"/>
+<wire x1="88.28" y1="8.0264" x2="89.408" y2="13.97" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="RFI2">
 <contactref element="RFI-RFO1" pad="1"/>
 <contactref element="RFI-GND1" pad="1"/>
 <contactref element="LORA2" pad="25"/>
-<wire x1="5.842" y1="-83.82" x2="-9.54" y2="-90.17" width="0" layer="19" extent="1-1"/>
-<wire x1="64.77" y1="10.5664" x2="5.842" y2="-83.82" width="0" layer="19" extent="1-1"/>
+<wire x1="87.122" y1="10.16" x2="88.25" y2="11.43" width="0" layer="19" extent="1-1"/>
+<wire x1="87.63" y1="8.0264" x2="87.122" y2="10.16" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VC2PETH">
 <contactref element="U6" pad="6"/>
@@ -2278,6 +2278,11 @@ will not be understood (or retained) with this version.
 Since Version 8.3, EAGLE supports the association of 3D packages
 with devices in libraries, schematics, and board files. Those 3D
 packages will not be understood (or retained) with this version.
+</note>
+<note version="9.5" severity="warning">
+Since Version 9.5, EAGLE supports persistent groups with
+schematics, and board files. Those persistent groups
+will not be understood (or retained) with this version.
 </note>
 </compatibility>
 </eagle>
