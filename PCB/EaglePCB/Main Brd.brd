@@ -172,11 +172,9 @@
 </layers>
 <board>
 <plain>
-<wire x1="0" y1="66.04" x2="0" y2="5.08" width="0" layer="20"/>
+<wire x1="0" y1="66.04" x2="0" y2="0" width="0" layer="20"/>
 <wire x1="109.22" y1="66.04" x2="109.22" y2="0" width="0" layer="20"/>
-<wire x1="109.22" y1="0" x2="29.21" y2="0" width="0" layer="20"/>
-<wire x1="29.21" y1="0" x2="24.13" y2="5.08" width="0" layer="20"/>
-<wire x1="24.13" y1="5.08" x2="0" y2="5.08" width="0" layer="20"/>
+<wire x1="109.22" y1="0" x2="0" y2="0" width="0" layer="20"/>
 <wire x1="0" y1="66.04" x2="109.22" y2="66.04" width="0" layer="20"/>
 </plain>
 <libraries>
@@ -1615,12 +1613,12 @@ design rules under a new name.</description>
 <attribute name="NAME" x="94.615" y="60.4266" size="1.27" layer="27" ratio="6" rot="SR270"/>
 <attribute name="VALUE" x="94.615" y="58.8772" size="1.27" layer="21" ratio="6" rot="SR270"/>
 </element>
-<element name="ETH" library="473" package="SPDIP28_300MC_MCH" value="ENC28J60-I/SP" x="30.48" y="36.83" smashed="yes">
-<attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="30.48" y="36.83" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="ENC28J60-I/SP" x="30.48" y="36.83" size="1.778" layer="27" display="off"/>
-<attribute name="MFR_NAME" value="Microchip" x="30.48" y="36.83" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="31.0134" y="19.685" size="1.27" layer="27" ratio="6" rot="SR0"/>
-<attribute name="VALUE" x="34.925" y="22.4028" size="1.27" layer="21" ratio="6" rot="SR90"/>
+<element name="ETH" library="473" package="SPDIP28_300MC_MCH" value="ENC28J60-I/SP" x="39.37" y="11.43" smashed="yes" rot="R90">
+<attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="39.37" y="11.43" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="ENC28J60-I/SP" x="39.37" y="11.43" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MFR_NAME" value="Microchip" x="39.37" y="11.43" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="NAME" x="56.515" y="11.9634" size="1.27" layer="27" ratio="6" rot="SR90"/>
+<attribute name="VALUE" x="53.7972" y="15.875" size="1.27" layer="21" ratio="6" rot="SR180"/>
 </element>
 <element name="U3" library="473" package="DBT0038A_M" value="MSP430FR2355TDBTRDBT0038A_M" x="52.07" y="52.07" smashed="yes">
 <attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="52.07" y="52.07" size="1.778" layer="27" display="off"/>
@@ -1785,99 +1783,99 @@ design rules under a new name.</description>
 <attribute name="NAME" x="98.8695" y="11.303" size="0.8128" layer="25" ratio="18" rot="R270"/>
 <attribute name="VALUE" x="98.425" y="11.303" size="0.4064" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="VC2PETH-GND" library="microbuilder" package="0402" value="75 Ohm" x="-8.89" y="-92.71" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-92.9005" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-93.345" size="0.4064" layer="27" ratio="10"/>
+<element name="VC2PETH-GND" library="microbuilder" package="0402" value="75 Ohm" x="24.13" y="17.78" smashed="yes" rot="R180">
+<attribute name="NAME" x="22.733" y="17.9705" size="0.8128" layer="25" ratio="18" rot="R180"/>
+<attribute name="VALUE" x="22.733" y="18.415" size="0.4064" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="VC2ETH-GND" library="microbuilder" package="0402" value="75 Ohm" x="-8.89" y="-95.25" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-95.4405" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-95.885" size="0.4064" layer="27" ratio="10"/>
+<element name="VC2ETH-GND" library="microbuilder" package="0402" value="75 Ohm" x="19.05" y="6.35" smashed="yes" rot="R90">
+<attribute name="NAME" x="19.2405" y="7.747" size="0.8128" layer="25" ratio="18" rot="R90"/>
+<attribute name="VALUE" x="19.685" y="7.747" size="0.4064" layer="27" ratio="10" rot="R90"/>
 </element>
-<element name="VC2ETH-GNDC" library="microbuilder" package="0402" value="1nF" x="-8.89" y="-97.79" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-97.9805" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-98.425" size="0.4064" layer="27" ratio="10"/>
+<element name="VC2ETH-GNDC" library="microbuilder" package="0402" value="1nF" x="20.32" y="6.35" smashed="yes" rot="R270">
+<attribute name="NAME" x="20.1295" y="4.953" size="0.8128" layer="25" ratio="18" rot="R270"/>
+<attribute name="VALUE" x="19.685" y="4.953" size="0.4064" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="VC2PETH-GNDC" library="microbuilder" package="0402" value="1nF" x="-8.89" y="-100.33" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-100.5205" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-100.965" size="0.4064" layer="27" ratio="10"/>
+<element name="VC2PETH-GNDC" library="microbuilder" package="0402" value="1nF" x="26.67" y="17.78" smashed="yes" rot="R180">
+<attribute name="NAME" x="25.273" y="17.9705" size="0.8128" layer="25" ratio="18" rot="R180"/>
+<attribute name="VALUE" x="25.273" y="18.415" size="0.4064" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="RDM-GND" library="microbuilder" package="0402" value="49.9 Ohm'" x="-8.89" y="-102.87" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-103.0605" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-103.505" size="0.4064" layer="27" ratio="10"/>
+<element name="RDM-GND" library="microbuilder" package="0402" value="49.9 Ohm'" x="67.31" y="8.89" smashed="yes" rot="R90">
+<attribute name="NAME" x="67.5005" y="10.287" size="0.8128" layer="25" ratio="18" rot="R90"/>
+<attribute name="VALUE" x="67.945" y="10.287" size="0.4064" layer="27" ratio="10" rot="R90"/>
 </element>
-<element name="RDP-GND" library="microbuilder" package="0402" value="49.9 Ohm" x="-8.89" y="-105.41" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-105.6005" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-106.045" size="0.4064" layer="27" ratio="10"/>
+<element name="RDP-GND" library="microbuilder" package="0402" value="49.9 Ohm" x="69.85" y="8.89" smashed="yes" rot="R90">
+<attribute name="NAME" x="70.0405" y="10.287" size="0.8128" layer="25" ratio="18" rot="R90"/>
+<attribute name="VALUE" x="70.485" y="10.287" size="0.4064" layer="27" ratio="10" rot="R90"/>
 </element>
-<element name="RD-GND" library="microbuilder" package="0603" value="0.1 uF" x="-0.85" y="-140.97" smashed="yes">
-<attribute name="NAME" x="0.547" y="-141.1605" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="0.547" y="-141.605" size="0.4064" layer="27" ratio="10"/>
+<element name="RD-GND" library="microbuilder" package="0603" value="0.1 uF" x="70.27" y="6.35" smashed="yes">
+<attribute name="NAME" x="71.667" y="6.1595" size="0.8128" layer="25" ratio="18"/>
+<attribute name="VALUE" x="71.667" y="5.715" size="0.4064" layer="27" ratio="10"/>
 </element>
-<element name="RDM-GND1" library="microbuilder" package="0402" value="49.9 Ohm'" x="-8.89" y="-110.49" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-110.6805" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-111.125" size="0.4064" layer="27" ratio="10"/>
+<element name="RDM-GND1" library="microbuilder" package="0402" value="49.9 Ohm'" x="25.4" y="21.59" smashed="yes">
+<attribute name="NAME" x="26.797" y="21.3995" size="0.8128" layer="25" ratio="18"/>
+<attribute name="VALUE" x="26.797" y="20.955" size="0.4064" layer="27" ratio="10"/>
 </element>
-<element name="RDP-GND1" library="microbuilder" package="0402" value="49.9 Ohm" x="-8.89" y="-113.03" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-113.2205" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-113.665" size="0.4064" layer="27" ratio="10"/>
+<element name="RDP-GND1" library="microbuilder" package="0402" value="49.9 Ohm" x="25.4" y="22.86" smashed="yes">
+<attribute name="NAME" x="26.797" y="22.6695" size="0.8128" layer="25" ratio="18"/>
+<attribute name="VALUE" x="26.797" y="22.225" size="0.4064" layer="27" ratio="10"/>
 </element>
-<element name="RD-GND1" library="microbuilder" package="0603" value="0.1 uF" x="-0.85" y="-153.67" smashed="yes">
-<attribute name="NAME" x="0.547" y="-153.8605" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="0.547" y="-154.305" size="0.4064" layer="27" ratio="10"/>
+<element name="RD-GND1" library="microbuilder" package="0603" value="0.1 uF" x="28.36" y="24.13" smashed="yes">
+<attribute name="NAME" x="29.757" y="23.9395" size="0.8128" layer="25" ratio="18"/>
+<attribute name="VALUE" x="29.757" y="23.495" size="0.4064" layer="27" ratio="10"/>
 </element>
-<element name="TCT-3V3" library="microbuilder" package="0603" value="" x="-8.89" y="-118.11" smashed="yes">
-<attribute name="NAME" x="-7.112" y="-118.237" size="0.8128" layer="25" font="vector" ratio="18"/>
-<attribute name="VALUE" x="-7.112" y="-118.872" size="0.4064" layer="27" font="vector" ratio="10"/>
+<element name="TCT-3V3" library="microbuilder" package="0603" value="" x="25.4" y="25.4" smashed="yes" rot="R90">
+<attribute name="NAME" x="25.527" y="27.178" size="0.8128" layer="25" font="vector" ratio="18" rot="R90"/>
+<attribute name="VALUE" x="26.162" y="27.178" size="0.4064" layer="27" font="vector" ratio="10" rot="R90"/>
 </element>
-<element name="VCAPCLOSE" library="microbuilder" package="0805" value="10 uF" x="-8.89" y="-120.65" smashed="yes">
-<attribute name="NAME" x="-6.858" y="-120.777" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-6.858" y="-121.412" size="0.4064" layer="27" ratio="10"/>
+<element name="VCAPCLOSE" library="microbuilder" package="0805" value="10 uF" x="39.37" y="7.62" smashed="yes" rot="R90">
+<attribute name="NAME" x="39.497" y="9.652" size="0.8128" layer="25" ratio="18" rot="R90"/>
+<attribute name="VALUE" x="40.132" y="9.652" size="0.4064" layer="27" ratio="10" rot="R90"/>
 </element>
-<element name="LEDG" library="microbuilder" package="0402" value="" x="-8.89" y="-123.19" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-123.3805" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-123.825" size="0.4064" layer="27" ratio="10"/>
+<element name="LEDG" library="microbuilder" package="0402" value="" x="8.89" y="7.62" smashed="yes" rot="R270">
+<attribute name="NAME" x="8.6995" y="6.223" size="0.8128" layer="25" ratio="18" rot="R270"/>
+<attribute name="VALUE" x="8.255" y="6.223" size="0.4064" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="LEDY" library="microbuilder" package="0402" value="" x="-8.89" y="-125.73" smashed="yes">
-<attribute name="NAME" x="-7.493" y="-125.9205" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="-7.493" y="-126.365" size="0.4064" layer="27" ratio="10"/>
+<element name="LEDY" library="microbuilder" package="0402" value="" x="8.89" y="26.67" smashed="yes" rot="R90">
+<attribute name="NAME" x="9.0805" y="28.067" size="0.8128" layer="25" ratio="18" rot="R90"/>
+<attribute name="VALUE" x="9.525" y="28.067" size="0.4064" layer="27" ratio="10" rot="R90"/>
 </element>
-<element name="RBIAS-GNDCLOSE" library="Resistor_Capacitor" library_urn="urn:adsk.eagle:library:15122775" package="RES_0603" package3d_urn="urn:adsk.eagle:package:10872900/3" value="2.32K 1%" x="-8.89" y="-128.27" smashed="yes">
-<attribute name="CREATED_BY" value="PCBLayout.com" x="-8.89" y="-128.27" size="1.778" layer="27" display="off"/>
-<attribute name="DIGIKEY_PART_NUMBER" value="311-0.0GRTR-ND" x="-8.89" y="-128.27" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER" value="Yageo" x="-8.89" y="-128.27" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="RC0603JR-070RL" x="-8.89" y="-128.27" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="-10.16" y="-127.508" size="0.5" layer="25" ratio="10"/>
-<attribute name="PACKAGE" value="SMD 0603" x="-8.89" y="-128.27" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="-10.16" y="-129.54" size="0.5" layer="27" ratio="10"/>
+<element name="RBIAS-GNDCLOSE" library="Resistor_Capacitor" library_urn="urn:adsk.eagle:library:15122775" package="RES_0603" package3d_urn="urn:adsk.eagle:package:10872900/3" value="2.32K 1%" x="72.39" y="8.89" smashed="yes" rot="R90">
+<attribute name="CREATED_BY" value="PCBLayout.com" x="72.39" y="8.89" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="DIGIKEY_PART_NUMBER" value="311-0.0GRTR-ND" x="72.39" y="8.89" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MANUFACTURER" value="Yageo" x="72.39" y="8.89" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MPN" value="RC0603JR-070RL" x="72.39" y="8.89" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="NAME" x="71.628" y="7.62" size="0.5" layer="25" ratio="10" rot="R90"/>
+<attribute name="PACKAGE" value="SMD 0603" x="72.39" y="8.89" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="VALUE" x="73.66" y="7.62" size="0.5" layer="27" ratio="10" rot="R90"/>
 </element>
-<element name="VSSTX-VDDTX" library="microbuilder" package="0603" value="0.1 uF" x="-8.89" y="-156.21" smashed="yes">
-<attribute name="NAME" x="-7.112" y="-156.337" size="0.8128" layer="25" font="vector" ratio="18"/>
-<attribute name="VALUE" x="-7.112" y="-156.972" size="0.4064" layer="27" font="vector" ratio="10"/>
+<element name="VSSTX-VDDTX" library="microbuilder" package="0603" value="0.1 uF" x="68.58" y="15.24" smashed="yes" rot="MR180">
+<attribute name="NAME" x="70.358" y="15.367" size="0.8128" layer="26" font="vector" ratio="18" rot="MR180"/>
+<attribute name="VALUE" x="70.358" y="16.002" size="0.4064" layer="28" font="vector" ratio="10" rot="MR180"/>
 </element>
-<element name="VSSRX-VDDRX" library="microbuilder" package="0603" value="0.1 uF" x="-8.89" y="-158.75" smashed="yes">
-<attribute name="NAME" x="-7.112" y="-158.877" size="0.8128" layer="25" font="vector" ratio="18"/>
-<attribute name="VALUE" x="-7.112" y="-159.512" size="0.4064" layer="27" font="vector" ratio="10"/>
+<element name="VSSRX-VDDRX" library="microbuilder" package="0603" value="0.1 uF" x="63.5" y="15.24" smashed="yes" rot="MR90">
+<attribute name="NAME" x="63.373" y="17.018" size="0.8128" layer="26" font="vector" ratio="18" rot="MR90"/>
+<attribute name="VALUE" x="62.738" y="17.018" size="0.4064" layer="28" font="vector" ratio="10" rot="MR90"/>
 </element>
-<element name="VSS-VDD_ETH" library="microbuilder" package="0603" value="0.1 uF" x="-8.89" y="-161.29" smashed="yes">
-<attribute name="NAME" x="-7.112" y="-161.417" size="0.8128" layer="25" font="vector" ratio="18"/>
-<attribute name="VALUE" x="-7.112" y="-162.052" size="0.4064" layer="27" font="vector" ratio="10"/>
+<element name="VSS-VDD_ETH" library="microbuilder" package="0603" value="0.1 uF" x="40.64" y="15.24" smashed="yes" rot="MR90">
+<attribute name="NAME" x="40.513" y="17.018" size="0.8128" layer="26" font="vector" ratio="18" rot="MR90"/>
+<attribute name="VALUE" x="39.878" y="17.018" size="0.4064" layer="28" font="vector" ratio="10" rot="MR90"/>
 </element>
-<element name="VSSOSC-VDDOSC" library="microbuilder" package="0603" value="0.1 uF" x="-8.89" y="-163.83" smashed="yes">
-<attribute name="NAME" x="-7.112" y="-163.957" size="0.8128" layer="25" font="vector" ratio="18"/>
-<attribute name="VALUE" x="-7.112" y="-164.592" size="0.4064" layer="27" font="vector" ratio="10"/>
+<element name="VSSOSC-VDDOSC" library="microbuilder" package="0603" value="0.1 uF" x="50.8" y="15.24" smashed="yes" rot="MR180">
+<attribute name="NAME" x="52.578" y="15.367" size="0.8128" layer="26" font="vector" ratio="18" rot="MR180"/>
+<attribute name="VALUE" x="52.578" y="16.002" size="0.4064" layer="28" font="vector" ratio="10" rot="MR180"/>
 </element>
-<element name="VSSPLL-VDDPLL" library="microbuilder" package="0603" value="0.1 uF" x="-8.89" y="-166.37" smashed="yes">
-<attribute name="NAME" x="-7.112" y="-166.497" size="0.8128" layer="25" font="vector" ratio="18"/>
-<attribute name="VALUE" x="-7.112" y="-167.132" size="0.4064" layer="27" font="vector" ratio="10"/>
+<element name="VSSPLL-VDDPLL" library="microbuilder" package="0603" value="0.1 uF" x="58.42" y="16.51" smashed="yes" rot="MR0">
+<attribute name="NAME" x="56.642" y="16.383" size="0.8128" layer="26" font="vector" ratio="18" rot="MR0"/>
+<attribute name="VALUE" x="56.642" y="15.748" size="0.4064" layer="28" font="vector" ratio="10" rot="MR0"/>
 </element>
-<element name="U$2" library="473" package="4-SMD-PACKAGE" value="CRYSTAL" x="-8.89" y="-168.91" smashed="yes"/>
-<element name="OSC2-GND" library="microbuilder" package="0603" value="180 pF" x="-8.89" y="-171.45" smashed="yes">
-<attribute name="NAME" x="-7.112" y="-171.577" size="0.8128" layer="25" font="vector" ratio="18"/>
-<attribute name="VALUE" x="-7.112" y="-172.212" size="0.4064" layer="27" font="vector" ratio="10"/>
+<element name="U$2" library="473" package="4-SMD-PACKAGE" value="CRYSTAL" x="50.8" y="22.86" smashed="yes" rot="R180"/>
+<element name="OSC2-GND" library="microbuilder" package="0603" value="180 pF" x="48.26" y="25.4" smashed="yes" rot="R90">
+<attribute name="NAME" x="48.387" y="27.178" size="0.8128" layer="25" font="vector" ratio="18" rot="R90"/>
+<attribute name="VALUE" x="49.022" y="27.178" size="0.4064" layer="27" font="vector" ratio="10" rot="R90"/>
 </element>
-<element name="OSC1-GND" library="microbuilder" package="0603" value="14pF" x="-8.89" y="-173.99" smashed="yes">
-<attribute name="NAME" x="-7.112" y="-174.117" size="0.8128" layer="25" font="vector" ratio="18"/>
-<attribute name="VALUE" x="-7.112" y="-174.752" size="0.4064" layer="27" font="vector" ratio="10"/>
+<element name="OSC1-GND" library="microbuilder" package="0603" value="14pF" x="53.34" y="25.4" smashed="yes" rot="R90">
+<attribute name="NAME" x="53.467" y="27.178" size="0.8128" layer="25" font="vector" ratio="18" rot="R90"/>
+<attribute name="VALUE" x="54.102" y="27.178" size="0.4064" layer="27" font="vector" ratio="10" rot="R90"/>
 </element>
 </elements>
 <signals>
@@ -1944,14 +1942,14 @@ design rules under a new name.</description>
 <contactref element="RBIAS-GNDCLOSE" pad="1"/>
 <contactref element="OSC2-GND" pad="2"/>
 <contactref element="OSC1-GND" pad="2"/>
-<wire x1="-8.04" y1="-171.45" x2="-8.04" y2="-173.99" width="0" layer="19" extent="1-1"/>
-<wire x1="0" y1="-153.67" x2="-8.04" y2="-171.45" width="0" layer="19" extent="1-1"/>
-<wire x1="0" y1="-140.97" x2="0" y2="-153.67" width="0" layer="19" extent="1-1"/>
-<wire x1="-9.685" y1="-128.27" x2="0" y2="-140.97" width="0" layer="19" extent="1-1"/>
-<wire x1="-9.84" y1="-120.65" x2="-9.685" y2="-128.27" width="0" layer="19" extent="1-1"/>
-<wire x1="-9.54" y1="-100.33" x2="-9.84" y2="-120.65" width="0" layer="19" extent="1-1"/>
-<wire x1="-9.54" y1="-97.79" x2="-9.54" y2="-100.33" width="0" layer="19" extent="1-1"/>
-<wire x1="95.25" y1="13.35" x2="-9.54" y2="-97.79" width="0" layer="19" extent="1-1"/>
+<wire x1="48.26" y1="26.25" x2="53.34" y2="26.25" width="0" layer="19" extent="1-1"/>
+<wire x1="29.21" y1="24.13" x2="48.26" y2="26.25" width="0" layer="19" extent="1-1"/>
+<wire x1="71.12" y1="6.35" x2="29.21" y2="24.13" width="0" layer="19" extent="1-1"/>
+<wire x1="72.39" y1="8.095" x2="71.12" y2="6.35" width="0" layer="19" extent="1-1"/>
+<wire x1="39.37" y1="6.67" x2="72.39" y2="8.095" width="0" layer="19" extent="1-1"/>
+<wire x1="27.32" y1="17.78" x2="39.37" y2="6.67" width="0" layer="19" extent="1-1"/>
+<wire x1="20.32" y1="7" x2="27.32" y2="17.78" width="0" layer="19" extent="1-1"/>
+<wire x1="95.25" y1="13.35" x2="20.32" y2="7" width="0" layer="19" extent="1-1"/>
 <wire x1="96.52" y1="13.35" x2="95.25" y2="13.35" width="0" layer="19" extent="1-1"/>
 <wire x1="88.138" y1="10.16" x2="96.52" y2="13.35" width="0" layer="19" extent="1-1"/>
 <wire x1="99.06" y1="13.35" x2="88.138" y2="10.16" width="0" layer="19" extent="1-1"/>
@@ -2085,22 +2083,22 @@ design rules under a new name.</description>
 <signal name="VC2PETH">
 <contactref element="U6" pad="6"/>
 <contactref element="VC2PETH-GND" pad="2"/>
-<wire x1="20.32" y1="17.78" x2="-8.24" y2="-92.71" width="0" layer="19" extent="1-1"/>
+<wire x1="20.32" y1="17.78" x2="23.48" y2="17.78" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VC2ETH">
 <contactref element="U6" pad="1"/>
 <contactref element="VC2ETH-GND" pad="2"/>
-<wire x1="17.78" y1="11.43" x2="-8.24" y2="-95.25" width="0" layer="19" extent="1-1"/>
+<wire x1="17.78" y1="11.43" x2="19.05" y2="7" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$5">
 <contactref element="VC2ETH-GND" pad="1"/>
 <contactref element="VC2ETH-GNDC" pad="2"/>
-<wire x1="-9.54" y1="-95.25" x2="-8.24" y2="-97.79" width="0" layer="19" extent="1-1"/>
+<wire x1="19.05" y1="5.7" x2="20.32" y2="5.7" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$6">
 <contactref element="VC2PETH-GND" pad="1"/>
 <contactref element="VC2PETH-GNDC" pad="2"/>
-<wire x1="-9.54" y1="-92.71" x2="-8.24" y2="-100.33" width="0" layer="19" extent="1-1"/>
+<wire x1="24.78" y1="17.78" x2="26.02" y2="17.78" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$3">
 <contactref element="U6" pad="4"/>
@@ -2109,36 +2107,36 @@ design rules under a new name.</description>
 <contactref element="U6" pad="5"/>
 <contactref element="RDP-GND" pad="2"/>
 <contactref element="ETH" pad="13"/>
-<wire x1="30.48" y1="6.35" x2="-8.24" y2="-105.41" width="0" layer="19" extent="1-1"/>
-<wire x1="17.78" y1="16.51" x2="30.48" y2="6.35" width="0" layer="19" extent="1-1"/>
+<wire x1="69.85" y1="11.43" x2="69.85" y2="9.54" width="0" layer="19" extent="1-1"/>
+<wire x1="17.78" y1="16.51" x2="69.85" y2="11.43" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="RDM">
 <contactref element="U6" pad="3"/>
 <contactref element="RDM-GND" pad="2"/>
 <contactref element="ETH" pad="12"/>
-<wire x1="30.48" y1="8.89" x2="-8.24" y2="-102.87" width="0" layer="19" extent="1-1"/>
-<wire x1="17.78" y1="13.97" x2="30.48" y2="8.89" width="0" layer="19" extent="1-1"/>
+<wire x1="67.31" y1="11.43" x2="67.31" y2="9.54" width="0" layer="19" extent="1-1"/>
+<wire x1="17.78" y1="13.97" x2="67.31" y2="11.43" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$8">
 <contactref element="RDM-GND" pad="1"/>
 <contactref element="RDP-GND" pad="1"/>
 <contactref element="RD-GND" pad="1"/>
-<wire x1="-9.54" y1="-105.41" x2="-1.7" y2="-140.97" width="0" layer="19" extent="1-1"/>
-<wire x1="-9.54" y1="-102.87" x2="-9.54" y2="-105.41" width="0" layer="19" extent="1-1"/>
+<wire x1="69.85" y1="8.24" x2="69.42" y2="6.35" width="0" layer="19" extent="1-1"/>
+<wire x1="67.31" y1="8.24" x2="69.85" y2="8.24" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="TDP">
 <contactref element="U6" pad="10"/>
 <contactref element="RDP-GND1" pad="2"/>
 <contactref element="ETH" pad="17"/>
-<wire x1="38.1" y1="8.89" x2="-8.24" y2="-113.03" width="0" layer="19" extent="1-1"/>
-<wire x1="20.32" y1="22.86" x2="38.1" y2="8.89" width="0" layer="19" extent="1-1"/>
+<wire x1="67.31" y1="19.05" x2="26.05" y2="22.86" width="0" layer="19" extent="1-1"/>
+<wire x1="20.32" y1="22.86" x2="67.31" y2="19.05" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="TDM">
 <contactref element="U6" pad="8"/>
 <contactref element="RDM-GND1" pad="2"/>
 <contactref element="ETH" pad="16"/>
-<wire x1="38.1" y1="6.35" x2="-8.24" y2="-110.49" width="0" layer="19" extent="1-1"/>
-<wire x1="20.32" y1="20.32" x2="38.1" y2="6.35" width="0" layer="19" extent="1-1"/>
+<wire x1="69.85" y1="19.05" x2="26.05" y2="21.59" width="0" layer="19" extent="1-1"/>
+<wire x1="20.32" y1="20.32" x2="69.85" y2="19.05" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="TDC">
 <contactref element="U6" pad="9"/>
@@ -2146,22 +2144,22 @@ design rules under a new name.</description>
 <contactref element="RDP-GND1" pad="1"/>
 <contactref element="RD-GND1" pad="1"/>
 <contactref element="TCT-3V3" pad="1"/>
-<wire x1="-9.74" y1="-118.11" x2="-1.7" y2="-153.67" width="0" layer="19" extent="1-1"/>
-<wire x1="-9.54" y1="-113.03" x2="-9.74" y2="-118.11" width="0" layer="19" extent="1-1"/>
-<wire x1="-9.54" y1="-110.49" x2="-9.54" y2="-113.03" width="0" layer="19" extent="1-1"/>
-<wire x1="17.78" y1="21.59" x2="-9.54" y2="-110.49" width="0" layer="19" extent="1-1"/>
+<wire x1="25.4" y1="24.55" x2="27.51" y2="24.13" width="0" layer="19" extent="1-1"/>
+<wire x1="24.75" y1="22.86" x2="25.4" y2="24.55" width="0" layer="19" extent="1-1"/>
+<wire x1="24.75" y1="21.59" x2="24.75" y2="22.86" width="0" layer="19" extent="1-1"/>
+<wire x1="17.78" y1="21.59" x2="24.75" y2="21.59" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="3V3">
 <contactref element="TCT-3V3" pad="2"/>
 <contactref element="LEDY" pad="2"/>
 <contactref element="LEDG" pad="2"/>
-<wire x1="-8.24" y1="-123.19" x2="-8.24" y2="-125.73" width="0" layer="19" extent="1-1"/>
-<wire x1="-8.04" y1="-118.11" x2="-8.24" y2="-123.19" width="0" layer="19" extent="1-1"/>
+<wire x1="8.89" y1="6.97" x2="8.89" y2="27.32" width="0" layer="19" extent="1-1"/>
+<wire x1="25.4" y1="26.25" x2="8.89" y2="6.97" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$4">
 <contactref element="ETH" pad="1"/>
 <contactref element="VCAPCLOSE" pad="2"/>
-<wire x1="30.48" y1="36.83" x2="-7.94" y2="-120.65" width="0" layer="19" extent="1-1"/>
+<wire x1="39.37" y1="11.43" x2="39.37" y2="8.57" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="LEDYN">
 <contactref element="U6" pad="14"/>
@@ -2169,17 +2167,17 @@ design rules under a new name.</description>
 <signal name="LEDGN">
 <contactref element="U6" pad="12"/>
 <contactref element="ETH" pad="27"/>
-<wire x1="6.858" y1="10.414" x2="38.1" y2="34.29" width="0" layer="19" extent="1-1"/>
+<wire x1="6.858" y1="10.414" x2="41.91" y2="19.05" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$7">
 <contactref element="LEDY" pad="1"/>
 <contactref element="U6" pad="13"/>
-<wire x1="8.89" y1="23.876" x2="-9.54" y2="-125.73" width="0" layer="19" extent="1-1"/>
+<wire x1="8.89" y1="23.876" x2="8.89" y2="26.02" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$9">
 <contactref element="U6" pad="11"/>
 <contactref element="LEDG" pad="1"/>
-<wire x1="8.89" y1="10.414" x2="-9.54" y2="-123.19" width="0" layer="19" extent="1-1"/>
+<wire x1="8.89" y1="10.414" x2="8.89" y2="8.27" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="LEDYP">
 <contactref element="ETH" pad="26"/>
@@ -2187,71 +2185,71 @@ design rules under a new name.</description>
 <signal name="N$10">
 <contactref element="ETH" pad="14"/>
 <contactref element="RBIAS-GNDCLOSE" pad="2"/>
-<wire x1="30.48" y1="3.81" x2="-8.095" y2="-128.27" width="0" layer="19" extent="1-1"/>
+<wire x1="72.39" y1="11.43" x2="72.39" y2="9.685" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VDDTX_ETH">
 <contactref element="ETH" pad="15"/>
 <contactref element="VSSTX-VDDTX" pad="2"/>
-<wire x1="38.1" y1="3.81" x2="-8.04" y2="-156.21" width="0" layer="19" extent="1-1"/>
+<wire x1="72.39" y1="19.05" x2="69.43" y2="15.24" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VSSTX_ETH">
 <contactref element="ETH" pad="18"/>
 <contactref element="VSSTX-VDDTX" pad="1"/>
-<wire x1="38.1" y1="11.43" x2="-9.74" y2="-156.21" width="0" layer="19" extent="1-1"/>
+<wire x1="64.77" y1="19.05" x2="67.73" y2="15.24" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VDDRX_ETH">
 <contactref element="ETH" pad="19"/>
 <contactref element="VSSRX-VDDRX" pad="2"/>
-<wire x1="38.1" y1="13.97" x2="-8.04" y2="-158.75" width="0" layer="19" extent="1-1"/>
+<wire x1="62.23" y1="19.05" x2="63.5" y2="16.09" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VDDPLL_ETH">
 <contactref element="ETH" pad="20"/>
 <contactref element="VSSPLL-VDDPLL" pad="1"/>
-<wire x1="38.1" y1="16.51" x2="-9.74" y2="-166.37" width="0" layer="19" extent="1-1"/>
+<wire x1="59.69" y1="19.05" x2="59.27" y2="16.51" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VSSPLL_ETH">
 <contactref element="ETH" pad="21"/>
 <contactref element="VSSPLL-VDDPLL" pad="2"/>
-<wire x1="38.1" y1="19.05" x2="-8.04" y2="-166.37" width="0" layer="19" extent="1-1"/>
+<wire x1="57.15" y1="19.05" x2="57.57" y2="16.51" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VSSOSC_ETH">
 <contactref element="ETH" pad="22"/>
 <contactref element="VSSOSC-VDDOSC" pad="2"/>
-<wire x1="38.1" y1="21.59" x2="-8.04" y2="-163.83" width="0" layer="19" extent="1-1"/>
+<wire x1="54.61" y1="19.05" x2="51.65" y2="15.24" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VDDOSC_ETH">
 <contactref element="ETH" pad="25"/>
 <contactref element="VSSOSC-VDDOSC" pad="1"/>
-<wire x1="38.1" y1="29.21" x2="-9.74" y2="-163.83" width="0" layer="19" extent="1-1"/>
+<wire x1="46.99" y1="19.05" x2="49.95" y2="15.24" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VSSRX_ETH">
 <contactref element="ETH" pad="11"/>
 <contactref element="VSSRX-VDDRX" pad="1"/>
-<wire x1="30.48" y1="11.43" x2="-9.74" y2="-158.75" width="0" layer="19" extent="1-1"/>
+<wire x1="64.77" y1="11.43" x2="63.5" y2="14.39" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VSS_ETH">
 <contactref element="ETH" pad="2"/>
 <contactref element="VSS-VDD_ETH" pad="1"/>
-<wire x1="30.48" y1="34.29" x2="-9.74" y2="-161.29" width="0" layer="19" extent="1-1"/>
+<wire x1="41.91" y1="11.43" x2="40.64" y2="14.39" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VDD_ETH">
 <contactref element="ETH" pad="28"/>
 <contactref element="VSS-VDD_ETH" pad="2"/>
-<wire x1="38.1" y1="36.83" x2="-8.04" y2="-161.29" width="0" layer="19" extent="1-1"/>
+<wire x1="39.37" y1="19.05" x2="40.64" y2="16.09" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="OSC1_ETH">
 <contactref element="ETH" pad="23"/>
 <contactref element="U$2" pad="P$1"/>
 <contactref element="OSC1-GND" pad="1"/>
-<wire x1="-9.42" y1="-169.31" x2="-9.74" y2="-173.99" width="0" layer="19" extent="1-1"/>
-<wire x1="38.1" y1="24.13" x2="-9.42" y2="-169.31" width="0" layer="19" extent="1-1"/>
+<wire x1="51.33" y1="23.26" x2="53.34" y2="24.55" width="0" layer="19" extent="1-1"/>
+<wire x1="52.07" y1="19.05" x2="51.33" y2="23.26" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="OSC2_ETH">
 <contactref element="ETH" pad="24"/>
 <contactref element="U$2" pad="P$4"/>
 <contactref element="OSC2-GND" pad="1"/>
-<wire x1="-8.36" y1="-168.51" x2="-9.74" y2="-171.45" width="0" layer="19" extent="1-1"/>
-<wire x1="38.1" y1="26.67" x2="-8.36" y2="-168.51" width="0" layer="19" extent="1-1"/>
+<wire x1="50.27" y1="22.46" x2="48.26" y2="24.55" width="0" layer="19" extent="1-1"/>
+<wire x1="49.53" y1="19.05" x2="50.27" y2="22.46" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 <mfgpreviewcolors>
