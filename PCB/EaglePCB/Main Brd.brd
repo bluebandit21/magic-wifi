@@ -1724,9 +1724,9 @@ design rules under a new name.</description>
 <attribute name="NAME" x="90.297" y="11.2395" size="0.8128" layer="25" ratio="18"/>
 <attribute name="VALUE" x="90.297" y="10.795" size="0.4064" layer="27" ratio="10"/>
 </element>
-<element name="RFI-GND1" library="microbuilder" package="_0402" value="5.6 nH" x="87.63" y="10.16" smashed="yes" grouprefs="ANT2">
-<attribute name="NAME" x="86.6775" y="10.9539" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="86.6775" y="8.8264" size="0.4064" layer="27" ratio="10"/>
+<element name="RFI-GND1" library="microbuilder" package="_0402" value="5.6 nH" x="87.63" y="10.16" smashed="yes" rot="R180" grouprefs="ANT2">
+<attribute name="NAME" x="88.5825" y="9.3661" size="0.8128" layer="25" ratio="18" rot="R180"/>
+<attribute name="VALUE" x="88.5825" y="11.4936" size="0.4064" layer="27" ratio="10" rot="R180"/>
 </element>
 <element name="RFO-VR_PA1" library="microbuilder" package="_0402" value="33nH" x="88.9" y="13.97" smashed="yes" grouprefs="ANT2">
 <attribute name="NAME" x="87.9475" y="14.7639" size="0.8128" layer="25" ratio="18"/>
@@ -1792,21 +1792,21 @@ design rules under a new name.</description>
 <attribute name="NAME" x="60.7695" y="5.803" size="0.8128" layer="25" ratio="18" rot="R270"/>
 <attribute name="VALUE" x="60.325" y="5.803" size="0.4064" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="RDM-GND1" library="microbuilder" package="0402" value="49.9 Ohm'" x="25.4" y="21.59" smashed="yes">
-<attribute name="NAME" x="26.797" y="21.3995" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="26.797" y="20.955" size="0.4064" layer="27" ratio="10"/>
+<element name="RDM-GND1" library="microbuilder" package="0402" value="49.9 Ohm'" x="25.4" y="20.32" smashed="yes">
+<attribute name="NAME" x="26.797" y="20.1295" size="0.8128" layer="25" ratio="18"/>
+<attribute name="VALUE" x="26.797" y="19.685" size="0.4064" layer="27" ratio="10"/>
 </element>
 <element name="RDP-GND1" library="microbuilder" package="0402" value="49.9 Ohm" x="25.4" y="22.86" smashed="yes">
 <attribute name="NAME" x="26.797" y="22.6695" size="0.8128" layer="25" ratio="18"/>
 <attribute name="VALUE" x="26.797" y="22.225" size="0.4064" layer="27" ratio="10"/>
 </element>
-<element name="RD-GND1" library="microbuilder" package="0603" value="0.1 uF" x="28.36" y="24.13" smashed="yes">
-<attribute name="NAME" x="29.757" y="23.9395" size="0.8128" layer="25" ratio="18"/>
-<attribute name="VALUE" x="29.757" y="23.495" size="0.4064" layer="27" ratio="10"/>
+<element name="RD-GND1" library="microbuilder" package="0603" value="0.1 uF" x="19.47" y="30.48" smashed="yes">
+<attribute name="NAME" x="20.867" y="30.2895" size="0.8128" layer="25" ratio="18"/>
+<attribute name="VALUE" x="20.867" y="29.845" size="0.4064" layer="27" ratio="10"/>
 </element>
-<element name="TCT-3V3" library="microbuilder" package="0603" value="" x="25.4" y="25.4" smashed="yes" rot="R90">
-<attribute name="NAME" x="25.527" y="27.178" size="0.8128" layer="25" font="vector" ratio="18" rot="R90"/>
-<attribute name="VALUE" x="26.162" y="27.178" size="0.4064" layer="27" font="vector" ratio="10" rot="R90"/>
+<element name="TCT-3V3" library="microbuilder" package="0603" value="" x="17.78" y="27.94" smashed="yes" rot="R180">
+<attribute name="NAME" x="16.002" y="28.067" size="0.8128" layer="25" font="vector" ratio="18" rot="R180"/>
+<attribute name="VALUE" x="16.002" y="28.702" size="0.4064" layer="27" font="vector" ratio="10" rot="R180"/>
 </element>
 <element name="VCAPCLOSE" library="microbuilder" package="0805" value="10 uF" x="31.75" y="8.89" smashed="yes" rot="R90">
 <attribute name="NAME" x="31.877" y="10.922" size="0.8128" layer="25" ratio="18" rot="R90"/>
@@ -1849,17 +1849,17 @@ design rules under a new name.</description>
 <attribute name="NAME" x="49.022" y="17.653" size="0.8128" layer="26" font="vector" ratio="18" rot="MR0"/>
 <attribute name="VALUE" x="49.022" y="17.018" size="0.4064" layer="28" font="vector" ratio="10" rot="MR0"/>
 </element>
-<element name="OSC2-GND" library="microbuilder" package="0603" value="180 pF" x="39.37" y="30.48" smashed="yes" rot="R90">
-<attribute name="NAME" x="39.497" y="32.258" size="0.8128" layer="25" font="vector" ratio="18" rot="R90"/>
-<attribute name="VALUE" x="40.132" y="32.258" size="0.4064" layer="27" font="vector" ratio="10" rot="R90"/>
+<element name="OSC2-GND" library="microbuilder" package="0603" value="180 pF" x="39.37" y="30.48" smashed="yes" rot="MR90">
+<attribute name="NAME" x="39.243" y="32.258" size="0.8128" layer="26" font="vector" ratio="18" rot="MR90"/>
+<attribute name="VALUE" x="38.608" y="32.258" size="0.4064" layer="28" font="vector" ratio="10" rot="MR90"/>
 </element>
-<element name="OSC1-GND" library="microbuilder" package="0603" value="14pF" x="49.53" y="30.48" smashed="yes" rot="R90">
-<attribute name="NAME" x="49.657" y="32.258" size="0.8128" layer="25" font="vector" ratio="18" rot="R90"/>
-<attribute name="VALUE" x="50.292" y="32.258" size="0.4064" layer="27" font="vector" ratio="10" rot="R90"/>
+<element name="OSC1-GND" library="microbuilder" package="0603" value="14pF" x="49.53" y="30.48" smashed="yes" rot="MR90">
+<attribute name="NAME" x="49.403" y="32.258" size="0.8128" layer="26" font="vector" ratio="18" rot="MR90"/>
+<attribute name="VALUE" x="48.768" y="32.258" size="0.4064" layer="28" font="vector" ratio="10" rot="MR90"/>
 </element>
-<element name="U$2" library="473" package="2PAD-11.5X4.8" value="J49SMH-P-G-G-K-25M0" x="44.45" y="25.4" smashed="yes">
-<attribute name="NAME" x="36.45" y="28.3" size="1.27" layer="25"/>
-<attribute name="VALUE" x="36.35" y="21.2" size="1.27" layer="27"/>
+<element name="U$2" library="473" package="2PAD-11.5X4.8" value="J49SMH-P-G-G-K-25M0" x="44.45" y="25.4" smashed="yes" rot="MR180">
+<attribute name="NAME" x="36.45" y="22.5" size="1.27" layer="26" rot="MR180"/>
+<attribute name="VALUE" x="36.35" y="29.6" size="1.27" layer="28" rot="MR180"/>
 </element>
 </elements>
 <signals>
@@ -1941,16 +1941,16 @@ design rules under a new name.</description>
 <wire x1="101.6" y1="11.6393" x2="99.06" y2="13.35" width="0" layer="19" extent="1-1"/>
 <wire x1="101.6" y1="8.6807" x2="101.6" y2="11.6393" width="0" layer="19" extent="1-1"/>
 <wire x1="89.58" y1="8.0264" x2="95.25" y2="13.35" width="0" layer="19" extent="1-1"/>
-<wire x1="88.138" y1="10.16" x2="89.58" y2="8.0264" width="0" layer="19" extent="1-1"/>
-<wire x1="86.98" y1="8.0264" x2="88.138" y2="10.16" width="0" layer="19" extent="1-1"/>
+<wire x1="87.122" y1="10.16" x2="89.58" y2="8.0264" width="0" layer="19" extent="1-1"/>
+<wire x1="86.98" y1="8.0264" x2="87.122" y2="10.16" width="0" layer="19" extent="1-1"/>
 <wire x1="87.63" y1="5.08" x2="86.98" y2="8.0264" width="0" layer="19" extent="1-1"/>
 <wire x1="90.5764" y1="3.78" x2="87.63" y2="5.08" width="0" layer="19" extent="1-1"/>
 <wire x1="64.77" y1="9.365" x2="86.98" y2="8.0264" width="0" layer="19" extent="1-1"/>
 <wire x1="60.96" y1="6.35" x2="64.77" y2="9.365" width="0" layer="19" extent="1-1"/>
 <wire x1="49.53" y1="31.33" x2="64.77" y2="9.365" width="0" layer="19" extent="1-1"/>
 <wire x1="39.37" y1="31.33" x2="49.53" y2="31.33" width="0" layer="19" extent="1-1"/>
-<wire x1="29.21" y1="24.13" x2="39.37" y2="31.33" width="0" layer="19" extent="1-1"/>
-<wire x1="27.32" y1="17.78" x2="29.21" y2="24.13" width="0" layer="19" extent="1-1"/>
+<wire x1="20.32" y1="30.48" x2="39.37" y2="31.33" width="0" layer="19" extent="1-1"/>
+<wire x1="27.32" y1="17.78" x2="20.32" y2="30.48" width="0" layer="19" extent="1-1"/>
 <wire x1="20.32" y1="12.7" x2="27.32" y2="17.78" width="0" layer="19" extent="1-1"/>
 <wire x1="20.32" y1="7" x2="20.32" y2="12.7" width="0" layer="19" extent="1-1"/>
 <wire x1="17.78" y1="19.05" x2="20.32" y2="12.7" width="0" layer="19" extent="1-1"/>
@@ -1960,109 +1960,143 @@ design rules under a new name.</description>
 <contactref element="LORA1" pad="25"/>
 <contactref element="RFI-RFO" pad="1"/>
 <contactref element="RFI-GND" pad="1"/>
-<wire x1="88.25" y1="30.48" x2="87.63" y2="27.0764" width="0" layer="19" extent="1-1"/>
-<wire x1="88.138" y1="29.21" x2="88.25" y2="30.48" width="0" layer="19" extent="1-1"/>
+<wire x1="88.138" y1="29.21" x2="88.138" y2="30.368" width="0.1524" layer="1"/>
+<wire x1="88.138" y1="30.368" x2="88.25" y2="30.48" width="0.1524" layer="1"/>
+<wire x1="88.138" y1="29.21" x2="87.63" y2="28.702" width="0.1524" layer="1"/>
+<wire x1="87.63" y1="28.702" x2="87.63" y2="27.0764" width="0.1524" layer="1"/>
 </signal>
 <signal name="RFO">
 <contactref element="LORA1" pad="24"/>
 <contactref element="RFI-RFO" pad="2"/>
 <contactref element="RFO-VR_PA" pad="2"/>
 <contactref element="RFO-33PF" pad="2"/>
-<wire x1="89.55" y1="30.48" x2="88.28" y2="27.0764" width="0" layer="19" extent="1-1"/>
-<wire x1="89.408" y1="33.02" x2="89.55" y2="30.48" width="0" layer="19" extent="1-1"/>
-<wire x1="90.932" y1="33.02" x2="89.408" y2="33.02" width="0" layer="19" extent="1-1"/>
+<wire x1="88.6666" y1="28.8153125" x2="88.6666" y2="29.5966" width="0.1524" layer="1"/>
+<wire x1="88.6666" y1="29.5966" x2="89.55" y2="30.48" width="0.1524" layer="1"/>
+<wire x1="88.28" y1="27.0764" x2="88.28" y2="28.4287125" width="0.1524" layer="1"/>
+<wire x1="88.28" y1="28.4287125" x2="88.6666" y2="28.8153125" width="0.1524" layer="1"/>
+<wire x1="89.55" y1="30.48" x2="89.55" y2="32.878" width="0.1524" layer="1"/>
+<wire x1="89.55" y1="32.878" x2="89.408" y2="33.02" width="0.1524" layer="1"/>
+<wire x1="90.932" y1="33.02" x2="89.408" y2="33.02" width="0.1524" layer="1"/>
 </signal>
 <signal name="VR_PA">
 <contactref element="LORA1" pad="28"/>
 <contactref element="RFO-VR_PA" pad="1"/>
 <contactref element="VR_PA-PA_BOOST" pad="2"/>
-<wire x1="88.392" y1="33.02" x2="85.68" y2="27.0764" width="0" layer="19" extent="1-1"/>
-<wire x1="88.138" y1="31.75" x2="88.392" y2="33.02" width="0" layer="19" extent="1-1"/>
+<wire x1="88.392" y1="33.02" x2="88.392" y2="32.004" width="0.1524" layer="1"/>
+<wire x1="88.392" y1="32.004" x2="88.138" y2="31.75" width="0.1524" layer="1"/>
+<wire x1="88.392" y1="33.02" x2="87.6506" y2="32.2786" width="0.1524" layer="1"/>
+<wire x1="87.6506" y1="32.2786" x2="86.7273125" y2="32.2786" width="0.1524" layer="1"/>
+<wire x1="86.7273125" y1="32.2786" x2="85.68" y2="31.2312875" width="0.1524" layer="1"/>
+<wire x1="85.68" y1="31.2312875" x2="85.68" y2="27.0764" width="0.1524" layer="1"/>
 </signal>
 <signal name="PA_BOOST">
 <contactref element="VR_PA-PA_BOOST" pad="1"/>
 <contactref element="LORA1" pad="27"/>
-<wire x1="87.122" y1="31.75" x2="86.33" y2="27.0764" width="0" layer="19" extent="1-1"/>
+<wire x1="87.122" y1="31.75" x2="86.33" y2="30.958" width="0.1524" layer="1"/>
+<wire x1="86.33" y1="30.958" x2="86.33" y2="27.0764" width="0.1524" layer="1"/>
 </signal>
 <signal name="N$1">
 <contactref element="RFO-33PF" pad="1"/>
 <contactref element="10NH-ANT1" pad="2"/>
-<wire x1="91.948" y1="33.02" x2="92.06" y2="31.75" width="0" layer="19" extent="1-1"/>
+<wire x1="91.948" y1="33.02" x2="91.948" y2="31.862" width="0.1524" layer="1"/>
+<wire x1="91.948" y1="31.862" x2="92.06" y2="31.75" width="0.1524" layer="1"/>
 </signal>
 <signal name="ANT1">
 <contactref element="10NH-ANT1" pad="1"/>
 <contactref element="ANT1-GND" pad="2"/>
 <contactref element="ANT1-ANT2\" pad="2"/>
-<wire x1="95.25" y1="31.1" x2="94.742" y2="29.21" width="0" layer="19" extent="1-1"/>
-<wire x1="93.36" y1="31.75" x2="95.25" y2="31.1" width="0" layer="19" extent="1-1"/>
+<wire x1="94.742" y1="29.21" x2="94.742" y2="30.368" width="0.1524" layer="1"/>
+<wire x1="94.742" y1="30.368" x2="93.36" y2="31.75" width="0.1524" layer="1"/>
+<wire x1="95.25" y1="31.1" x2="95.25" y2="30.876" width="0.1524" layer="1"/>
+<wire x1="95.25" y1="30.876" x2="94.742" y2="30.368" width="0.1524" layer="1"/>
 </signal>
 <signal name="ANT2">
 <contactref element="ANT1-ANT2\" pad="1"/>
 <contactref element="ANT2-GND" pad="2"/>
 <contactref element="ANT2-ANT3" pad="2"/>
-<wire x1="96.52" y1="31.1" x2="97.282" y2="29.21" width="0" layer="19" extent="1-1"/>
-<wire x1="95.758" y1="29.21" x2="96.52" y2="31.1" width="0" layer="19" extent="1-1"/>
+<wire x1="97.282" y1="29.21" x2="96.52" y2="29.972" width="0.1524" layer="1"/>
+<wire x1="96.52" y1="29.972" x2="96.52" y2="31.1" width="0.1524" layer="1"/>
+<wire x1="96.52" y1="29.972" x2="95.758" y2="29.21" width="0.1524" layer="1"/>
 </signal>
 <signal name="ANT3">
 <contactref element="ANT2-ANT3" pad="1"/>
 <contactref element="ANT2-GND1" pad="2"/>
 <contactref element="J1" pad="1"/>
-<wire x1="98.298" y1="29.21" x2="100.0792" y2="29.21" width="0" layer="19" extent="1-1"/>
-<wire x1="99.06" y1="31.1" x2="98.298" y2="29.21" width="0" layer="19" extent="1-1"/>
+<wire x1="98.298" y1="29.21" x2="99.06" y2="29.972" width="0.1524" layer="1"/>
+<wire x1="99.06" y1="29.972" x2="99.06" y2="31.1" width="0.1524" layer="1"/>
+<wire x1="99.06" y1="31.1" x2="99.06" y2="30.2292" width="0.1524" layer="1"/>
+<wire x1="99.06" y1="30.2292" x2="100.0792" y2="29.21" width="0.1524" layer="1"/>
 </signal>
 <signal name="N$2">
 <contactref element="RFO-33PF1" pad="1"/>
 <contactref element="10NH-ANT2" pad="2"/>
-<wire x1="91.948" y1="13.97" x2="92.06" y2="12.7" width="0" layer="19" extent="1-1"/>
+<wire x1="91.948" y1="13.97" x2="91.948" y2="12.812" width="0.1524" layer="1"/>
+<wire x1="91.948" y1="12.812" x2="92.06" y2="12.7" width="0.1524" layer="1"/>
 </signal>
 <signal name="ANT3-2">
 <contactref element="J3" pad="1"/>
 <contactref element="ANT2-ANT1" pad="1"/>
 <contactref element="ANT2-GND3" pad="2"/>
-<wire x1="99.06" y1="12.05" x2="98.298" y2="10.16" width="0" layer="19" extent="1-1"/>
-<wire x1="100.0792" y1="10.16" x2="99.06" y2="12.05" width="0" layer="19" extent="1-1"/>
+<wire x1="98.298" y1="10.16" x2="99.06" y2="10.922" width="0.1524" layer="1"/>
+<wire x1="99.06" y1="10.922" x2="99.06" y2="12.05" width="0.1524" layer="1"/>
+<wire x1="99.06" y1="12.05" x2="99.06" y2="11.1792" width="0.1524" layer="1"/>
+<wire x1="99.06" y1="11.1792" x2="100.0792" y2="10.16" width="0.1524" layer="1"/>
 </signal>
 <signal name="ANT2-2">
 <contactref element="ANT1-ANT2\1" pad="1"/>
 <contactref element="ANT2-GND2" pad="2"/>
 <contactref element="ANT2-ANT1" pad="2"/>
-<wire x1="96.52" y1="12.05" x2="97.282" y2="10.16" width="0" layer="19" extent="1-1"/>
-<wire x1="95.758" y1="10.16" x2="96.52" y2="12.05" width="0" layer="19" extent="1-1"/>
+<wire x1="95.758" y1="10.16" x2="96.52" y2="10.922" width="0.1524" layer="1"/>
+<wire x1="96.52" y1="10.922" x2="96.52" y2="12.05" width="0.1524" layer="1"/>
+<wire x1="96.52" y1="10.922" x2="97.282" y2="10.16" width="0.1524" layer="1"/>
 </signal>
 <signal name="ANT1-2">
 <contactref element="10NH-ANT2" pad="1"/>
 <contactref element="ANT1-GND1" pad="2"/>
 <contactref element="ANT1-ANT2\1" pad="2"/>
-<wire x1="93.36" y1="12.7" x2="95.25" y2="12.05" width="0" layer="19" extent="1-1"/>
-<wire x1="94.742" y1="10.16" x2="93.36" y2="12.7" width="0" layer="19" extent="1-1"/>
+<wire x1="93.36" y1="12.7" x2="94.742" y2="11.318" width="0.1524" layer="1"/>
+<wire x1="94.742" y1="11.318" x2="94.742" y2="10.16" width="0.1524" layer="1"/>
+<wire x1="95.25" y1="12.05" x2="95.25" y2="11.826" width="0.1524" layer="1"/>
+<wire x1="95.25" y1="11.826" x2="94.742" y2="11.318" width="0.1524" layer="1"/>
 </signal>
 <signal name="PA_BOOST2">
 <contactref element="VR_PA-PA_BOOST1" pad="1"/>
 <contactref element="LORA2" pad="27"/>
-<wire x1="86.33" y1="8.0264" x2="87.122" y2="12.7" width="0" layer="19" extent="1-1"/>
+<wire x1="87.122" y1="12.7" x2="86.33" y2="11.908" width="0.1524" layer="1"/>
+<wire x1="86.33" y1="11.908" x2="86.33" y2="8.0264" width="0.1524" layer="1"/>
 </signal>
 <signal name="VR_PA2">
 <contactref element="RFO-VR_PA1" pad="1"/>
 <contactref element="VR_PA-PA_BOOST1" pad="2"/>
 <contactref element="LORA2" pad="28"/>
-<wire x1="88.392" y1="13.97" x2="88.138" y2="12.7" width="0" layer="19" extent="1-1"/>
-<wire x1="85.68" y1="8.0264" x2="88.392" y2="13.97" width="0" layer="19" extent="1-1"/>
+<wire x1="88.138" y1="12.7" x2="88.392" y2="12.954" width="0.1524" layer="1"/>
+<wire x1="88.392" y1="12.954" x2="88.392" y2="13.97" width="0.1524" layer="1"/>
+<wire x1="88.392" y1="13.97" x2="87.6506" y2="13.2286" width="0.1524" layer="1"/>
+<wire x1="87.6506" y1="13.2286" x2="86.7273125" y2="13.2286" width="0.1524" layer="1"/>
+<wire x1="86.7273125" y1="13.2286" x2="85.68" y2="12.1812875" width="0.1524" layer="1"/>
+<wire x1="85.68" y1="12.1812875" x2="85.68" y2="8.0264" width="0.1524" layer="1"/>
 </signal>
 <signal name="RFO2">
 <contactref element="RFI-RFO1" pad="2"/>
 <contactref element="RFO-VR_PA1" pad="2"/>
 <contactref element="RFO-33PF1" pad="2"/>
 <contactref element="LORA2" pad="24"/>
-<wire x1="90.932" y1="13.97" x2="89.55" y2="11.43" width="0" layer="19" extent="1-1"/>
-<wire x1="89.408" y1="13.97" x2="90.932" y2="13.97" width="0" layer="19" extent="1-1"/>
-<wire x1="88.28" y1="8.0264" x2="89.408" y2="13.97" width="0" layer="19" extent="1-1"/>
+<wire x1="89.55" y1="11.43" x2="88.6666" y2="10.5466" width="0.1524" layer="1"/>
+<wire x1="88.6666" y1="10.5466" x2="88.6666" y2="9.7653125" width="0.1524" layer="1"/>
+<wire x1="88.28" y1="9.3787125" x2="88.28" y2="8.0264" width="0.1524" layer="1"/>
+<wire x1="88.6666" y1="9.7653125" x2="88.28" y2="9.3787125" width="0.1524" layer="1"/>
+<wire x1="89.55" y1="11.43" x2="89.408" y2="11.572" width="0.1524" layer="1"/>
+<wire x1="89.408" y1="11.572" x2="89.408" y2="13.97" width="0.1524" layer="1"/>
+<wire x1="89.408" y1="13.97" x2="90.932" y2="13.97" width="0.1524" layer="1"/>
 </signal>
 <signal name="RFI2">
 <contactref element="RFI-RFO1" pad="1"/>
 <contactref element="RFI-GND1" pad="1"/>
 <contactref element="LORA2" pad="25"/>
-<wire x1="87.122" y1="10.16" x2="88.25" y2="11.43" width="0" layer="19" extent="1-1"/>
-<wire x1="87.63" y1="8.0264" x2="87.122" y2="10.16" width="0" layer="19" extent="1-1"/>
+<wire x1="88.25" y1="11.43" x2="88.138" y2="11.318" width="0.1524" layer="1"/>
+<wire x1="88.138" y1="11.318" x2="88.138" y2="10.16" width="0.1524" layer="1"/>
+<wire x1="88.138" y1="10.16" x2="87.63" y2="9.652" width="0.1524" layer="1"/>
+<wire x1="87.63" y1="9.652" x2="87.63" y2="8.0264" width="0.1524" layer="1"/>
 </signal>
 <signal name="VC2PETH">
 <contactref element="U6" pad="6"/>
@@ -2123,15 +2157,27 @@ design rules under a new name.</description>
 <contactref element="U6" pad="10"/>
 <contactref element="RDP-GND1" pad="2"/>
 <contactref element="ETH" pad="17"/>
-<wire x1="59.69" y1="20.32" x2="26.05" y2="22.86" width="0" layer="19" extent="1-1"/>
-<wire x1="20.32" y1="22.86" x2="59.69" y2="20.32" width="0" layer="19" extent="1-1"/>
+<wire x1="20.32" y1="22.86" x2="21.2000625" y2="22.86" width="0.1524" layer="1"/>
+<wire x1="25.8732875" y1="22.86" x2="26.05" y2="22.86" width="0.1524" layer="1"/>
+<wire x1="25.1946875" y1="23.5386" x2="25.8732875" y2="22.86" width="0.1524" layer="1"/>
+<wire x1="21.2000625" y1="22.86" x2="21.8786625" y2="23.5386" width="0.1524" layer="1"/>
+<wire x1="21.8786625" y1="23.5386" x2="25.1946875" y2="23.5386" width="0.1524" layer="1"/>
+<wire x1="26.05" y1="22.86" x2="57.15" y2="22.86" width="0.1524" layer="1"/>
+<via x="57.15" y="22.86" extent="1-16" drill="0.35"/>
+<wire x1="57.15" y1="22.86" x2="59.69" y2="20.32" width="0.1524" layer="16"/>
 </signal>
 <signal name="TDM">
 <contactref element="U6" pad="8"/>
 <contactref element="RDM-GND1" pad="2"/>
 <contactref element="ETH" pad="16"/>
-<wire x1="62.23" y1="20.32" x2="26.05" y2="21.59" width="0" layer="19" extent="1-1"/>
-<wire x1="20.32" y1="20.32" x2="62.23" y2="20.32" width="0" layer="19" extent="1-1"/>
+<wire x1="20.32" y1="20.32" x2="21.2000625" y2="20.32" width="0.1524" layer="1"/>
+<wire x1="25.8732875" y1="20.32" x2="26.05" y2="20.32" width="0.1524" layer="1"/>
+<wire x1="25.1946875" y1="19.6414" x2="25.8732875" y2="20.32" width="0.1524" layer="1"/>
+<wire x1="21.2000625" y1="20.32" x2="21.8786625" y2="19.6414" width="0.1524" layer="1"/>
+<wire x1="21.8786625" y1="19.6414" x2="25.1946875" y2="19.6414" width="0.1524" layer="1"/>
+<wire x1="26.05" y1="20.32" x2="27.32" y2="21.59" width="0.1524" layer="1"/>
+<wire x1="27.32" y1="21.59" x2="60.96" y2="21.59" width="0.1524" layer="1"/>
+<wire x1="60.96" y1="21.59" x2="62.23" y2="20.32" width="0.1524" layer="1"/>
 </signal>
 <signal name="TDC">
 <contactref element="U6" pad="9"/>
@@ -2139,21 +2185,24 @@ design rules under a new name.</description>
 <contactref element="RDP-GND1" pad="1"/>
 <contactref element="RD-GND1" pad="1"/>
 <contactref element="TCT-3V3" pad="1"/>
-<wire x1="17.78" y1="21.59" x2="24.13" y2="21.59" width="0.1524" layer="1"/>
-<wire x1="24.13" y1="21.59" x2="24.75" y2="21.59" width="0.1524" layer="1"/>
-<wire x1="24.75" y1="22.86" x2="24.13" y2="22.24" width="0.1524" layer="1"/>
-<wire x1="24.13" y1="22.24" x2="24.13" y2="21.59" width="0.1524" layer="1"/>
-<wire x1="24.75" y1="22.86" x2="25.4" y2="23.51" width="0.1524" layer="1"/>
-<wire x1="25.4" y1="23.51" x2="25.4" y2="24.55" width="0.1524" layer="1"/>
-<wire x1="25.4" y1="24.55" x2="25.82" y2="24.13" width="0.1524" layer="1"/>
-<wire x1="25.82" y1="24.13" x2="27.51" y2="24.13" width="0.1524" layer="1"/>
+<wire x1="18.63" y1="27.94" x2="17.78" y2="27.09" width="0.1524" layer="1"/>
+<wire x1="17.78" y1="27.09" x2="17.78" y2="21.59" width="0.1524" layer="1"/>
+<wire x1="18.63" y1="27.94" x2="18.63" y2="30.47" width="0.1524" layer="1"/>
+<wire x1="18.63" y1="30.47" x2="18.62" y2="30.48" width="0.1524" layer="1"/>
+<wire x1="24.75" y1="22.86" x2="22.90111875" y2="22.86" width="0.1524" layer="1"/>
+<wire x1="18.1229" y1="21.9329" x2="17.78" y2="21.59" width="0.1524" layer="1"/>
+<wire x1="21.97401875" y1="21.9329" x2="18.1229" y2="21.9329" width="0.1524" layer="1"/>
+<wire x1="22.90111875" y1="22.86" x2="21.97401875" y2="21.9329" width="0.1524" layer="1"/>
+<wire x1="24.75" y1="20.32" x2="22.90111875" y2="20.32" width="0.1524" layer="1"/>
+<wire x1="22.90111875" y1="20.32" x2="21.63111875" y2="21.59" width="0.1524" layer="1"/>
+<wire x1="21.63111875" y1="21.59" x2="17.78" y2="21.59" width="0.1524" layer="1"/>
 </signal>
 <signal name="3V3">
 <contactref element="TCT-3V3" pad="2"/>
 <contactref element="LEDY" pad="2"/>
 <contactref element="LEDG" pad="2"/>
 <wire x1="8.89" y1="6.97" x2="8.89" y2="27.32" width="0" layer="19" extent="1-1"/>
-<wire x1="25.4" y1="26.25" x2="8.89" y2="6.97" width="0" layer="19" extent="1-1"/>
+<wire x1="16.93" y1="27.94" x2="8.89" y2="6.97" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$4">
 <contactref element="ETH" pad="1"/>
@@ -2258,19 +2307,19 @@ design rules under a new name.</description>
 <contactref element="ETH" pad="23"/>
 <contactref element="OSC1-GND" pad="1"/>
 <contactref element="U$2" pad="P$2"/>
-<wire x1="49.45" y1="25.4" x2="49.45" y2="25.32" width="0.1524" layer="1"/>
-<wire x1="49.45" y1="25.32" x2="44.45" y2="20.32" width="0.1524" layer="1"/>
-<wire x1="49.45" y1="25.4" x2="49.53" y2="25.48" width="0.1524" layer="1"/>
-<wire x1="49.53" y1="25.48" x2="49.53" y2="29.63" width="0.1524" layer="1"/>
+<wire x1="44.45" y1="20.32" x2="49.45" y2="25.32" width="0.1524" layer="16"/>
+<wire x1="49.45" y1="25.32" x2="49.45" y2="25.4" width="0.1524" layer="16"/>
+<wire x1="49.45" y1="25.4" x2="49.53" y2="25.48" width="0.1524" layer="16"/>
+<wire x1="49.53" y1="25.48" x2="49.53" y2="29.63" width="0.1524" layer="16"/>
 </signal>
 <signal name="OSC2_ETH">
 <contactref element="ETH" pad="24"/>
 <contactref element="OSC2-GND" pad="1"/>
 <contactref element="U$2" pad="P$1"/>
-<wire x1="39.37" y1="29.63" x2="39.37" y2="25.48" width="0.1524" layer="1"/>
-<wire x1="39.45" y1="25.4" x2="39.37" y2="25.48" width="0.1524" layer="1"/>
-<wire x1="39.45" y1="25.4" x2="39.45" y2="22.78" width="0.1524" layer="1"/>
-<wire x1="39.45" y1="22.78" x2="41.91" y2="20.32" width="0.1524" layer="1"/>
+<wire x1="41.91" y1="20.32" x2="39.45" y2="22.78" width="0.1524" layer="16"/>
+<wire x1="39.45" y1="22.78" x2="39.45" y2="25.4" width="0.1524" layer="16"/>
+<wire x1="39.45" y1="25.4" x2="39.37" y2="25.48" width="0.1524" layer="16"/>
+<wire x1="39.37" y1="25.48" x2="39.37" y2="29.63" width="0.1524" layer="16"/>
 </signal>
 </signals>
 <mfgpreviewcolors>
