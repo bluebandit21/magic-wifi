@@ -49,15 +49,13 @@ void SPImain(void)
      CS_SMCLK_FLLREF_RATIO
      );
 
-    initSPI("A1");
-    initSPI("B0");
+    initSPI("A0");
 
     volatile unsigned int i = 0;
     for(;;){
-    EUSCI_A_SPI_transmitData(EUSCI_A1_BASE, 0xAA); //send 1010 1010
-    EUSCI_B_SPI_transmitData(EUSCI_B0_BASE, 0xAA); //send 1010 1010
+    EUSCI_A_SPI_transmitData(EUSCI_A0_BASE, 0xAA); //send 1010 1010
 
-    for(i = 0; i < 20000; ++i); //delay
+//    for(i = 0; i < 20000; ++i); //delay
     }
 }
 
@@ -109,7 +107,7 @@ void initSPI(char* SPILine) {
            param.msbFirst = EUSCI_A_SPI_MSB_FIRST;
            param.clockPhase = EUSCI_A_SPI_PHASE_DATA_CHANGED_ONFIRST_CAPTURED_ON_NEXT;
            param.clockPolarity = EUSCI_A_SPI_CLOCKPOLARITY_INACTIVITY_LOW;
-           param.spiMode = EUSCI_A_SPI_3PIN; //TODO implement CS ourselves.. or can use EUSCI_A_SPI_4PIN_UCxSTE_ACTIVE_HIGH
+           param.spiMode = EUSCI_A_SPI_4PIN_UCxSTE_ACTIVE_HIGH; //TODO implement CS ourselves.. or can use EUSCI_A_SPI_4PIN_UCxSTE_ACTIVE_HIGH
        EUSCI_A_SPI_initMaster(base, &param);
 
        //Enable SPI Module
@@ -132,7 +130,7 @@ void initSPI(char* SPILine) {
            param.msbFirst = EUSCI_B_SPI_MSB_FIRST;
            param.clockPhase = EUSCI_B_SPI_PHASE_DATA_CHANGED_ONFIRST_CAPTURED_ON_NEXT;
            param.clockPolarity = EUSCI_B_SPI_CLOCKPOLARITY_INACTIVITY_LOW;
-           param.spiMode = EUSCI_B_SPI_3PIN; //TODO implement CS ourselves.. or can use EUSCI_A_SPI_4PIN_UCxSTE_ACTIVE_HIGH
+           param.spiMode = EUSCI_B_SPI_4PIN_UCxSTE_ACTIVE_HIGH; //TODO implement CS ourselves.. or can use EUSCI_A_SPI_4PIN_UCxSTE_ACTIVE_HIGH
        EUSCI_B_SPI_initMaster(base, &param);
 
        //Enable SPI Module

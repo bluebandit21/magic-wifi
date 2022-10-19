@@ -57,9 +57,9 @@ functionality in an interrupt. */
 
 /* Set mainCREATE_SIMPLE_BLINKY_DEMO_ONLY to one to run the simple blinky demo,
 or 0 to run the more comprehensive test and demo application. */
-#define mainCREATE_SIMPLE_BLINKY_DEMO_ONLY	1
-#define mainSPI_TEST 1
-
+#define mainCREATE_SIMPLE_BLINKY_DEMO_ONLY	0
+#define mainSPI_TEST 0
+#define mainDEFER_INT 1
 /*-----------------------------------------------------------*/
 
 /*
@@ -75,6 +75,8 @@ static void prvSetupHardware( void );
     extern void SPImain(void);
 #elif( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 )
 	extern void main_blinky( void );
+#elif ( mainDEFER_INT == 1)
+	extern void main_defer_interrupt(void);
 #else
 	extern void main_full( void );
 #endif /* #if mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 */
@@ -112,6 +114,12 @@ int main( void )
 	        prvSetupHardware();
 		main_blinky();
 	}
+    #elif( mainDEFER_INT == 1 )
+    {
+        /* Configure the hardware ready to run the demo. */
+            prvSetupHardware();
+            main_defer_interrupt();
+    }
 	#else
 	{
 	    /* Configure the hardware ready to run the demo. */
@@ -168,15 +176,15 @@ void vApplicationIdleHook( void )
 
 void vApplicationTickHook( void )
 {
-	#if( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 0 )
-	{
-		/* Call the periodic event group from ISR demo. */
-		vPeriodicEventGroupsProcessing();
-
-		/* Call the code that 'gives' a task notification from an ISR. */
-		xNotifyTaskFromISR();
-	}
-	#endif
+//	#if( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1)
+//	{
+//		/* Call the periodic event group from ISR demo. */
+//		vPeriodicEventGroupsProcessing();
+//
+//		/* Call the code that 'gives' a task notification from an ISR. */
+//		xNotifyTaskFromISR();
+//	}
+//	#endif
 }
 /*-----------------------------------------------------------*/
 
