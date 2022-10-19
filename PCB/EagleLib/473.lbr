@@ -1872,6 +1872,16 @@
 <wire x1="1.1" y1="-1.01" x2="1.1" y2="0.9" width="0.1016" layer="21"/>
 <wire x1="1.1" y1="0.9" x2="0" y2="0.9" width="0.1016" layer="21"/>
 </package>
+<package name="2PAD-11.5X4.8">
+<smd name="P$1" x="-5" y="0" dx="5.5" dy="2" layer="1"/>
+<smd name="P$2" x="5" y="0" dx="5.5" dy="2" layer="1"/>
+<wire x1="-8" y1="2.8" x2="8.1" y2="2.8" width="0.127" layer="21"/>
+<wire x1="8.1" y1="2.8" x2="8.1" y2="-2.8" width="0.127" layer="21"/>
+<wire x1="8.1" y1="-2.8" x2="-8" y2="-2.8" width="0.127" layer="21"/>
+<wire x1="-8" y1="-2.8" x2="-8" y2="2.8" width="0.127" layer="21"/>
+<text x="-8" y="2.9" size="1.27" layer="25">&gt;NAME</text>
+<text x="-8.1" y="-4.2" size="1.27" layer="27">&gt;VALUE</text>
+</package>
 </packages>
 <symbols>
 <symbol name="CONN16_2337822-1">
@@ -2920,6 +2930,23 @@
 <connects>
 <connect gate="G$1" pin="P$1" pad="P$1"/>
 <connect gate="G$1" pin="P$2" pad="P$4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="J49SMH-P-G-G-K-25M0">
+<description>A 25 MHz Crystal Oscillator with 30 pF load capacitance. In a HC-49 US Case Package.</description>
+<gates>
+<gate name="G$1" symbol="CRYSTAL_OSC" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="2PAD-11.5X4.8">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
 </connects>
 <technologies>
 <technology name=""/>
