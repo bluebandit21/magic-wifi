@@ -246,12 +246,35 @@ void ENC28J60::initSPI () {
 
     GPIO_setOutputLowOnPin(SCK_Port, SCK_Pin);
 
-    SPCR = (0b1 << SPE) | (0b1 << MSTR); // 8 MHz @ 16
-    SPSR |= (0b1 << SPI2X);
+    //This is largely adapted(stolen) from initSPI on freertos_port branch
+    //At some point should be more properly transitioned over
+    uint8_t port = GPIO_PORT_P1;
+    uint16_t pins = GPIO_PIN4 + GPIO_PIN5 + GPIO_PIN6 + GPIO_PIN7;
+    GPIO_setAsPeripheralModuleFunctionInputPin(port, pins, GPIO_PRIMARY_MODULE_FUNCTION);
+    PMM_unlockLPM5();
+
+    const int CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ = 8000;
+    uint16_t base = EUSCI_A0_BASE;
+    EUSCI_A_SPI_initMasterParam param = {0};
+    param.selectClockSource = EUSCI_A_SPI_CLOCKSOURCE_SMCLK;
+    param.clockSourceFrequency = CS_getSMCLK(); //SMCLK capable of up to 24MHz. Non-jank around 8MHz.
+    param.desiredSpiClock = CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ * 1000;
+    param.msbFirst = EUSCI_A_SPI_MSB_FIRST;
+    param.clockPhase = EUSCI_A_SPI_PHASE_DATA_CHANGED_ONFIRST_CAPTURED_ON_NEXT;
+    param.clockPolarity = EUSCI_A_SPI_CLOCKPOLARITY_INACTIVITY_LOW;
+    param.spiMode = EUSCI_A_SPI_3PIN; //TODO implement CS ourselves.. or can use EUSCI_A_SPI_4PIN_UCxSTE_ACTIVE_HIGH
+    EUSCI_A_SPI_initMaster(base, &param);
+
+    //Enable SPI Module
+    EUSCI_A_SPI_enable(base);
+    //Clear receive interrupt flag
+    EUSCI_A_SPI_clearInterrupt(base, EUSCI_A_SPI_RECEIVE_INTERRUPT);
+    //Enable Receive interrupt
+    EUSCI_A_SPI_enableInterrupt(base, EUSCI_A_SPI_RECEIVE_INTERRUPT);
 }
 
 static void enableChip () {
-    cli();
+    //cli(); //TODO: This is ... questionable
 
     GPIO_setOutputLowOnPin(select_Port, select_Pin);
 }
@@ -260,13 +283,12 @@ static void disableChip () {
 
     GPIO_setOutputHighOnPin(select_Port, select_Pin);
 
-    sei();
+    //sei(); //TODO: This is ... questionable
 }
 
 static void xferSPI (byte data) {
-    SPDR = data;
-    while (!(SPSR&(1<<SPIF)))
-        ;
+
+    EUSCI_A_SPI_transmitData(EUSCI_A0_BASE, data);
 }
 
 static byte readOp (byte op, byte address) {
@@ -275,7 +297,9 @@ static byte readOp (byte op, byte address) {
     xferSPI(0x00);
     if (address & 0x80)
         xferSPI(0x00);
-    byte result = SPDR;
+
+    byte result = EUSCI_A_SPI_receiveData(EUSCI_A0_BASE);
+
     disableChip();
     return result;
 }
@@ -294,17 +318,16 @@ static void readBuf(uint16_t len, byte* data) {
     if (len != 0) {
         xferSPI(ENC28J60_READ_BUF_MEM);
 
-        SPDR = 0x00;
+        EUSCI_A_SPI_transmitData(EUSCI_A0_BASE, 0x00);
+
         while (--len) {
-            while (!(SPSR & (1<<SPIF)))
-                ;
-            nextbyte = SPDR;
-            SPDR = 0x00;
+            nextbyte = EUSCI_A_SPI_receiveData(EUSCI_A0_BASE);
+            EUSCI_A_SPI_transmitData(EUSCI_A0_BASE, 0x00);
+
             *data++ = nextbyte;
         }
-        while (!(SPSR & (1<<SPIF)))
-            ;
-        *data++ = SPDR;
+
+        *data++ = EUSCI_A_SPI_receiveData(EUSCI_A0_BASE);
     }
     disableChip();
 }
@@ -314,15 +337,15 @@ static void writeBuf(uint16_t len, const byte* data) {
     if (len != 0) {
         xferSPI(ENC28J60_WRITE_BUF_MEM);
 
-        SPDR = *data++;
+
+
+        EUSCI_A_SPI_transmitData(EUSCI_A0_BASE, *data++);
+
         while (--len) {
             uint8_t nextbyte = *data++;
-        	while (!(SPSR & (1<<SPIF)))
-                ;
-            SPDR = nextbyte;
+
+            EUSCI_A_SPI_transmitData(EUSCI_A0_BASE, nextbyte);
      	};
-        while (!(SPSR & (1<<SPIF)))
-            ;
     }
     disableChip();
 }
@@ -372,14 +395,21 @@ static void writePhy (byte address, uint16_t data) {
 
 byte ENC28J60::initialize (uint16_t size, const byte* macaddr) {
     bufferSize = size;
-    if (((SPCR >> SPE) & 0b1) == 0)
+
+    static bool is_initialized = false;
+
+    if(!is_initialized){
+        is_initialized = true;
         initSPI();
+    }
 
     GPIO_setAsOutputPin(select_Port, select_Pin);
     disableChip();
 
     writeOp(ENC28J60_SOFT_RESET, 0, ENC28J60_SOFT_RESET);
-    delay(2); // errata B7/2
+
+    for(int i = 0; i<24000;i++); //Delay 2 ms ~= 24000 clock cycles
+
     while (!readOp(ENC28J60_READ_CTRL_REG, ESTAT) & ESTAT_CLKRDY)
         ;
 
