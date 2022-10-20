@@ -1896,12 +1896,12 @@ design rules under a new name.</description>
 <attribute name="NAME" x="36.45" y="22.5" size="1.27" layer="26" rot="MR180"/>
 <attribute name="VALUE" x="36.35" y="29.6" size="1.27" layer="28" rot="MR180"/>
 </element>
-<element name="J2" library="473" package="CON_702461401_MOL" value="702461401" x="5.08" y="-53.34" smashed="yes">
-<attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="5.08" y="-53.34" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="702461401" x="5.08" y="-53.34" size="1.778" layer="27" display="off"/>
-<attribute name="MFR_NAME" value="Molex Connector Corporation" x="5.08" y="-53.34" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="9.4234" y="-42.545" size="1.27" layer="27" ratio="6" rot="SR0"/>
-<attribute name="VALUE" x="10.9728" y="-42.545" size="1.27" layer="21" ratio="6" rot="SR0"/>
+<element name="J2" library="473" package="CON_702461401_MOL" value="702461401" x="6.35" y="59.69" smashed="yes">
+<attribute name="COPYRIGHT" value="Copyright (C) 2022 Ultra Librarian. All rights reserved." x="6.35" y="59.69" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="702461401" x="6.35" y="59.69" size="1.778" layer="27" display="off"/>
+<attribute name="MFR_NAME" value="Molex Connector Corporation" x="6.35" y="59.69" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="10.6934" y="70.485" size="1.27" layer="27" ratio="6" rot="SR0"/>
+<attribute name="VALUE" x="12.2428" y="70.485" size="1.27" layer="21" ratio="6" rot="SR0"/>
 </element>
 </elements>
 <signals>
