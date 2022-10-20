@@ -8,7 +8,7 @@ int8_t sx127x_nss_pin = SX127X_PIN_NSS;
 
 // TODO:: REPLACE with RTOS block function to eliminate busy wait, for TEST use ONLY
 void delay(int i) {
-    for(volatile int i = 0; i < 100000; ++i);
+    for(int j = 0; j < 100000; ++j);
 }
 
 void sx127x_setSPI(EUSCI_A_SPI_initMasterParam &SpiObject)
@@ -35,6 +35,11 @@ void sx127x_begin()
     GPIO_setAsOutputPin(sx127x_nss_port, sx127x_nss_pin);
     EUSCI_A_SPI_initMaster(baseAddress, sx127x_spi_params);
     EUSCI_A_SPI_enable(baseAddress);
+    //EUSCI_A_SPI_clearInterrupt(EUSCI_A0_BASE,
+             // EUSCI_A_SPI_RECEIVE_INTERRUPT);
+        //Enable Receive interrupt
+    //EUSCI_A_SPI_enableInterrupt(EUSCI_A0_BASE,
+              //EUSCI_A_SPI_RECEIVE_INTERRUPT);
 }
 
 void sx127x_writeBits(uint8_t address, uint8_t data, uint8_t position, uint8_t length)
@@ -57,14 +62,14 @@ uint8_t sx127x_readRegister(uint8_t address)
 
 uint8_t sx127x_transfer(uint8_t address, uint8_t data)
 {
-    GPIO_setOutputHighOnPin(sx127x_nss_port, sx127x_nss_pin);
+    GPIO_setOutputLowOnPin(sx127x_nss_port, sx127x_nss_pin);
 
     EUSCI_A_SPI_transmitData(baseAddress, address);
     EUSCI_A_SPI_transmitData(baseAddress, data);
     uint8_t response = EUSCI_A_SPI_receiveData(baseAddress); // TODO:: verify this tx/rx pattern works, buffering should make full duplex? 
-    EUSCI_A_SPI_disable(baseAddress); // TODO:: this might be slow ?? Since bus is dedicated, this likely unnecessary
+    //EUSCI_A_SPI_disable(baseAddress); // TODO:: this might be slow ?? Since bus is dedicated, this likely unnecessary
 
-    GPIO_setOutputLowOnPin(sx127x_nss_port, sx127x_nss_pin);
+    GPIO_setOutputHighOnPin(sx127x_nss_port, sx127x_nss_pin);
 
     return response;
 }
