@@ -24,22 +24,14 @@
  *
  */
 
-/******************************************************************************
- * This project provides two demo applications.  A simple blinky style project,
- * and a more comprehensive test and demo application.  The
- * mainCREATE_SIMPLE_BLINKY_DEMO_ONLY setting (defined in this file) is used to
- * select between the two.  The simply blinky demo is implemented and described
- * in main_blinky.c.  The more comprehensive test and demo application is
- * implemented and described in main_full.c.
+/*
+ * main_structure.c
+ * Implements overall structure for the program.
  *
- * This file implements the code that is not demo specific, including the
- * hardware setup and standard FreeRTOS hook functions.
- *
- * ENSURE TO READ THE DOCUMENTATION PAGE FOR THIS PORT AND DEMO APPLICATION ON
- * THE http://www.FreeRTOS.org WEB SITE FOR FULL INFORMATION ON USING THIS DEMO
- * APPLICATION, AND ITS ASSOCIATE FreeRTOS ARCHITECTURE PORT!
- *
+ *  Created on: Oct 20, 2022
+ *      Author: gzm20
  */
+
 
 /* Scheduler include files. */
 #include "FreeRTOS.h"
@@ -55,117 +47,168 @@ functionality in an interrupt. */
 /* TI includes. */
 #include "driverlib.h"
 
-/* Set mainCREATE_SIMPLE_BLINKY_DEMO_ONLY to one to run the simple blinky demo,
-or 0 to run the more comprehensive test and demo application. */
-#define mainCREATE_SIMPLE_BLINKY_DEMO_ONLY	0
-#define mainSPI_TEST 0
-#define mainDEFER_INT 1
-/*-----------------------------------------------------------*/
+//provides system setup.
+static void prvSetup(void);
 
-/*
- * Configure the hardware as necessary to run this demo.
- */
-static void prvSetupHardware( void );
-
-/*
- * main_blinky() is used when mainCREATE_SIMPLE_BLINKY_DEMO_ONLY is set to 1.
- * main_full() is used when mainCREATE_SIMPLE_BLINKY_DEMO_ONLY is set to 0.
- */
-#if (mainSPI_TEST == 1)
-    extern void SPImain(void);
-#elif( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 )
-	extern void main_blinky( void );
-#elif ( mainDEFER_INT == 1)
-	extern void main_defer_interrupt(void);
-#else
-	extern void main_full( void );
-#endif /* #if mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 */
-/* Prototypes for the standard FreeRTOS callback/hook functions implemented
-within this file. */
+//FreeRTOS system hooks - not sure if relevant.
 void vApplicationMallocFailedHook( void );
 void vApplicationIdleHook( void );
 void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName );
 void vApplicationTickHook( void );
 
+//From demo main.c
 /* The heap is allocated here so the "persistent" qualifier can be used.  This
 requires configAPPLICATION_ALLOCATED_HEAP to be set to 1 in FreeRTOSConfig.h.
 See http://www.freertos.org/a00111.html for more information. */
 #ifdef __ICC430__
-	__persistent 					/* IAR version. */
+    __persistent                    /* IAR version. */
 #else
-	#pragma PERSISTENT( ucHeap ) 	/* CCS version. */
+    #pragma PERSISTENT( ucHeap )    /* CCS version. */
 #endif
 uint8_t ucHeap[ configTOTAL_HEAP_SIZE ] = { 0 };
 
-/*-----------------------------------------------------------*/
+//EUSCI A1 (P4.0~P4.3) touches a button and TX/RX pins used in debugging.
+//Don't use this by default (only TRUE when we are working on final board)
+//When false, allows P4.1 button to be used for input.
+#define USE_EUSCI_A1 (false)
 
-int main( void )
+//EUSCI B0 (P1.0~P1.3) touches the red LED at the bottom of the board.
+//For now, because we assume P1.0 (STE/Chip Select) is used, we disable use of the LED.
+//We could use another line and have both be usable.
+#define USE_EUSCI_B0 (false)
+
+int main(void){
+    //prvSetup();
+    SPImain();
+    //TODO put main here
+    return 0;
+}
+
+void initSPI(char*);
+
+void SPImain(void)
 {
-    #if( mainSPI_TEST == 1 )
-    {
-	    SPImain();
+    WDT_A_hold(WDT_A_BASE); //shut up watchdog
+
+    //Target frequency for MCLK in kHz
+    const int CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ = 8000;
+    //MCLK/FLLRef Ratio
+    const int CS_SMCLK_FLLREF_RATIO = (int)(CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ * 1000.0 / 32768.0); // = Desired HZ / 32768
+    //Variable to store current Clock values
+    volatile uint32_t clockValue = 0;
+    // Set DCO FLL reference = REFO
+    CS_initClockSignal(
+     CS_FLLREF,
+     CS_REFOCLK_SELECT,
+     CS_CLOCK_DIVIDER_1);
+    // Set ACLK = REFO
+    CS_initClockSignal(
+     CS_ACLK,
+     CS_REFOCLK_SELECT,
+     CS_CLOCK_DIVIDER_1);
+
+    // Set Ratio and Desired MCLK Frequency and initialize DCO
+    // Returns 1 (STATUS_SUCCESS) if good
+
+    volatile int result = CS_initFLLSettle(
+     CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ,
+     CS_SMCLK_FLLREF_RATIO
+     );
+
+    initSPI("A0");
+
+    volatile unsigned int i = 0;
+    for(;;){
+    EUSCI_A_SPI_transmitData(EUSCI_A0_BASE, 0xAA); //send 1010 1010
+
     }
-    /* See http://www.FreeRTOS.org/MSP430FR5969_Free_RTOS_Demo.html */
-    /* The mainCREATE_SIMPLE_BLINKY_DEMO_ONLY setting is described at the top
-    of this file. */
-	#elif( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1 )
-	{
-	    /* Configure the hardware ready to run the demo. */
-	        prvSetupHardware();
-		main_blinky();
-	}
-    #elif( mainDEFER_INT == 1 )
-    {
-        /* Configure the hardware ready to run the demo. */
-            prvSetupHardware();
-            main_defer_interrupt();
+}
+
+//initializes SPI given which one (SPIBank = 'A' or 'B', SPISlot = 0 or 1)
+void initSPI(char* SPILine) {
+    char SPIBank = SPILine[0];
+    char SPISlot = SPILine[1];
+    //pinMode() equivalent
+    //B0: 1.0 ~ 1.3, B1: 4.4 ~ 4.7
+    //A0: 1.4 ~ 1.7, A1: 4.0 ~ 4.3
+
+    // Set up GPIO Pins
+    uint8_t port;
+    uint16_t pins;
+    if(SPIBank == 'A'){
+        if(SPISlot == '0'){
+            port = GPIO_PORT_P1;
+            pins = GPIO_PIN4 + GPIO_PIN5 + GPIO_PIN6 + GPIO_PIN7;
+        }else if(SPISlot == '1'){
+            port = GPIO_PORT_P4;
+            pins = GPIO_PIN0 + GPIO_PIN1 + GPIO_PIN2 + GPIO_PIN3;
+        }
+    }else if(SPIBank == 'B'){
+        if(SPISlot == '0'){
+            port = GPIO_PORT_P1;
+            pins = GPIO_PIN0 + GPIO_PIN1 + GPIO_PIN2 + GPIO_PIN3;
+        }else if(SPISlot == '1'){
+            port = GPIO_PORT_P4;
+            pins = GPIO_PIN4 + GPIO_PIN5 + GPIO_PIN6 + GPIO_PIN7;
+        }
     }
-	#else
-	{
-	    /* Configure the hardware ready to run the demo. */
-	    prvSetupHardware();
-		main_full();
-	}
-	#endif
-	return 0;
+    GPIO_setAsPeripheralModuleFunctionInputPin(
+        port, pins, GPIO_PRIMARY_MODULE_FUNCTION);
+
+    // Disable the GPIO power-on default high-impedance mode
+    PMM_unlockLPM5();
+
+    // Setup EUSCI SPI access and interrupts
+    const int CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ = 8000;
+    if(SPIBank == 'A'){
+       uint16_t base = EUSCI_A0_BASE;
+       if(SPISlot == '1'){
+           base = EUSCI_A1_BASE;
+       }
+       EUSCI_A_SPI_initMasterParam param = {0};
+           param.selectClockSource = EUSCI_A_SPI_CLOCKSOURCE_SMCLK;
+           param.clockSourceFrequency = CS_getSMCLK(); //SMCLK capable of up to 24MHz. Non-jank around 8MHz.
+           param.desiredSpiClock = CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ * 1000;
+           param.msbFirst = EUSCI_A_SPI_MSB_FIRST;
+           param.clockPhase = EUSCI_A_SPI_PHASE_DATA_CHANGED_ONFIRST_CAPTURED_ON_NEXT;
+           param.clockPolarity = EUSCI_A_SPI_CLOCKPOLARITY_INACTIVITY_LOW;
+           param.spiMode = EUSCI_A_SPI_4PIN_UCxSTE_ACTIVE_HIGH; //TODO implement CS ourselves.. or can use EUSCI_A_SPI_4PIN_UCxSTE_ACTIVE_HIGH
+       EUSCI_A_SPI_initMaster(base, &param);
+
+       //Enable SPI Module
+       EUSCI_A_SPI_enable(base);
+       //Clear receive interrupt flag
+       EUSCI_A_SPI_clearInterrupt(base,
+             EUSCI_A_SPI_RECEIVE_INTERRUPT);
+       //Enable Receive interrupt
+       EUSCI_A_SPI_enableInterrupt(base,
+             EUSCI_A_SPI_RECEIVE_INTERRUPT);
+    }else if(SPIBank == 'B'){
+       uint16_t base = EUSCI_B0_BASE;
+       if(SPISlot == '1'){
+           base = EUSCI_B1_BASE;
+       }
+       EUSCI_B_SPI_initMasterParam param = {0};
+           param.selectClockSource = EUSCI_B_SPI_CLOCKSOURCE_SMCLK;
+           param.clockSourceFrequency = CS_getSMCLK(); //SMCLK capable of up to 24MHz. Non-jank around 8MHz.
+           param.desiredSpiClock = CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ * 1000;
+           param.msbFirst = EUSCI_B_SPI_MSB_FIRST;
+           param.clockPhase = EUSCI_B_SPI_PHASE_DATA_CHANGED_ONFIRST_CAPTURED_ON_NEXT;
+           param.clockPolarity = EUSCI_B_SPI_CLOCKPOLARITY_INACTIVITY_LOW;
+           param.spiMode = EUSCI_B_SPI_4PIN_UCxSTE_ACTIVE_HIGH; //TODO implement CS ourselves.. or can use EUSCI_A_SPI_4PIN_UCxSTE_ACTIVE_HIGH
+       EUSCI_B_SPI_initMaster(base, &param);
+
+       //Enable SPI Module
+       EUSCI_B_SPI_enable(base);
+       //Clear receive interrupt flag
+       EUSCI_B_SPI_clearInterrupt(base,
+             EUSCI_B_SPI_RECEIVE_INTERRUPT);
+       //Enable Receive interrupt
+       EUSCI_B_SPI_enableInterrupt(base,
+             EUSCI_B_SPI_RECEIVE_INTERRUPT);
+    }
 }
 
-/*-----------------------------------------------------------*/
-
-void init_SPI(void){
-    //Initializes all 4 SPI lines as master.
-    EUSCI_A_SPI_initMasterParam param = {};
-}
-
-/*-----------------------------------------------------------*/
-
-void vApplicationMallocFailedHook( void )
-{
-	/* Called if a call to pvPortMalloc() fails because there is insufficient
-	free memory available in the FreeRTOS heap.  pvPortMalloc() is called
-	internally by FreeRTOS API functions that create tasks, queues, software
-	timers, and semaphores.  The size of the FreeRTOS heap is set by the
-	configTOTAL_HEAP_SIZE configuration constant in FreeRTOSConfig.h. */
-
-	/* Force an assert. */
-	configASSERT( ( volatile void * ) NULL );
-}
-/*-----------------------------------------------------------*/
-
-void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName )
-{
-	( void ) pcTaskName;
-	( void ) pxTask;
-
-	/* Run time stack overflow checking is performed if
-	configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2.  This hook
-	function is called if a stack overflow is detected.
-	See http://www.freertos.org/Stacks-and-stack-overflow-checking.html */
-
-	/* Force an assert. */
-	configASSERT( ( volatile void * ) NULL );
-}
-/*-----------------------------------------------------------*/
 
 void vApplicationIdleHook( void )
 {
@@ -176,17 +219,42 @@ void vApplicationIdleHook( void )
 
 void vApplicationTickHook( void )
 {
-//	#if( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1)
-//	{
-//		/* Call the periodic event group from ISR demo. */
-//		vPeriodicEventGroupsProcessing();
+//  #if( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1)
+//  {
+//      /* Call the periodic event group from ISR demo. */
+//      vPeriodicEventGroupsProcessing();
 //
-//		/* Call the code that 'gives' a task notification from an ISR. */
-//		xNotifyTaskFromISR();
-//	}
-//	#endif
+//      /* Call the code that 'gives' a task notification from an ISR. */
+//      xNotifyTaskFromISR();
+//  }
+//  #endif
+}
+
+void vApplicationMallocFailedHook( void )
+{
+    /* Called if a call to pvPortMalloc() fails because there is insufficient
+    free memory available in the FreeRTOS heap.  pvPortMalloc() is called
+    internally by FreeRTOS API functions that create tasks, queues, software
+    timers, and semaphores.  The size of the FreeRTOS heap is set by the
+    configTOTAL_HEAP_SIZE configuration constant in FreeRTOSConfig.h. */
+
+    configASSERT( ( volatile void * ) NULL );
 }
 /*-----------------------------------------------------------*/
+
+void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName )
+{
+    //Remove compiler warnings.
+    ( void ) pcTaskName;
+    ( void ) pxTask;
+
+    /* Run time stack overflow checking is performed if
+    configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2.  This hook
+    function is called if a stack overflow is detected.
+    See http://www.freertos.org/Stacks-and-stack-overflow-checking.html */
+
+    configASSERT( ( volatile void * ) NULL );
+}
 
 /* The MSP430X port uses this callback function to configure its tick interrupt.
 This allows the application to choose the tick interrupt source.
@@ -196,230 +264,152 @@ vApplicationSetupTimerInterrupt() generates the tick from timer A0, so in this
 case configTICK_VECTOR is set to TIMER0_A0_VECTOR. */
 void vApplicationSetupTimerInterrupt( void )
 {
-const unsigned short usACLK_Frequency_Hz = 32768;
+    const unsigned short usACLK_Frequency_Hz = 32768;
 
-	/* Ensure the timer is stopped. */
-	TB0CTL = 0;
+    /* Ensure the timer is stopped. */
+    TB0CTL = 0;
 
-	/* Run the timer from the ACLK. */
-	TB0CTL = TBSSEL_1;
+    /* Run the timer from the ACLK. */
+    TB0CTL = TBSSEL_1;
 
-	/* Clear everything to start with. */
-	TB0CTL |= TBCLR;
+    /* Clear everything to start with. */
+    TB0CTL |= TBCLR;
 
-	/* Set the compare match value according to the tick rate we want. */
-	TB0CCR0 = usACLK_Frequency_Hz / configTICK_RATE_HZ;
+    /* Set the compare match value according to the tick rate we want. */
+    TB0CCR0 = usACLK_Frequency_Hz / configTICK_RATE_HZ;
 
-	/* Enable the interrupts. */
-	TB0CCTL0 = CCIE;
+    /* Enable the interrupts. */
+    TB0CCTL0 = CCIE;
 
-	/* Start up clean. */
-	TB0CTL |= TBCLR;
+    /* Start up clean. */
+    TB0CTL |= TBCLR;
 
-	/* Up mode. */
-	TB0CTL |= MC_1;
+    /* Up mode. */
+    TB0CTL |= MC_1;
 }
 /*-----------------------------------------------------------*/
 
 
-//*****************************************************************************
-//
 //Desired Timeout for XT1 initialization
-//
-//*****************************************************************************
 #define CS_XT1_TIMEOUT 50000
 
-//*****************************************************************************
-//
-//Desired Timeout for XT2 initialization
-//
-//*****************************************************************************
-#define CS_XT2_TIMEOUT 0
-
-//*****************************************************************************
-//
-//XT1 Crystal Frequency being used
-//
-//*****************************************************************************
-#define CS_XT1_CRYSTAL_FREQUENCY    32768
-
-
-
-//*****************************************************************************
-//
 //Target frequency for MCLK in kHz
-//
-//*****************************************************************************
 #define CS_MCLK_DESIRED_FREQUENCY_IN_KHZ   1000
 
-//*****************************************************************************
-//
 //MCLK/FLLRef Ratio
-//
-//*****************************************************************************
-#define CS_MCLK_FLLREF_RATIO   30
+#define CS_MCLK_FLLREF_RATIO   30 //can be calculated.
 
-//*****************************************************************************
-//
-//Variable to store current Clock values
-//
-//*****************************************************************************
-uint32_t clockValue = 0;
-
-//*****************************************************************************
-//
-//Variable to store status of Oscillator fault flags
-//
-//*****************************************************************************
-uint16_t status;
-
-
-
-static void prvSetupHardware( void )
+static void prvSetup( void )
 {
-    uint8_t returnValue = 0;
-    /* Stop Watchdog timer. */
+    // Stop watchdog timer (TODO: still needed if we use _system_pre_init?)
     WDT_A_hold( __MSP430_BASEADDRESS_WDT_A__ );
 
-	/* Set all GPIO pins to output and low. */
-	GPIO_setOutputLowOnPin( GPIO_PORT_P1, GPIO_PIN0 | GPIO_PIN1 | GPIO_PIN2 | GPIO_PIN3 | GPIO_PIN4 | GPIO_PIN5 | GPIO_PIN6 | GPIO_PIN7 );
-	GPIO_setOutputLowOnPin( GPIO_PORT_P2, GPIO_PIN0 | GPIO_PIN1 | GPIO_PIN2 | GPIO_PIN3 | GPIO_PIN4 | GPIO_PIN5 | GPIO_PIN6 | GPIO_PIN7 );
-	GPIO_setOutputLowOnPin( GPIO_PORT_P3, GPIO_PIN0 | GPIO_PIN1 | GPIO_PIN2 | GPIO_PIN3 | GPIO_PIN4 | GPIO_PIN5 | GPIO_PIN6 | GPIO_PIN7 );
-	GPIO_setOutputLowOnPin( GPIO_PORT_P4, GPIO_PIN0 | GPIO_PIN1 | GPIO_PIN2 | GPIO_PIN3 | GPIO_PIN4 | GPIO_PIN5 | GPIO_PIN6 | GPIO_PIN7 );
-	GPIO_setOutputLowOnPin( GPIO_PORT_PJ, GPIO_PIN0 | GPIO_PIN1 | GPIO_PIN2 | GPIO_PIN3 | GPIO_PIN4 | GPIO_PIN5 | GPIO_PIN6 | GPIO_PIN7 | GPIO_PIN8 | GPIO_PIN9 | GPIO_PIN10 | GPIO_PIN11 | GPIO_PIN12 | GPIO_PIN13 | GPIO_PIN14 | GPIO_PIN15 );
-	GPIO_setAsOutputPin( GPIO_PORT_P1, GPIO_PIN0 | GPIO_PIN1 | GPIO_PIN2 | GPIO_PIN3 | GPIO_PIN4 | GPIO_PIN5 | GPIO_PIN6 | GPIO_PIN7 );
-	GPIO_setAsOutputPin( GPIO_PORT_P2, GPIO_PIN0 | GPIO_PIN1 | GPIO_PIN2 | GPIO_PIN3 | GPIO_PIN4 | GPIO_PIN5 | GPIO_PIN6 | GPIO_PIN7 );
-	GPIO_setAsOutputPin( GPIO_PORT_P3, GPIO_PIN0 | GPIO_PIN1 | GPIO_PIN2 | GPIO_PIN3 | GPIO_PIN4 | GPIO_PIN5 | GPIO_PIN6 | GPIO_PIN7 );
-	GPIO_setAsOutputPin( GPIO_PORT_P4, GPIO_PIN0 | GPIO_PIN1 | GPIO_PIN2 | GPIO_PIN3 | GPIO_PIN4 | GPIO_PIN5 | GPIO_PIN6 | GPIO_PIN7 );
-	GPIO_setAsOutputPin( GPIO_PORT_PJ, GPIO_PIN0 | GPIO_PIN1 | GPIO_PIN2 | GPIO_PIN3 | GPIO_PIN4 | GPIO_PIN5 | GPIO_PIN6 | GPIO_PIN7 | GPIO_PIN8 | GPIO_PIN9 | GPIO_PIN10 | GPIO_PIN11 | GPIO_PIN12 | GPIO_PIN13 | GPIO_PIN14 | GPIO_PIN15 );
-	GPIO_setAsOutputPin( GPIO_PORT_P6, GPIO_PIN6); //for second LED
-	GPIO_setOutputLowOnPin( GPIO_PORT_P6, GPIO_PIN6);
+    //LEDs
+    //Red (Warning: Also used for SPI B0 STE/CS)
+    if (!USE_EUSCI_B0){
+        GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0); GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0);
+    }
+    //Green
+    GPIO_setAsOutputPin(GPIO_PORT_P6, GPIO_PIN6); GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
 
+    //Onboard buttons
+    //left button on board (Warning: Also used for SPI A1 CLK)
+    if (!USE_EUSCI_A1){
+        GPIO_setAsInputPin(GPIO_PORT_P4, GPIO_PIN1);
+    }
+    //right button on board
+    GPIO_setAsInputPin(GPIO_PORT_P2, GPIO_PIN3);
 
-	/* SPI initialization */
+    //SPI lines
+    //A0
+    GPIO_setAsPeripheralModuleFunctionInputPin(
+        GPIO_PORT_P1, GPIO_PIN4 + GPIO_PIN5 + GPIO_PIN6 + GPIO_PIN7, GPIO_PRIMARY_MODULE_FUNCTION);
+    //A1
+    if (USE_EUSCI_A1){
+        GPIO_setAsPeripheralModuleFunctionInputPin(
+            GPIO_PORT_P4, GPIO_PIN0 + GPIO_PIN1 + GPIO_PIN2 + GPIO_PIN3, GPIO_PRIMARY_MODULE_FUNCTION);
+    }
+    //B0
+    if (USE_EUSCI_B0){
+        GPIO_setAsPeripheralModuleFunctionInputPin(
+           GPIO_PORT_P1, GPIO_PIN0 + GPIO_PIN1 + GPIO_PIN2 + GPIO_PIN3, GPIO_PRIMARY_MODULE_FUNCTION);
+    }
+    //B1
+    GPIO_setAsPeripheralModuleFunctionInputPin(
+        GPIO_PORT_P4, GPIO_PIN4 + GPIO_PIN5 + GPIO_PIN6 + GPIO_PIN7, GPIO_PRIMARY_MODULE_FUNCTION);
 
+    //Disable the GPIO power-on default high-impedance mode. Enables GPIO for actual use.
+    PMM_unlockLPM5();
 
-
-
-	// /* Configure P2.0 - UCA0TXD and P2.1 - UCA0RXD. */
-	// GPIO_setOutputLowOnPin( GPIO_PORT_P2, GPIO_PIN0 );
-	// GPIO_setAsOutputPin( GPIO_PORT_P2, GPIO_PIN0 );
-	// GPIO_setAsPeripheralModuleFunctionInputPin( GPIO_PORT_P2, GPIO_PIN1, GPIO_SECONDARY_MODULE_FUNCTION );
-	// GPIO_setAsPeripheralModuleFunctionOutputPin( GPIO_PORT_P2, GPIO_PIN0, GPIO_SECONDARY_MODULE_FUNCTION );
-
-	// /* Set PJ.4 and PJ.5 for LFXT. */
-	// GPIO_setAsPeripheralModuleFunctionInputPin(  GPIO_PORT_PJ, GPIO_PIN4 + GPIO_PIN5, GPIO_PRIMARY_MODULE_FUNCTION  );
-
-	// /* Set DCO frequency to 8 MHz. */
-	// CS_setDCOFreq( CS_DCORSEL_0, CS_DCOFSEL_6 );
-
-	// /* Set external clock frequency to 32.768 KHz. */
-	// CS_setExternalClockSource( 32768, 0 );
-
-	// /* Set ACLK = LFXT. */
-	// CS_initClockSignal( CS_ACLK, CS_LFXTCLK_SELECT, CS_CLOCK_DIVIDER_1 );
-
-	// /* Set SMCLK = DCO with frequency divider of 1. */
-	// CS_initClockSignal( CS_SMCLK, CS_DCOCLK_SELECT, CS_CLOCK_DIVIDER_1 );
-
-	// /* Set MCLK = DCO with frequency divider of 1. */
-	// CS_initClockSignal( CS_MCLK, CS_DCOCLK_SELECT, CS_CLOCK_DIVIDER_1 );
-
-	// /* Start XT1 with no time out. */
-	// CS_turnOnLFXT( CS_LFXT_DRIVE_0 );
-
-	// /* Disable the GPIO power-on default high-impedance mode. */
-	// PMM_unlockLPM5();
-
-	//from the google drive dude
+    //---------------------------------------Clock configuration------------------------------------------
+    //from the google drive dude
 
     //Port select XT1
     GPIO_setAsPeripheralModuleFunctionInputPin(
         GPIO_PORT_P2,
         GPIO_PIN6 + GPIO_PIN7,
-        GPIO_SECONDARY_MODULE_FUNCTION
-    );
-
-    /* Disable the GPIO power-on default high-impedance mode. */
-    PMM_unlockLPM5();
+        GPIO_SECONDARY_MODULE_FUNCTION);
 
     //Initializes the XT1 and XT2 crystal frequencies being used
-    CS_setExternalClockSource(
-        CS_XT1_CRYSTAL_FREQUENCY
-        );
+    CS_setExternalClockSource(32768); //32,768 Hz ext. oscillator
 
     //Initialize XT1. Returns STATUS_SUCCESS if initializes successfully
-    returnValue = CS_turnOnXT1LFWithTimeout(
+    uint8_t returnValue = CS_turnOnXT1LFWithTimeout(
         CS_XT1_DRIVE_0,
-        CS_XT1_TIMEOUT
-        );
+        CS_XT1_TIMEOUT);
 
     //Select XT1 as ACLK source
     CS_initClockSignal(
         CS_ACLK,
         CS_XT1CLK_SELECT,
-        CS_CLOCK_DIVIDER_1
-        );
-
-
-   //--------------------------------------------------------------------------
+        CS_CLOCK_DIVIDER_1);
 
     //Set DCO FLL reference = REFO
-       CS_initClockSignal(
-           CS_FLLREF,
-           CS_REFOCLK_SELECT,
-           CS_CLOCK_DIVIDER_1
-           );
+    CS_initClockSignal(
+        CS_FLLREF,
+        CS_REFOCLK_SELECT,
+        CS_CLOCK_DIVIDER_1);
 
-       //Create struct variable to store proper software trim values
-          CS_initFLLParam param = {0};
+    //Create struct variable to store proper software trim values
+    CS_initFLLParam param = {0};
 
-          //Set Ratio/Desired MCLK Frequency, initialize DCO, save trim values
-          CS_initFLLCalculateTrim(
-              CS_MCLK_DESIRED_FREQUENCY_IN_KHZ,
-              CS_MCLK_FLLREF_RATIO,
-              &param
-              );
+    //Set Ratio/Desired MCLK Frequency, initialize DCO, save trim values
+    CS_initFLLCalculateTrim(
+        CS_MCLK_DESIRED_FREQUENCY_IN_KHZ,
+        CS_MCLK_FLLREF_RATIO,
+        &param);
 
-          //Clear all OSC fault flag
-          CS_clearAllOscFlagsWithTimeout(1000);
+    //Clear all OSC fault flag
+    CS_clearAllOscFlagsWithTimeout(1000);
 
-          //For demonstration purpose, change DCO clock freq to 16MHz
-          CS_initFLLSettle(
-              16000,
-              487
-              );
+    //For demonstration purpose, change DCO clock freq to 16MHz
+    CS_initFLLSettle(
+        16000,
+        487
+        );
 
-          //Clear all OSC fault flag
-          CS_clearAllOscFlagsWithTimeout(1000);
+    //Clear all OSC fault flag
+    CS_clearAllOscFlagsWithTimeout(1000);
 
-          //Reload DCO trim values that were calculated earlier
-          CS_initFLLLoadTrim(
-              CS_MCLK_DESIRED_FREQUENCY_IN_KHZ,
-              CS_MCLK_FLLREF_RATIO,
-              &param
-              );
+    //Reload DCO trim values that were calculated earlier
+    CS_initFLLLoadTrim(
+        CS_MCLK_DESIRED_FREQUENCY_IN_KHZ,
+        CS_MCLK_FLLREF_RATIO,
+        &param);
 
-          //Clear all OSC fault flag
-          CS_clearAllOscFlagsWithTimeout(1000);
+    //Clear all OSC fault flag
+    CS_clearAllOscFlagsWithTimeout(1000); //TODO these needed?
 
-          //Enable oscillator fault interrupt
-          SFR_enableInterrupt(SFR_OSCILLATOR_FAULT_INTERRUPT);
+    //Enable oscillator fault interrupt
+    SFR_enableInterrupt(SFR_OSCILLATOR_FAULT_INTERRUPT);
 
-          // Enable global interrupt
-          __bis_SR_register(GIE);
-
-
+    // Enable global interrupt
+    __bis_SR_register(GIE);
 }
-/*-----------------------------------------------------------*/
 
 int _system_pre_init( void )
 {
     /* Stop Watchdog timer. */
     WDT_A_hold( __MSP430_BASEADDRESS_WDT_A__ );
-
-    /* Return 1 for segments to be initialised. */
     return 1;
 }
-
-
