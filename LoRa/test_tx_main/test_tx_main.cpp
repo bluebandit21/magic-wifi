@@ -50,6 +50,14 @@ uint8_t crcEn = 1;
 // SyncWord setting
 uint8_t syncword = 0x12;
 
+// debug reg
+void debug(uint8_t val) {
+    static uint8_t debug_reg[50];
+    static int i;
+    if(i >= 50) i = 0;
+    debug_reg[i++] = val;
+}
+
 volatile bool transmitted = false;
 
 // TOD0:: replace mock with MSP timer
@@ -88,6 +96,7 @@ void settingFunction(EUSCI_A_SPI_initMasterParam &SpiObject) {
   sx127x_setSPI(SpiObject);
   sx127x_begin();
   volatile uint8_t version = sx127x_readRegister(SX127X_REG_VERSION);
+  debug(version);
   if (version == 0x12 || version == 0x22) {
     //Serial.println("Resetting RF module");
     version = version;
@@ -134,34 +143,40 @@ void settingFunction(EUSCI_A_SPI_initMasterParam &SpiObject) {
   // Show modulation param and packet param registers
   volatile uint8_t reg, reg_;
   reg = sx127x_readRegister(SX127X_REG_MODEM_CONFIG_1);
+  debug(reg);
   //Serial.print("Modem config 1 : 0x");
   //Serial.println(reg, HEX);
   reg = sx127x_readRegister(SX127X_REG_MODEM_CONFIG_2);
+  debug(reg);
   //Serial.print("Modem config 2 : 0x");
   //Serial.println(reg, HEX);
   reg = sx127x_readRegister(SX127X_REG_PREAMBLE_MSB);
+  debug(reg);
   reg_ = sx127x_readRegister(SX127X_REG_PREAMBLE_LSB);
+  debug(reg_);
   //Serial.print("Preamble length : 0x");
   //Serial.println(reg * 256 + reg_, HEX);
 
   // Set synchronize word
   sx127x_writeRegister(SX127X_REG_SYNC_WORD, syncword);
   reg = sx127x_readRegister(SX127X_REG_SYNC_WORD);
+  debug(reg);
   //Serial.print("Set syncWord to 0x");
   //Serial.println(reg, HEX);
-  reg = reg;
 }
 
 uint8_t transmitFunction(char* message, uint8_t length) {
 
   //Serial.println("\n-- TRANSMIT FUNCTION --");
-  uint8_t reg, reg_;
+  volatile uint8_t reg, reg_;
 
   // Configure FIFO address and address pointer for TX operation
   sx127x_writeRegister(SX127X_REG_FIFO_TX_BASE_ADDR, 0x00);
   reg = sx127x_readRegister(SX127X_REG_FIFO_TX_BASE_ADDR);
+  debug(reg);
   sx127x_writeRegister(SX127X_REG_FIFO_ADDR_PTR, 0x00);
   reg_ = sx127x_readRegister(SX127X_REG_FIFO_ADDR_PTR);
+  debug(reg_);
   //Serial.print("Set FIFO TX base address and address pointer (0x");
   //Serial.print(reg, HEX);
   //Serial.print(" | 0x");
@@ -183,6 +198,7 @@ uint8_t transmitFunction(char* message, uint8_t length) {
   // Set payload length
   sx127x_writeRegister(SX127X_REG_PAYLOAD_LENGTH, length);
   reg = sx127x_readRegister(SX127X_REG_PAYLOAD_LENGTH);
+  debug(reg);
   //Serial.print("Set payload length same as message length (");
   //Serial.print(reg);
   //Serial.println(")");
@@ -207,7 +223,7 @@ uint8_t transmitFunction(char* message, uint8_t length) {
 
   // Wait for TX done interrupt and calcualte transmit time
   //Serial.println("Wait for TX done interrupt");
-  delayMicroseconds(4000); // TODO:: this may be slow, interrupt disabled
+  delayMicroseconds(400000); // TODO:: this may be slow, interrupt disabled
   tTrans = millis() - tStart;
   // Clear transmit interrupt flag
   transmitted = false;
@@ -227,6 +243,7 @@ uint8_t transmitFunction(char* message, uint8_t length) {
   // }
 
   // return interrupt status
+  debug(irqStat);
   return irqStat;
 }
 
@@ -278,9 +295,10 @@ void SPImain(void)
     EUSCI_A_SPI_initMasterParam param = {0};
     param.selectClockSource = EUSCI_A_SPI_CLOCKSOURCE_SMCLK;
     param.clockSourceFrequency = CS_getSMCLK(); //SMCLK capable of up to 24MHz.
-    param.desiredSpiClock = 7800000; //TODO can we get this high? It said 8MHz max.
+    param.desiredSpiClock = 2000000; //TODO can we get this high? It said 8MHz max.
     param.msbFirst = EUSCI_A_SPI_MSB_FIRST;
-    param.clockPhase = EUSCI_A_SPI_PHASE_DATA_CHANGED_ONFIRST_CAPTURED_ON_NEXT;
+    //param.clockPhase = EUSCI_A_SPI_PHASE_DATA_CHANGED_ONFIRST_CAPTURED_ON_NEXT;
+    param.clockPhase = EUSCI_A_SPI_PHASE_DATA_CAPTURED_ONFIRST_CHANGED_ON_NEXT;
     param.clockPolarity = EUSCI_A_SPI_CLOCKPOLARITY_INACTIVITY_LOW;
     param.spiMode = EUSCI_A_SPI_3PIN; //TODO implement CS ourselves.. or can use EUSCI_A_SPI_4PIN_UCxSTE_ACTIVE_HIGH
     //EUSCI_A_SPI_initMaster(EUSCI_A0_BASE, &param);
@@ -298,21 +316,21 @@ void SPImain(void)
     // EUSCI_A_SPI_enableInterrupt(EUSCI_A0_BASE,
     //       EUSCI_A_SPI_RECEIVE_INTERRUPT);
 
-    static char message[] = "HeLoRa";
+    static char message[] = "Hello World!!! Can I really send a long message?";
     for(;;){
         // Message to transmit
-        static int i = 0;
 
         uint8_t length = sizeof(message);
 
 
         // Transmit message
-        uint8_t status = transmitFunction(message, length);
+        volatile uint8_t status = transmitFunction(message, length);
+        debug(0);
 
         // Don't load RF module with continous transmit
-        //delayMicroseconds(10000000);
+        delayMicroseconds(10000);
 
-        for(i = 0; i < 20000; ++i); //delay
+        //for(volatile int i = 0; i < 20000; ++i); //delay
     }
 
 
