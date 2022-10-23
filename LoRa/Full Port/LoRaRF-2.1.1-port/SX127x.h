@@ -27,7 +27,7 @@ class SX127x
 {
     public:
 
-        SX127x();
+        SX127x(bool port);
 
         // Common Operational methods
         bool begin();
@@ -40,7 +40,7 @@ class SX127x
         void setActive();
 
         // Hardware configuration methods
-        void setSPI(EUSCI_A_SPI_initMasterParam &SpiObject);
+        void setSPI(EUSCI_B_SPI_initMasterParam &SpiObject);
         void setPins(int8_t nss, int8_t reset, int8_t irq=-1, int8_t txen=-1, int8_t rxen=-1);
         void setCurrentProtection(uint8_t current);
         void setOscillator(uint8_t option);
@@ -126,7 +126,8 @@ class SX127x
 
     private:
 
-        EUSCI_A_SPI_initMasterParam _spi;
+        EUSCI_B_SPI_initMasterParam _spi;
+        bool port;
         int8_t _nss, _reset, _irq, _txen, _rxen;
         uint8_t _statusWait;
         volatile static uint8_t _statusIrq;

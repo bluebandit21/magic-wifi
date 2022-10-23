@@ -21,18 +21,29 @@ int8_t SX127x::_irqStatic = -1;
 
 int8_t SX127x::_pinToLow = -1;
 
-SX127x::SX127x()
+SX127x::SX127x(bool spi_port)
 {
+    port = spi_port;
     setPins(SX127X_PIN_NSS, SX127X_PIN_RESET);
 }
 
 bool SX127x::begin()
 {
     // Configure SPI
-    GPIO_setAsPeripheralModuleFunctionInputPin( //pinMode() of TI
-                    GPIO_PORT_P1,
-                    GPIO_PIN4+GPIO_PIN5+GPIO_PIN6+GPIO_PIN7,
-                    GPIO_PRIMARY_MODULE_FUNCTION);
+    if (port == 0) {
+        // FOR EUSCI_SPI_B0
+        GPIO_setAsPeripheralModuleFunctionInputPin( //pinMode() of TI
+                           GPIO_PORT_P1,
+                           GPIO_PIN1+GPIO_PIN2+GPIO_PIN3,
+                           GPIO_PRIMARY_MODULE_FUNCTION);
+    } else {
+        // FOR EUSCI_SPI_B1
+       GPIO_setAsPeripheralModuleFunctionInputPin( //pinMode() of TI
+                                   GPIO_PORT_P4,
+                                   GPIO_PIN5+GPIO_PIN6+GPIO_PIN7,
+                                   GPIO_PRIMARY_MODULE_FUNCTION);
+    }
+
 
         /* Disable the GPIO power-on default high-impedance mode. */
              PMM_unlockLPM5();
@@ -61,14 +72,14 @@ bool SX127x::begin()
                   CS_SMCLK_FLLREF_RATIO
                   );
 
-        EUSCI_A_SPI_initMasterParam param = {0};
-        param.selectClockSource = EUSCI_A_SPI_CLOCKSOURCE_SMCLK;
+        EUSCI_B_SPI_initMasterParam param = {0};
+        param.selectClockSource = EUSCI_B_SPI_CLOCKSOURCE_SMCLK;
         param.clockSourceFrequency = CS_getSMCLK(); //SMCLK capable of up to 24MHz.
         param.desiredSpiClock = 4000000; //TODO can we get this high? It said 8MHz max.
-        param.msbFirst = EUSCI_A_SPI_MSB_FIRST;
-        param.clockPhase = EUSCI_A_SPI_PHASE_DATA_CAPTURED_ONFIRST_CHANGED_ON_NEXT;
-        param.clockPolarity = EUSCI_A_SPI_CLOCKPOLARITY_INACTIVITY_LOW;
-        param.spiMode = EUSCI_A_SPI_3PIN; //TODO implement CS ourselves.. or can use EUSCI_A_SPI_4PIN_UCxSTE_ACTIVE_HIGH
+        param.msbFirst = EUSCI_B_SPI_MSB_FIRST;
+        param.clockPhase = EUSCI_B_SPI_PHASE_DATA_CAPTURED_ONFIRST_CHANGED_ON_NEXT;
+        param.clockPolarity = EUSCI_B_SPI_CLOCKPOLARITY_INACTIVITY_LOW;
+        param.spiMode = EUSCI_B_SPI_3PIN; //TODO implement CS ourselves.. or can use EUSCI_B_SPI_4PIN_UCxSTE_ACTIVE_HIGH
 
         _spi = param;
     // set pins as input or output
@@ -77,7 +88,7 @@ bool SX127x::begin()
     //if (_rxen != -1) pinMode(_rxen, OUTPUT);
 
     // begin spi and perform device reset
-    sx127x_setSPI(_spi);
+    sx127x_setSPI(_spi, port);
     sx127x_begin();
     if (!SX127x::reset()) return false;
 
@@ -136,9 +147,9 @@ void SX127x::setActive()
     //sx127x_setPins(_nss);
 }
 
-void SX127x::setSPI(EUSCI_A_SPI_initMasterParam &SpiObject)
+void SX127x::setSPI(EUSCI_B_SPI_initMasterParam &SpiObject)
 {
-    sx127x_setSPI(SpiObject);
+    sx127x_setSPI(SpiObject, port);
 
     _spi = SpiObject;
 }

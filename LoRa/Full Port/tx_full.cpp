@@ -46,7 +46,7 @@ void delayMicroseconds(unsigned int us) {
 void SPImain(void)
 {
 
-    SX127x LoRa;
+    SX127x LoRa(0);
 
     int8_t nssPin = 10, resetPin = 9, irqPin = -1, txenPin = 8, rxenPin = 7;
       if (!LoRa.begin(nssPin, resetPin, irqPin, txenPin, rxenPin)){
@@ -116,7 +116,7 @@ void SPImain(void)
 void SPImainReceive(void)
 {
 
-    SX127x LoRa;
+    SX127x LoRa(0);
     char receiveBuffer[100];
 
     // Begin LoRa radio and set NSS, reset, txen, and rxen pin with connected arduino pins
@@ -196,7 +196,7 @@ void SPImainReceive(void)
 int main(void) {
     WDT_A_hold(WDT_A_BASE); //shut up watchdog
     //GPIO_setOutputHighOnPin(GPIO_PORT_P1,GPIO_PIN3);
-    SPImainReceive();
+    SPImain();
     //GPIO_setOutputLowOnPin(GPIO_PORT_P1,GPIO_PIN3);
 }
 
