@@ -32,29 +32,21 @@
  *      Author: gzm20
  */
 
-
-/* Scheduler include files. */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
 
-/* Standard demo includes, used so the tick hook can exercise some FreeRTOS
-functionality in an interrupt. */
-#include "EventGroupsDemo.h"
-#include "TaskNotify.h"
-#include "ParTest.h" /* LEDs - a historic name for "Parallel Port". */
-
-/* TI includes. */
 #include "driverlib.h"
 
 //provides system setup.
 static void prvSetup(void);
-
-//FreeRTOS system hooks - not sure if relevant.
 void vApplicationMallocFailedHook( void );
-void vApplicationIdleHook( void );
 void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName );
-void vApplicationTickHook( void );
+
+void SPImain(void);
+void initSPI(char, char);
+void clockSetup(void);
+extern void main_defer_interrupt(void);
 
 //From demo main.c
 /* The heap is allocated here so the "persistent" qualifier can be used.  This
@@ -72,62 +64,45 @@ uint8_t ucHeap[ configTOTAL_HEAP_SIZE ] = { 0 };
 //When false, allows P4.1 button to be used for input.
 #define USE_EUSCI_A1 (false)
 
-//EUSCI B0 (P1.0~P1.3) touches the red LED at the bottom of the board.
-//For now, because we assume P1.0 (STE/Chip Select) is used, we disable use of the LED.
-//We could use another line and have both be usable.
-#define USE_EUSCI_B0 (false)
-
 int main(void){
-    //prvSetup();
-    SPImain();
-    //TODO put main here
+    prvSetup();
+//    initSPI('A', '0');
+    main_defer_interrupt();
+    //SPImain();
     return 0;
 }
 
-void initSPI(char*);
+#define CS_MCLK_DESIRED_KHZ (16000)
+#define CS_MCLK_FLL_RATIO   (488) //= rounding MCLK desired HZ / 32768
+//Sets up Clock signals for the FR2355: MCLK @ 16M, SMCLK (SPI, etc.) @ 8M.
+
+void clockSetup(void){
+    CS_initClockSignal(CS_FLLREF, CS_REFOCLK_SELECT, CS_CLOCK_DIVIDER_1);
+
+    // Set Ratio and Desired MCLK Frequency and initialize DCO. Returns 1 (STATUS_SUCCESS) if good
+    // By default, MCLK = DCOCLK = 16M after this settles.
+    CS_initFLLSettle(CS_MCLK_DESIRED_KHZ, CS_MCLK_FLL_RATIO);
+
+    // SMCLK = DCOCLK / 2 = 8M
+    CS_initClockSignal(CS_SMCLK, CS_DCOCLKDIV_SELECT, CS_CLOCK_DIVIDER_2);
+
+    //Sanity checking? enable and breakpoint on the following values.
+    volatile uint32_t MCLK_val = CS_getMCLK();      //15,990,784 (16M)
+    volatile uint32_t SMCLK_val = CS_getSMCLK();    // 7,995,392 (8M)
+}
 
 void SPImain(void)
 {
-    WDT_A_hold(WDT_A_BASE); //shut up watchdog
-
-    //Target frequency for MCLK in kHz
-    const int CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ = 8000;
-    //MCLK/FLLRef Ratio
-    const int CS_SMCLK_FLLREF_RATIO = (int)(CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ * 1000.0 / 32768.0); // = Desired HZ / 32768
-    //Variable to store current Clock values
-    volatile uint32_t clockValue = 0;
-    // Set DCO FLL reference = REFO
-    CS_initClockSignal(
-     CS_FLLREF,
-     CS_REFOCLK_SELECT,
-     CS_CLOCK_DIVIDER_1);
-    // Set ACLK = REFO
-    CS_initClockSignal(
-     CS_ACLK,
-     CS_REFOCLK_SELECT,
-     CS_CLOCK_DIVIDER_1);
-
-    // Set Ratio and Desired MCLK Frequency and initialize DCO
-    // Returns 1 (STATUS_SUCCESS) if good
-
-    volatile int result = CS_initFLLSettle(
-     CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ,
-     CS_SMCLK_FLLREF_RATIO
-     );
-
-    initSPI("A0");
-
-    volatile unsigned int i = 0;
+    clockSetup();
+    initSPI('A', '0');
+    
     for(;;){
-    EUSCI_A_SPI_transmitData(EUSCI_A0_BASE, 0xAA); //send 1010 1010
-
+        EUSCI_A_SPI_transmitData(EUSCI_A0_BASE, 0xAC); //send 1010 1100
     }
 }
 
-//initializes SPI given which one (SPIBank = 'A' or 'B', SPISlot = 0 or 1)
-void initSPI(char* SPILine) {
-    char SPIBank = SPILine[0];
-    char SPISlot = SPILine[1];
+//initializes SPI given which one (SPIBank = 'A' or 'B', SPISlot = '0' or '1')
+void initSPI(char SPIBank, char SPISlot) {
     //pinMode() equivalent
     //B0: 1.0 ~ 1.3, B1: 4.4 ~ 4.7
     //A0: 1.4 ~ 1.7, A1: 4.0 ~ 4.3
@@ -159,7 +134,6 @@ void initSPI(char* SPILine) {
     PMM_unlockLPM5();
 
     // Setup EUSCI SPI access and interrupts
-    const int CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ = 8000;
     if(SPIBank == 'A'){
        uint16_t base = EUSCI_A0_BASE;
        if(SPISlot == '1'){
@@ -168,11 +142,11 @@ void initSPI(char* SPILine) {
        EUSCI_A_SPI_initMasterParam param = {0};
            param.selectClockSource = EUSCI_A_SPI_CLOCKSOURCE_SMCLK;
            param.clockSourceFrequency = CS_getSMCLK(); //SMCLK capable of up to 24MHz. Non-jank around 8MHz.
-           param.desiredSpiClock = CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ * 1000;
+           param.desiredSpiClock = 8000000;
            param.msbFirst = EUSCI_A_SPI_MSB_FIRST;
            param.clockPhase = EUSCI_A_SPI_PHASE_DATA_CHANGED_ONFIRST_CAPTURED_ON_NEXT;
            param.clockPolarity = EUSCI_A_SPI_CLOCKPOLARITY_INACTIVITY_LOW;
-           param.spiMode = EUSCI_A_SPI_4PIN_UCxSTE_ACTIVE_HIGH; //TODO implement CS ourselves.. or can use EUSCI_A_SPI_4PIN_UCxSTE_ACTIVE_HIGH
+           param.spiMode = EUSCI_A_SPI_3PIN;
        EUSCI_A_SPI_initMaster(base, &param);
 
        //Enable SPI Module
@@ -191,11 +165,11 @@ void initSPI(char* SPILine) {
        EUSCI_B_SPI_initMasterParam param = {0};
            param.selectClockSource = EUSCI_B_SPI_CLOCKSOURCE_SMCLK;
            param.clockSourceFrequency = CS_getSMCLK(); //SMCLK capable of up to 24MHz. Non-jank around 8MHz.
-           param.desiredSpiClock = CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ * 1000;
+           param.desiredSpiClock = 8000000;
            param.msbFirst = EUSCI_B_SPI_MSB_FIRST;
            param.clockPhase = EUSCI_B_SPI_PHASE_DATA_CHANGED_ONFIRST_CAPTURED_ON_NEXT;
            param.clockPolarity = EUSCI_B_SPI_CLOCKPOLARITY_INACTIVITY_LOW;
-           param.spiMode = EUSCI_B_SPI_4PIN_UCxSTE_ACTIVE_HIGH; //TODO implement CS ourselves.. or can use EUSCI_A_SPI_4PIN_UCxSTE_ACTIVE_HIGH
+           param.spiMode = EUSCI_A_SPI_3PIN;
        EUSCI_B_SPI_initMaster(base, &param);
 
        //Enable SPI Module
@@ -209,27 +183,7 @@ void initSPI(char* SPILine) {
     }
 }
 
-
-void vApplicationIdleHook( void )
-{
-    __bis_SR_register( LPM4_bits + GIE );
-    __no_operation();
-}
-/*-----------------------------------------------------------*/
-
-void vApplicationTickHook( void )
-{
-//  #if( mainCREATE_SIMPLE_BLINKY_DEMO_ONLY == 1)
-//  {
-//      /* Call the periodic event group from ISR demo. */
-//      vPeriodicEventGroupsProcessing();
-//
-//      /* Call the code that 'gives' a task notification from an ISR. */
-//      xNotifyTaskFromISR();
-//  }
-//  #endif
-}
-
+//Failure hooks
 void vApplicationMallocFailedHook( void )
 {
     /* Called if a call to pvPortMalloc() fails because there is insufficient
@@ -240,7 +194,6 @@ void vApplicationMallocFailedHook( void )
 
     configASSERT( ( volatile void * ) NULL );
 }
-/*-----------------------------------------------------------*/
 
 void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName )
 {
@@ -260,8 +213,8 @@ void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName )
 This allows the application to choose the tick interrupt source.
 configTICK_VECTOR must also be set in FreeRTOSConfig.h to the correct
 interrupt vector for the chosen tick interrupt source.  This implementation of
-vApplicationSetupTimerInterrupt() generates the tick from timer A0, so in this
-case configTICK_VECTOR is set to TIMER0_A0_VECTOR. */
+vApplicationSetupTimerInterrupt() generates the tick from timer B0, so in this
+case configTICK_VECTOR is set to TIMER0_B0_VECTOR. */
 void vApplicationSetupTimerInterrupt( void )
 {
     const unsigned short usACLK_Frequency_Hz = 32768;
@@ -301,14 +254,10 @@ void vApplicationSetupTimerInterrupt( void )
 
 static void prvSetup( void )
 {
-    // Stop watchdog timer (TODO: still needed if we use _system_pre_init?)
-    WDT_A_hold( __MSP430_BASEADDRESS_WDT_A__ );
-
     //LEDs
-    //Red (Warning: Also used for SPI B0 STE/CS)
-    if (!USE_EUSCI_B0){
-        GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0); GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0);
-    }
+    //Red
+    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0); GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0);
+    
     //Green
     GPIO_setAsOutputPin(GPIO_PORT_P6, GPIO_PIN6); GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
 
@@ -323,20 +272,19 @@ static void prvSetup( void )
     //SPI lines
     //A0
     GPIO_setAsPeripheralModuleFunctionInputPin(
-        GPIO_PORT_P1, GPIO_PIN4 + GPIO_PIN5 + GPIO_PIN6 + GPIO_PIN7, GPIO_PRIMARY_MODULE_FUNCTION);
+        GPIO_PORT_P1, GPIO_PIN5 + GPIO_PIN6 + GPIO_PIN7, GPIO_PRIMARY_MODULE_FUNCTION);
     //A1
     if (USE_EUSCI_A1){
         GPIO_setAsPeripheralModuleFunctionInputPin(
-            GPIO_PORT_P4, GPIO_PIN0 + GPIO_PIN1 + GPIO_PIN2 + GPIO_PIN3, GPIO_PRIMARY_MODULE_FUNCTION);
+            GPIO_PORT_P4, GPIO_PIN1 + GPIO_PIN2 + GPIO_PIN3, GPIO_PRIMARY_MODULE_FUNCTION);
     }
     //B0
-    if (USE_EUSCI_B0){
-        GPIO_setAsPeripheralModuleFunctionInputPin(
-           GPIO_PORT_P1, GPIO_PIN0 + GPIO_PIN1 + GPIO_PIN2 + GPIO_PIN3, GPIO_PRIMARY_MODULE_FUNCTION);
-    }
+    GPIO_setAsPeripheralModuleFunctionInputPin(
+        GPIO_PORT_P1, GPIO_PIN1 + GPIO_PIN2 + GPIO_PIN3, GPIO_PRIMARY_MODULE_FUNCTION);
+    
     //B1
     GPIO_setAsPeripheralModuleFunctionInputPin(
-        GPIO_PORT_P4, GPIO_PIN4 + GPIO_PIN5 + GPIO_PIN6 + GPIO_PIN7, GPIO_PRIMARY_MODULE_FUNCTION);
+        GPIO_PORT_P4, GPIO_PIN5 + GPIO_PIN6 + GPIO_PIN7, GPIO_PRIMARY_MODULE_FUNCTION);
 
     //Disable the GPIO power-on default high-impedance mode. Enables GPIO for actual use.
     PMM_unlockLPM5();
@@ -363,42 +311,43 @@ static void prvSetup( void )
         CS_ACLK,
         CS_XT1CLK_SELECT,
         CS_CLOCK_DIVIDER_1);
+    
+    clockSetup();
+    // //Set DCO FLL reference = REFO
+    // CS_initClockSignal(
+    //     CS_FLLREF,
+    //     CS_REFOCLK_SELECT,
+    //     CS_CLOCK_DIVIDER_1);
 
-    //Set DCO FLL reference = REFO
-    CS_initClockSignal(
-        CS_FLLREF,
-        CS_REFOCLK_SELECT,
-        CS_CLOCK_DIVIDER_1);
+    // //Create struct variable to store proper software trim values
+    // CS_initFLLParam param = {0};
 
-    //Create struct variable to store proper software trim values
-    CS_initFLLParam param = {0};
+    // //Set Ratio/Desired MCLK Frequency, initialize DCO, save trim values
+    // CS_initFLLCalculateTrim(
+    //     CS_MCLK_DESIRED_FREQUENCY_IN_KHZ,
+    //     CS_MCLK_FLLREF_RATIO,
+    //     &param);
 
-    //Set Ratio/Desired MCLK Frequency, initialize DCO, save trim values
-    CS_initFLLCalculateTrim(
-        CS_MCLK_DESIRED_FREQUENCY_IN_KHZ,
-        CS_MCLK_FLLREF_RATIO,
-        &param);
+    // //Clear all OSC fault flag
+    // CS_clearAllOscFlagsWithTimeout(1000);
 
-    //Clear all OSC fault flag
-    CS_clearAllOscFlagsWithTimeout(1000);
+    // //For demonstration purpose, change DCO clock freq to 16MHz
+    // CS_initFLLSettle(
+    //     16000,
+    //     487
+    //     );
 
-    //For demonstration purpose, change DCO clock freq to 16MHz
-    CS_initFLLSettle(
-        16000,
-        487
-        );
+    // //Clear all OSC fault flag
+    // CS_clearAllOscFlagsWithTimeout(1000);
 
-    //Clear all OSC fault flag
-    CS_clearAllOscFlagsWithTimeout(1000);
+    // //Reload DCO trim values that were calculated earlier
+    // CS_initFLLLoadTrim(
+    //     CS_MCLK_DESIRED_FREQUENCY_IN_KHZ,
+    //     CS_MCLK_FLLREF_RATIO,
+    //     &param);
 
-    //Reload DCO trim values that were calculated earlier
-    CS_initFLLLoadTrim(
-        CS_MCLK_DESIRED_FREQUENCY_IN_KHZ,
-        CS_MCLK_FLLREF_RATIO,
-        &param);
-
-    //Clear all OSC fault flag
-    CS_clearAllOscFlagsWithTimeout(1000); //TODO these needed?
+    // //Clear all OSC fault flag
+    // CS_clearAllOscFlagsWithTimeout(1000); //TODO these needed?
 
     //Enable oscillator fault interrupt
     SFR_enableInterrupt(SFR_OSCILLATOR_FAULT_INTERRUPT);
@@ -409,7 +358,7 @@ static void prvSetup( void )
 
 int _system_pre_init( void )
 {
-    /* Stop Watchdog timer. */
+    //Always runs on system init - no need for us to define this elsewhere.
     WDT_A_hold( __MSP430_BASEADDRESS_WDT_A__ );
     return 1;
 }

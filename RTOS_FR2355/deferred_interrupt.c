@@ -1,25 +1,16 @@
 /*
  * deferred_interrupt.c
- *
+ * Created for Milestone 1 demo.
  *  Created on: Oct 19, 2022
  *      Author: gzm20
  */
 
-/* Scheduler includes. */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
 
-///* Demo includes. */
-//#include "partest.h"
-
-/* TI includes. */
 #include "driverlib.h"
 
-#define mainTASK_PERIOD_MS  (1000)
-#define mainTASK_LENGTH_MS  (500)
-
-#define intTASK_LENGTH_MS   (2000)
 
 SemaphoreHandle_t xISRSemaphore;
 
@@ -40,38 +31,19 @@ void main_defer_interrupt(void){
     GPIO_enableInterrupt(GPIO_PORT_P4, GPIO_PIN1);
     GPIO_clearInterrupt(GPIO_PORT_P4, GPIO_PIN1);
 
+    xTaskCreate(mainTask, "mainTask", 128, NULL, 2, NULL );
+    xTaskCreate(deferTask, "deferTask", 128, NULL, 1, NULL );
 
-    //xTaskCreate()
-    xTaskCreate(
-        mainTask
-        ,  "mainTask"   // A name just for humans
-        ,  128  // This stack size can be checked & adjusted by reading the Stack Highwater
-        ,  NULL
-        ,  2  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
-        ,  NULL );
-
-       //deferred ISR
-      xTaskCreate(
-        deferTask
-        ,  "deferTask"   // A name just for humans
-        ,  128  // This stack size can be checked & adjusted by reading the Stack Highwater
-        ,  NULL
-        ,  1  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
-        ,  NULL );
-
-      vTaskStartScheduler();
-
-      while(1);
+    vTaskStartScheduler();
+    while(1);
 }
-
-//xSemaphoreGiveFromISR(xISRSemaphore, NULL);
 
 static void mainTask    (void* pvParams){
     (void) pvParams;
     TickType_t xNextWakeTime = xTaskGetTickCount();
 
     for(;;){
-        CPU_work(500, GPIO_PORT_P1, GPIO_PIN0);
+        CPU_work(8000, GPIO_PORT_P1, GPIO_PIN0);
         vTaskDelayUntil(&xNextWakeTime, 1000 / portTICK_PERIOD_MS);
     }
 }
@@ -84,11 +56,11 @@ __interrupt void Port_4(void)
 }
 
 
-static void deferTask   (void* pvParams){
+static void deferTask(void* pvParams){
     (void) pvParams;
     for(;;){
         if(xSemaphoreTake(xISRSemaphore, (TickType_t) ~-1) == pdTRUE){
-            CPU_work(2000, GPIO_PORT_P6, GPIO_PIN6);
+            CPU_work(32000, GPIO_PORT_P6, GPIO_PIN6);
         }
     }
 }
