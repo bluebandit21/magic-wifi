@@ -233,9 +233,11 @@ bool ENC28J60::promiscuous_enabled = false;
 static byte Enc28j60Bank;
 
 void ENC28J60::initSPI () {
+    GPIO_setAsOutputPin(select_Port, select_Pin);
+    GPIO_setOutputHighOnPin(select_Port, select_Pin);
 
-    GPIO_setAsOutputPin(SS_Port, SS_Pin);
-    GPIO_setOutputHighOnPin(SS_Port, SS_Pin);
+    /*
+
 
     GPIO_setAsOutputPin(MOSI_Port, MOSI_Pin);
     GPIO_setAsOutputPin(SCK_Port, SCK_Pin);
@@ -245,6 +247,7 @@ void ENC28J60::initSPI () {
     GPIO_setOutputLowOnPin(MOSI_Port, MOSI_Pin);
 
     GPIO_setOutputLowOnPin(SCK_Port, SCK_Pin);
+    */
 
     //This is largely adapted(stolen) from initSPI on freertos_port branch
     //At some point should be more properly transitioned over
@@ -253,14 +256,14 @@ void ENC28J60::initSPI () {
     GPIO_setAsPeripheralModuleFunctionInputPin(port, pins, GPIO_PRIMARY_MODULE_FUNCTION);
     PMM_unlockLPM5();
 
-    const int CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ = 8000;
+    const uint32_t CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ = 8000;
     uint16_t base = EUSCI_A0_BASE;
     EUSCI_A_SPI_initMasterParam param = {0};
     param.selectClockSource = EUSCI_A_SPI_CLOCKSOURCE_SMCLK;
     param.clockSourceFrequency = CS_getSMCLK(); //SMCLK capable of up to 24MHz. Non-jank around 8MHz.
     param.desiredSpiClock = CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ * 1000;
     param.msbFirst = EUSCI_A_SPI_MSB_FIRST;
-    param.clockPhase = EUSCI_A_SPI_PHASE_DATA_CHANGED_ONFIRST_CAPTURED_ON_NEXT;
+    param.clockPhase = EUSCI_A_SPI_PHASE_DATA_CAPTURED_ONFIRST_CHANGED_ON_NEXT;
     param.clockPolarity = EUSCI_A_SPI_CLOCKPOLARITY_INACTIVITY_LOW;
     param.spiMode = EUSCI_A_SPI_3PIN; //TODO implement CS ourselves.. or can use EUSCI_A_SPI_4PIN_UCxSTE_ACTIVE_HIGH
     EUSCI_A_SPI_initMaster(base, &param);
@@ -403,12 +406,14 @@ byte ENC28J60::initialize (uint16_t size, const byte* macaddr) {
         initSPI();
     }
 
-    GPIO_setAsOutputPin(select_Port, select_Pin);
+    //GPIO_setAsOutputPin(select_Port, select_Pin);
     disableChip();
 
     writeOp(ENC28J60_SOFT_RESET, 0, ENC28J60_SOFT_RESET);
 
-    for(int i = 0; i<24000;i++); //Delay 2 ms ~= 24000 clock cycles
+    for(volatile int i = 0; i<24000;i++){
+        for(volatile int j=0;j<10;j++); //Delay 2 ms ~= 24000 clock cycles
+    }
 
     while (!readOp(ENC28J60_READ_CTRL_REG, ESTAT) & ESTAT_CLKRDY)
         ;
