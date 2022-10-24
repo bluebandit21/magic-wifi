@@ -9,6 +9,20 @@
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
+<layer number="2" name="Route2" color="16" fill="1" visible="no" active="no"/>
+<layer number="3" name="Route3" color="17" fill="1" visible="no" active="no"/>
+<layer number="4" name="Route4" color="18" fill="1" visible="no" active="no"/>
+<layer number="5" name="Route5" color="19" fill="1" visible="no" active="no"/>
+<layer number="6" name="Route6" color="25" fill="1" visible="no" active="no"/>
+<layer number="7" name="Route7" color="26" fill="1" visible="no" active="no"/>
+<layer number="8" name="Route8" color="27" fill="1" visible="no" active="no"/>
+<layer number="9" name="Route9" color="28" fill="1" visible="no" active="no"/>
+<layer number="10" name="Route10" color="29" fill="1" visible="no" active="no"/>
+<layer number="11" name="Route11" color="30" fill="1" visible="no" active="no"/>
+<layer number="12" name="Route12" color="20" fill="1" visible="no" active="no"/>
+<layer number="13" name="Route13" color="21" fill="1" visible="no" active="no"/>
+<layer number="14" name="Route14" color="22" fill="1" visible="no" active="no"/>
+<layer number="15" name="Route15" color="23" fill="1" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
 <layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
@@ -3813,6 +3827,8 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <part name="OSC1-GND" library="microbuilder" deviceset="CAP_CERAMIC" device="0603" value="14pF"/>
 <part name="U$2" library="473" deviceset="J49SMH-P-G-G-K-25M0" device=""/>
 <part name="J2" library="473" deviceset="702461401" device=""/>
+<part name="U$3" library="NC_MARKER" deviceset="NC_MARKER" device=""/>
+<part name="U$4" library="NC_MARKER" deviceset="NC_MARKER" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -4043,6 +4059,8 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <instance part="J2" gate="A" x="76.2" y="27.94" smashed="yes">
 <attribute name="NAME" x="80.3656" y="33.2486" size="2.0828" layer="95" ratio="6" rot="SR0"/>
 </instance>
+<instance part="U$3" gate="G$1" x="190.5" y="38.1" smashed="yes"/>
+<instance part="U$4" gate="G$1" x="190.5" y="43.18" smashed="yes"/>
 </instances>
 <busses>
 </busses>
@@ -4756,6 +4774,150 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <pinref part="OSC2-GND" gate="G$1" pin="P$1"/>
 <pinref part="U$2" gate="G$1" pin="P$1"/>
 <junction x="345.44" y="-2.54"/>
+</segment>
+</net>
+<net name="N$11" class="0">
+<segment>
+<pinref part="LORA2" gate="A" pin="RESET"/>
+<wire x1="-73.66" y1="33.02" x2="-81.28" y2="33.02" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$12" class="0">
+<segment>
+<pinref part="LORA2" gate="A" pin="VBAT2"/>
+<wire x1="-27.94" y1="10.16" x2="-22.86" y2="10.16" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$13" class="0">
+<segment>
+<pinref part="LORA2" gate="A" pin="VBAT1"/>
+<wire x1="-73.66" y1="45.72" x2="-81.28" y2="45.72" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="LORA2_GPIO_0" class="0">
+<segment>
+<pinref part="LORA2" gate="A" pin="DIO0"/>
+<wire x1="-73.66" y1="25.4" x2="-81.28" y2="25.4" width="0.1524" layer="91"/>
+<label x="-91.44" y="25.4" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LORA2_MOSI" class="0">
+<segment>
+<pinref part="LORA2" gate="A" pin="MOSI"/>
+<wire x1="-27.94" y1="20.32" x2="-22.86" y2="20.32" width="0.1524" layer="91"/>
+<label x="-27.94" y="20.32" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LORA2_MISO" class="0">
+<segment>
+<pinref part="LORA2" gate="A" pin="MISO"/>
+<wire x1="-27.94" y1="17.78" x2="-22.86" y2="17.78" width="0.1524" layer="91"/>
+<label x="-27.94" y="17.78" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LORA2_SCK" class="0">
+<segment>
+<pinref part="LORA2" gate="A" pin="SCK"/>
+<wire x1="-27.94" y1="15.24" x2="-22.86" y2="15.24" width="0.1524" layer="91"/>
+<label x="-27.94" y="15.24" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LORA2_CHIPSEL" class="0">
+<segment>
+<pinref part="LORA2" gate="A" pin="NSS"/>
+<wire x1="-27.94" y1="22.86" x2="-22.86" y2="22.86" width="0.1524" layer="91"/>
+<label x="-27.94" y="22.86" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LORA2_RX" class="0">
+<segment>
+<pinref part="LORA2" gate="A" pin="RXTX"/>
+<wire x1="-27.94" y1="30.48" x2="-7.62" y2="30.48" width="0.1524" layer="91"/>
+<label x="-17.78" y="30.48" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LORA1_TX" class="0">
+<segment>
+<pinref part="LORA1" gate="A" pin="RXTX"/>
+<wire x1="-27.94" y1="86.36" x2="-12.7" y2="86.36" width="0.1524" layer="91"/>
+<label x="-27.94" y="86.36" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LORA1_CHIPSEL" class="0">
+<segment>
+<pinref part="LORA1" gate="A" pin="NSS"/>
+<wire x1="-27.94" y1="78.74" x2="-20.32" y2="78.74" width="0.1524" layer="91"/>
+<label x="-27.94" y="78.74" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LORA1_MISO" class="0">
+<segment>
+<pinref part="LORA1" gate="A" pin="MOSI"/>
+<wire x1="-27.94" y1="76.2" x2="-20.32" y2="76.2" width="0.1524" layer="91"/>
+<label x="-27.94" y="76.2" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LORA1_MOSI" class="0">
+<segment>
+<pinref part="LORA1" gate="A" pin="MISO"/>
+<wire x1="-27.94" y1="73.66" x2="-20.32" y2="73.66" width="0.1524" layer="91"/>
+<label x="-27.94" y="73.66" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LORA1_SCK" class="0">
+<segment>
+<pinref part="LORA1" gate="A" pin="SCK"/>
+<wire x1="-27.94" y1="71.12" x2="-20.32" y2="71.12" width="0.1524" layer="91"/>
+<label x="-27.94" y="71.12" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="LORA1_GPIO_0" class="0">
+<segment>
+<pinref part="LORA1" gate="A" pin="DIO0"/>
+<wire x1="-73.66" y1="81.28" x2="-78.74" y2="81.28" width="0.1524" layer="91"/>
+<label x="-91.44" y="81.28" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="ETH_CHIPSEL" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="!CS"/>
+<wire x1="213.36" y1="27.94" x2="205.74" y2="27.94" width="0.1524" layer="91"/>
+<label x="198.12" y="27.94" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="ETH_SCK" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="SCK"/>
+<wire x1="213.36" y1="30.48" x2="205.74" y2="30.48" width="0.1524" layer="91"/>
+<label x="200.66" y="30.48" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="ETH_MOSI" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="SI"/>
+<wire x1="213.36" y1="33.02" x2="205.74" y2="33.02" width="0.1524" layer="91"/>
+<label x="200.66" y="33.02" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="ETH_MISO" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="SO"/>
+<wire x1="213.36" y1="35.56" x2="205.74" y2="35.56" width="0.1524" layer="91"/>
+<label x="200.66" y="35.56" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$14" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="NC"/>
+<wire x1="213.36" y1="38.1" x2="195.58" y2="38.1" width="0.1524" layer="91"/>
+<pinref part="U$3" gate="G$1" pin="P$1"/>
+</segment>
+</net>
+<net name="N$15" class="0">
+<segment>
+<pinref part="ETH" gate="A" pin="CLKOUT"/>
+<wire x1="213.36" y1="43.18" x2="195.58" y2="43.18" width="0.1524" layer="91"/>
+<pinref part="U$4" gate="G$1" pin="P$1"/>
 </segment>
 </net>
 </nets>
