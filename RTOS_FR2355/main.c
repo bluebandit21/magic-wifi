@@ -25,8 +25,8 @@
  */
 
 /*
- * main_structure.c
- * Implements overall structure for the program.
+ * main.c
+ * Implements overall structure for the RTOS.
  *
  *  Created on: Oct 20, 2022
  *      Author: gzm20
@@ -46,6 +46,7 @@ void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName );
 void SPImain(void);
 void initSPI(char, char);
 void clockSetup(void);
+
 extern void main_defer_interrupt(void);
 
 //From demo main.c
@@ -95,10 +96,12 @@ void SPImain(void)
 {
     clockSetup();
     initSPI('A', '0');
-    
-    for(;;){
+    int i = 0;
+    for(i = 0; i < 10; ++i){
         EUSCI_A_SPI_transmitData(EUSCI_A0_BASE, 0xAC); //send 1010 1100
     }
+    main_defer_interrupt();
+    return 0;
 }
 
 //initializes SPI given which one (SPIBank = 'A' or 'B', SPISlot = '0' or '1')
@@ -154,9 +157,9 @@ void initSPI(char SPIBank, char SPISlot) {
        //Clear receive interrupt flag
        EUSCI_A_SPI_clearInterrupt(base,
              EUSCI_A_SPI_RECEIVE_INTERRUPT);
-       //Enable Receive interrupt
-       EUSCI_A_SPI_enableInterrupt(base,
-             EUSCI_A_SPI_RECEIVE_INTERRUPT);
+       //Enable Receive interrupt NOTE: enabling without implementing an interrupt jumps to ISR trap.
+//       EUSCI_A_SPI_enableInterrupt(base,
+//             EUSCI_A_SPI_RECEIVE_INTERRUPT);
     }else if(SPIBank == 'B'){
        uint16_t base = EUSCI_B0_BASE;
        if(SPISlot == '1'){
@@ -177,9 +180,9 @@ void initSPI(char SPIBank, char SPISlot) {
        //Clear receive interrupt flag
        EUSCI_B_SPI_clearInterrupt(base,
              EUSCI_B_SPI_RECEIVE_INTERRUPT);
-       //Enable Receive interrupt
-       EUSCI_B_SPI_enableInterrupt(base,
-             EUSCI_B_SPI_RECEIVE_INTERRUPT);
+       //Enable Receive interrupt NOTE: enabling without implementing an interrupt jumps to ISR trap.
+//       EUSCI_B_SPI_enableInterrupt(base,
+//             EUSCI_B_SPI_RECEIVE_INTERRUPT);
     }
 }
 
@@ -240,17 +243,24 @@ void vApplicationSetupTimerInterrupt( void )
     /* Up mode. */
     TB0CTL |= MC_1;
 }
-/*-----------------------------------------------------------*/
 
+#define CS_MCLK_DESIRED_KHZ (16000)
+#define CS_MCLK_FLL_RATIO   (488) //= rounding MCLK desired HZ / 32768
+//Sets up Clock signals for the FR2355: MCLK @ 16M, SMCLK (SPI, etc.) @ 8M.
+void clockSetup(void){
+    CS_initClockSignal(CS_FLLREF, CS_REFOCLK_SELECT, CS_CLOCK_DIVIDER_1);
 
-//Desired Timeout for XT1 initialization
-#define CS_XT1_TIMEOUT 50000
+    // Set Ratio and Desired MCLK Frequency and initialize DCO. Returns 1 (STATUS_SUCCESS) if good
+    // By default, MCLK = DCOCLK = 16M after this settles.
+    CS_initFLLSettle(CS_MCLK_DESIRED_KHZ, CS_MCLK_FLL_RATIO);
 
-//Target frequency for MCLK in kHz
-#define CS_MCLK_DESIRED_FREQUENCY_IN_KHZ   1000
+    // SMCLK = DCOCLK / 2 = 8M
+    CS_initClockSignal(CS_SMCLK, CS_DCOCLKDIV_SELECT, CS_CLOCK_DIVIDER_2);
 
-//MCLK/FLLRef Ratio
-#define CS_MCLK_FLLREF_RATIO   30 //can be calculated.
+    //Sanity checking? enable and breakpoint on the following values.
+    volatile uint32_t MCLK_val = CS_getMCLK();      //15,990,784 (16M)
+    volatile uint32_t SMCLK_val = CS_getSMCLK();    // 7,995,392 (8M)
+}
 
 static void prvSetup( void )
 {
@@ -289,72 +299,8 @@ static void prvSetup( void )
     //Disable the GPIO power-on default high-impedance mode. Enables GPIO for actual use.
     PMM_unlockLPM5();
 
-    //---------------------------------------Clock configuration------------------------------------------
-    //from the google drive dude
-
-    //Port select XT1
-    GPIO_setAsPeripheralModuleFunctionInputPin(
-        GPIO_PORT_P2,
-        GPIO_PIN6 + GPIO_PIN7,
-        GPIO_SECONDARY_MODULE_FUNCTION);
-
-    //Initializes the XT1 and XT2 crystal frequencies being used
-    CS_setExternalClockSource(32768); //32,768 Hz ext. oscillator
-
-    //Initialize XT1. Returns STATUS_SUCCESS if initializes successfully
-    uint8_t returnValue = CS_turnOnXT1LFWithTimeout(
-        CS_XT1_DRIVE_0,
-        CS_XT1_TIMEOUT);
-
-    //Select XT1 as ACLK source
-    CS_initClockSignal(
-        CS_ACLK,
-        CS_XT1CLK_SELECT,
-        CS_CLOCK_DIVIDER_1);
-    
+    //Clock config
     clockSetup();
-    // //Set DCO FLL reference = REFO
-    // CS_initClockSignal(
-    //     CS_FLLREF,
-    //     CS_REFOCLK_SELECT,
-    //     CS_CLOCK_DIVIDER_1);
-
-    // //Create struct variable to store proper software trim values
-    // CS_initFLLParam param = {0};
-
-    // //Set Ratio/Desired MCLK Frequency, initialize DCO, save trim values
-    // CS_initFLLCalculateTrim(
-    //     CS_MCLK_DESIRED_FREQUENCY_IN_KHZ,
-    //     CS_MCLK_FLLREF_RATIO,
-    //     &param);
-
-    // //Clear all OSC fault flag
-    // CS_clearAllOscFlagsWithTimeout(1000);
-
-    // //For demonstration purpose, change DCO clock freq to 16MHz
-    // CS_initFLLSettle(
-    //     16000,
-    //     487
-    //     );
-
-    // //Clear all OSC fault flag
-    // CS_clearAllOscFlagsWithTimeout(1000);
-
-    // //Reload DCO trim values that were calculated earlier
-    // CS_initFLLLoadTrim(
-    //     CS_MCLK_DESIRED_FREQUENCY_IN_KHZ,
-    //     CS_MCLK_FLLREF_RATIO,
-    //     &param);
-
-    // //Clear all OSC fault flag
-    // CS_clearAllOscFlagsWithTimeout(1000); //TODO these needed?
-
-    //Enable oscillator fault interrupt
-    SFR_enableInterrupt(SFR_OSCILLATOR_FAULT_INTERRUPT);
-
-    // Enable global interrupt
-    __bis_SR_register(GIE);
-}
 
 int _system_pre_init( void )
 {
