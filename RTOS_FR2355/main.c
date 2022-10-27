@@ -73,37 +73,6 @@ int main(void){
     return 0;
 }
 
-#define CS_MCLK_DESIRED_KHZ (16000)
-#define CS_MCLK_FLL_RATIO   (488) //= rounding MCLK desired HZ / 32768
-//Sets up Clock signals for the FR2355: MCLK @ 16M, SMCLK (SPI, etc.) @ 8M.
-
-void clockSetup(void){
-    CS_initClockSignal(CS_FLLREF, CS_REFOCLK_SELECT, CS_CLOCK_DIVIDER_1);
-
-    // Set Ratio and Desired MCLK Frequency and initialize DCO. Returns 1 (STATUS_SUCCESS) if good
-    // By default, MCLK = DCOCLK = 16M after this settles.
-    CS_initFLLSettle(CS_MCLK_DESIRED_KHZ, CS_MCLK_FLL_RATIO);
-
-    // SMCLK = DCOCLK / 2 = 8M
-    CS_initClockSignal(CS_SMCLK, CS_DCOCLKDIV_SELECT, CS_CLOCK_DIVIDER_2);
-
-    //Sanity checking? enable and breakpoint on the following values.
-    volatile uint32_t MCLK_val = CS_getMCLK();      //15,990,784 (16M)
-    volatile uint32_t SMCLK_val = CS_getSMCLK();    // 7,995,392 (8M)
-}
-
-void SPImain(void)
-{
-    clockSetup();
-    initSPI('A', '0');
-    int i = 0;
-    for(i = 0; i < 10; ++i){
-        EUSCI_A_SPI_transmitData(EUSCI_A0_BASE, 0xAC); //send 1010 1100
-    }
-    main_defer_interrupt();
-    return 0;
-}
-
 //initializes SPI given which one (SPIBank = 'A' or 'B', SPISlot = '0' or '1')
 void initSPI(char SPIBank, char SPISlot) {
     //pinMode() equivalent
@@ -301,7 +270,7 @@ static void prvSetup( void )
 
     //Clock config
     clockSetup();
-
+}
 int _system_pre_init( void )
 {
     //Always runs on system init - no need for us to define this elsewhere.
