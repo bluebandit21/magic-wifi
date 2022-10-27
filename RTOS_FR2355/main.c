@@ -147,7 +147,7 @@ void initSPI(char SPIBank, char SPISlot) {
            param.clockSourceFrequency = CS_getSMCLK(); //SMCLK capable of up to 24MHz. Non-jank around 8MHz.
            param.desiredSpiClock = 8000000;
            param.msbFirst = EUSCI_A_SPI_MSB_FIRST;
-           param.clockPhase = EUSCI_A_SPI_PHASE_DATA_CHANGED_ONFIRST_CAPTURED_ON_NEXT;
+           param.clockPhase = EUSCI_A_SPI_PHASE_DATA_CAPTURED_ONFIRST_CHANGED_ON_NEXT;
            param.clockPolarity = EUSCI_A_SPI_CLOCKPOLARITY_INACTIVITY_LOW;
            param.spiMode = EUSCI_A_SPI_3PIN;
        EUSCI_A_SPI_initMaster(base, &param);
@@ -170,7 +170,7 @@ void initSPI(char SPIBank, char SPISlot) {
            param.clockSourceFrequency = CS_getSMCLK(); //SMCLK capable of up to 24MHz. Non-jank around 8MHz.
            param.desiredSpiClock = 8000000;
            param.msbFirst = EUSCI_B_SPI_MSB_FIRST;
-           param.clockPhase = EUSCI_B_SPI_PHASE_DATA_CHANGED_ONFIRST_CAPTURED_ON_NEXT;
+           param.clockPhase = EUSCI_A_SPI_PHASE_DATA_CAPTURED_ONFIRST_CHANGED_ON_NEXT;
            param.clockPolarity = EUSCI_B_SPI_CLOCKPOLARITY_INACTIVITY_LOW;
            param.spiMode = EUSCI_A_SPI_3PIN;
        EUSCI_B_SPI_initMaster(base, &param);
