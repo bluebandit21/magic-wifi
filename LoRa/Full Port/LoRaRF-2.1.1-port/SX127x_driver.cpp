@@ -3,8 +3,10 @@
 uint16_t baseAddress = SX127X_SPI_0;
 EUSCI_B_SPI_initMasterParam sx127x_spi_params;
 uint32_t sx127x_spiFrequency = SX127X_SPI_FREQUENCY;
-int8_t sx127x_nss_port = SX127X_PORT_NSS;
-int8_t sx127x_nss_pin = SX127X_PIN_NSS;
+int8_t sx127x_nss_port;
+int8_t sx127x_nss_pin;
+int8_t sx127x_reset_port;
+int8_t sx127x_reset_pin;
 
 // TODO:: REPLACE with RTOS block function to eliminate busy wait, for TEST use ONLY
 void delay(int delay) {
@@ -17,6 +19,13 @@ void sx127x_setSPI(EUSCI_B_SPI_initMasterParam &SpiObject, bool port)
 {
     sx127x_spi_params = SpiObject;
     baseAddress = port ? SX127X_SPI_1 : SX127X_SPI_0;
+    sx127x_nss_port = port ? SX127X_PORT_0_NSS : SX127X_PORT_1_NSS;
+    sx127x_nss_pin = port ? SX127X_PIN_0_NSS : SX127X_PIN_1_NSS;
+
+    sx127x_reset_port = port ? SX127X_PORT_0_RESET : SX127X_PORT_1_RESET;
+    sx127x_reset_pin = port ? SX127X_PIN_0_RESET : SX127X_PIN_1_RESET;
+
+
 }
 
 void sx127x_setPins(int8_t nss)
@@ -26,10 +35,10 @@ void sx127x_setPins(int8_t nss)
 
 void sx127x_reset(int8_t reset)
 {
-    GPIO_setAsOutputPin(SX127X_PORT_RESET, SX127X_PIN_RESET);
-    GPIO_setOutputHighOnPin(SX127X_PORT_RESET, SX127X_PIN_RESET);
+    GPIO_setAsOutputPin(sx127x_reset_port, sx127x_reset_pin);
+    GPIO_setOutputHighOnPin(sx127x_reset_port, sx127x_reset_pin);
     delay(1);
-    GPIO_setOutputLowOnPin(SX127X_PORT_RESET, SX127X_PIN_RESET);
+    GPIO_setOutputLowOnPin(sx127x_reset_port, sx127x_reset_pin);
     delay(5);
 }
 
@@ -71,12 +80,10 @@ uint8_t sx127x_transfer(uint8_t address, uint8_t data)
     GPIO_setOutputLowOnPin(sx127x_nss_port, sx127x_nss_pin);
     delay(10);
 
-    //EUSCI_B_SPI_enable(baseAddress);
     EUSCI_B_SPI_transmitData(baseAddress, address);
     EUSCI_B_SPI_transmitData(baseAddress, data);
     delay(10);
-    uint8_t response = *(volatile uint8_t*)EUSCI_B_SPI_getReceiveBufferAddress(baseAddress); //EUSCI_B_SPI_receiveData(baseAddress); // TODO:: verify this tx/rx pattern works, buffering should make full duplex?
-    //EUSCI_B_SPI_disable(baseAddress); // TODO:: this might be slow ?? Since bus is dedicated, this likely unnecessary
+    uint8_t response = *(volatile uint8_t*)EUSCI_B_SPI_getReceiveBufferAddress(baseAddress);
 
     delay(10);
     GPIO_setOutputHighOnPin(sx127x_nss_port, sx127x_nss_pin);

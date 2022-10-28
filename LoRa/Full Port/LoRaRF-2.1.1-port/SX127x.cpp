@@ -19,12 +19,11 @@ uint8_t SX127x::_payloadTxRx = 0;
 
 int8_t SX127x::_irqStatic = -1;
 
-int8_t SX127x::_pinToLow = -1;
+//int8_t SX127x::_pinToLow = -1;
 
 SX127x::SX127x(bool spi_port)
 {
     port = spi_port;
-    setPins(SX127X_PIN_NSS, SX127X_PIN_RESET);
 }
 
 bool SX127x::begin()
@@ -102,7 +101,7 @@ bool SX127x::begin()
 
 bool SX127x::begin(int8_t nss, int8_t reset, int8_t irq, int8_t txen, int8_t rxen)
 {
-    setPins(nss, reset, irq, txen, rxen);
+    setPins(nss, reset, irq);
     return begin();
 }
 
@@ -154,15 +153,15 @@ void SX127x::setSPI(EUSCI_B_SPI_initMasterParam &SpiObject)
     _spi = SpiObject;
 }
 
-void SX127x::setPins(int8_t nss, int8_t reset, int8_t irq, int8_t txen, int8_t rxen)
+void SX127x::setPins(int8_t nss, int8_t reset, int8_t irq)
 {
     sx127x_setPins(nss);
 
     _nss = nss;
     _reset = reset;
     _irq = irq;
-    _txen = txen;
-    _rxen = rxen;
+    //_txen = txen;
+    //_rxen = rxen;
     //_irqStatic = digitalPinToInterrupt(_irq);
 }
 
@@ -370,11 +369,11 @@ void SX127x::beginPacket()
     _payloadTxRx = 0;
 
     // set txen pin to high and rxen pin to low
-    if ((_rxen != -1) && (_txen != -1)){
+    //if ((_rxen != -1) && (_txen != -1)){
         //digitalWrite(_rxen, LOW);
         //digitalWrite(_txen, HIGH); // disabled, will not be used since we are dedicating modules
-        _pinToLow = _txen;
-    }
+       // _pinToLow = _txen;
+   // }
 }
 
 bool SX127x::endPacket(uint32_t timeout)
@@ -437,11 +436,11 @@ bool SX127x::request(uint32_t timeout)
     sx127x_writeRegister(SX127X_REG_IRQ_FLAGS, 0xFF);
 
     // set txen pin to low and rxen pin to high
-    if ((_rxen != -1) && (_txen != -1)){
+   // if ((_rxen != -1) && (_txen != -1)){
         //digitalWrite(_rxen, HIGH);
         //digitalWrite(_txen, LOW);
-        _pinToLow = _rxen;
-    }
+       // _pinToLow = _rxen;
+   // }
 
     // set status to RX wait
     _statusWait = SX127X_STATUS_RX_WAIT;

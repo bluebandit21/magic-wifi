@@ -48,11 +48,11 @@ void settingFunction() {
   // Pin setting
   //Serial.println("Setting pins");
   sx127x_setPins(nssPin);
-  pinMode(irqPin, INPUT);
-  if (txenPin != -1 && rxenPin != -1) {
-    pinMode(txenPin, OUTPUT);
-    pinMode(rxenPin, OUTPUT);
-  }
+  // pinMode(irqPin, INPUT);
+  // if (txenPin != -1 && rxenPin != -1) {
+  //   pinMode(txenPin, OUTPUT);
+  //   pinMode(rxenPin, OUTPUT);
+  // }
 
   // Reset RF module by setting resetPin to LOW and begin SPI communication
   sx127x_reset(resetPin);

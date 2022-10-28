@@ -121,12 +121,20 @@
 #define SX127X_STATUS_CAD_DONE                  LORA_STATUS_CAD_DONE
 
 // Default Hardware Configuration
-#define SX127X_PORT_NSS                         GPIO_PORT_P1
-#define SX127X_PIN_NSS                          GPIO_PIN0
-#define SX127X_PORT_RESET                       GPIO_PORT_P1
-#define SX127X_PIN_RESET                        GPIO_PIN4
 #define SX127X_SPI_0                            EUSCI_B0_BASE
+#define SX127X_PORT_0_NSS                       GPIO_PORT_P1
+#define SX127X_PIN_0_NSS                        GPIO_PIN0
+#define SX127X_PORT_0_RESET                     GPIO_PORT_P1
+#define SX127X_PIN_0_RESET                      GPIO_PIN4
+#define SX127X_PORT_0_IRQ                       GPIO_PORT_P1
+#define SX127X_PIN_0_IRQ                        GPIO_PIN4
 #define SX127X_SPI_1                            EUSCI_B1_BASE
+#define SX127X_PORT_1_NSS                       GPIO_PORT_P1
+#define SX127X_PIN_1_NSS                        GPIO_PIN0
+#define SX127X_PORT_1_RESET                     GPIO_PORT_P1
+#define SX127X_PIN_1_RESET                      GPIO_PIN4
+#define SX127X_PORT_1_IRQ                       GPIO_PORT_P1
+#define SX127X_PIN_1_IRQ                        GPIO_PIN4
 #define SX127X_SPI_FREQUENCY                    16000000    // Maximum LoRa SPI frequency
 
 void sx127x_setSPI(EUSCI_B_SPI_initMasterParam &SpiObject, bool port);
