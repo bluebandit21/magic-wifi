@@ -7,6 +7,18 @@ int8_t sx127x_nss_port;
 int8_t sx127x_nss_pin;
 int8_t sx127x_reset_port;
 int8_t sx127x_reset_pin;
+int8_t sx127x_irq_port;
+int8_t sx127x_irq_pin;
+void (*isr_ptr)(void);
+
+
+// ISR
+#pragma vector=PORT4_VECTOR // TODO:: parameterize??
+__interrupt void sx127x_ISR(void)
+{
+    (*isr_ptr)(); // Call ISR
+    GPIO_clearInterrupt(GPIO_PORT_P4, GPIO_PIN1);
+}
 
 // TODO:: REPLACE with RTOS block function to eliminate busy wait, for TEST use ONLY
 void delay(int delay) {
@@ -25,17 +37,15 @@ void sx127x_setSPI(EUSCI_B_SPI_initMasterParam &SpiObject, bool port)
     sx127x_reset_port = port ? SX127X_PORT_0_RESET : SX127X_PORT_1_RESET;
     sx127x_reset_pin = port ? SX127X_PIN_0_RESET : SX127X_PIN_1_RESET;
 
+    sx127x_irq_port = port ? SX127X_PORT_0_IRQ : SX127X_PORT_1_IRQ ;
+    sx127x_irq_pin = port ? SX127X_PIN_0_IRQ : SX127X_PIN_1_IRQ ;
+
 
 }
 
-void sx127x_setPins(int8_t nss)
-{
-    // This function is vestigial, MSP will need both port and pin, currently hardcoded //sx127x_nss =  ;
-}
 
-void sx127x_reset(int8_t reset)
+void sx127x_reset()
 {
-    GPIO_setAsOutputPin(sx127x_reset_port, sx127x_reset_pin);
     GPIO_setOutputHighOnPin(sx127x_reset_port, sx127x_reset_pin);
     delay(1);
     GPIO_setOutputLowOnPin(sx127x_reset_port, sx127x_reset_pin);
@@ -45,7 +55,11 @@ void sx127x_reset(int8_t reset)
 void sx127x_begin()
 {
     GPIO_setAsOutputPin(sx127x_nss_port, sx127x_nss_pin);
+    GPIO_setAsOutputPin(sx127x_reset_port, sx127x_reset_pin);
     GPIO_setOutputHighOnPin(sx127x_nss_port, sx127x_nss_pin);
+    GPIO_setAsInputPinWithPullUpResistor(sx127x_irq_port, sx127x_irq_pin);
+    GPIO_selectInterruptEdge(sx127x_irq_port, sx127x_irq_pin, GPIO_LOW_TO_HIGH_TRANSITION);
+
     EUSCI_B_SPI_initMaster(baseAddress, &sx127x_spi_params);
     EUSCI_B_SPI_enable(baseAddress);
     //EUSCI_B_SPI_clearInterrupt(EUSCI_B0_BASE,
@@ -89,4 +103,14 @@ uint8_t sx127x_transfer(uint8_t address, uint8_t data)
     GPIO_setOutputHighOnPin(sx127x_nss_port, sx127x_nss_pin);
 
     return response;
+}
+
+void sx127x_interruptEnable(void (*isr)(void)) {
+   isr_ptr = isr;
+   GPIO_clearInterrupt(sx127x_irq_port, sx127x_irq_pin);
+   GPIO_enableInterrupt(sx127x_irq_port, sx127x_irq_pin);
+}
+
+void sx127x_interruptDisable() {
+   GPIO_disableInterrupt(sx127x_irq_port, sx127x_irq_pin);
 }

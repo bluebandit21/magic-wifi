@@ -31,17 +31,14 @@ class SX127x
 
         // Common Operational methods
         bool begin();
-        bool begin(int8_t nss, int8_t reset, int8_t irq=-1, int8_t txen=-1, int8_t rxen=-1);
         void end();
         bool reset();
         void sleep();
         void wake();
         void standby();
-        void setActive();
 
         // Hardware configuration methods
         void setSPI(EUSCI_B_SPI_initMasterParam &SpiObject);
-        void setPins(int8_t nss, int8_t reset, int8_t irq=-1);
         void setCurrentProtection(uint8_t current);
         void setOscillator(uint8_t option);
 
@@ -128,7 +125,7 @@ class SX127x
 
         EUSCI_B_SPI_initMasterParam _spi;
         bool port;
-        int8_t _nss, _reset, _irq;
+        int8_t _irq = -1; // change to enable/disable
         uint8_t _statusWait;
         volatile static uint8_t _statusIrq;
         static uint32_t _transmitTime;

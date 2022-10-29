@@ -99,12 +99,6 @@ bool SX127x::begin()
     return true;
 }
 
-bool SX127x::begin(int8_t nss, int8_t reset, int8_t irq, int8_t txen, int8_t rxen)
-{
-    setPins(nss, reset, irq);
-    return begin();
-}
-
 void SX127x::end()
 {
     sleep();
@@ -113,7 +107,7 @@ void SX127x::end()
 
 bool SX127x::reset()
 {
-    sx127x_reset(_reset);
+    sx127x_reset();
     // wait until device connected,
     uint8_t version = 0x00;
     while (version != 0x12 && version != 0x22) {
@@ -139,12 +133,6 @@ void SX127x::standby()
     sx127x_writeRegister(SX127X_REG_OP_MODE, _modem | SX127X_MODE_STDBY);
 }
 
-void SX127x::setActive()
-{
-    // override spi, nss, and busy static property in SX127x driver with object property
-    //sx127x_setSPI(*_spi, 0);
-    //sx127x_setPins(_nss);
-}
 
 void SX127x::setSPI(EUSCI_B_SPI_initMasterParam &SpiObject)
 {
@@ -153,17 +141,6 @@ void SX127x::setSPI(EUSCI_B_SPI_initMasterParam &SpiObject)
     _spi = SpiObject;
 }
 
-void SX127x::setPins(int8_t nss, int8_t reset, int8_t irq)
-{
-    sx127x_setPins(nss);
-
-    _nss = nss;
-    _reset = reset;
-    _irq = irq;
-    //_txen = txen;
-    //_rxen = rxen;
-    //_irqStatic = digitalPinToInterrupt(_irq);
-}
 
 void SX127x::setCurrentProtection(uint8_t current)
 {
@@ -398,7 +375,9 @@ bool SX127x::endPacket(uint32_t timeout)
     // set TX done interrupt on DIO0 and attach TX interrupt handler
     if (_irq != -1) {
         sx127x_writeRegister(SX127X_REG_DIO_MAPPING_1, SX127X_DIO0_TX_DONE);
+
         //attachInterrupt(_irqStatic, SX127x::_interruptTx, RISING);
+        sx127x_interruptEnable(&SX127x::_interruptTx());
     }
     return true;
 }
@@ -466,8 +445,10 @@ bool SX127x::request(uint32_t timeout)
     if (_irq != -1) {
         sx127x_writeRegister(SX127X_REG_DIO_MAPPING_1, SX127X_DIO0_RX_DONE);
         if (timeout == SX127X_RX_CONTINUOUS) {
+             sx127x_interruptEnable(&SX127x::_interruptRxContinuous());
             //attachInterrupt(_irqStatic, SX127x::_interruptRxContinuous, RISING);
         } else {
+            sx127x_interruptEnable(&SX127x::_interruptRx());
             //attachInterrupt(_irqStatic, SX127x::_interruptRx, RISING);
         }
     }
@@ -646,9 +627,8 @@ void SX127x::_interruptTx()
     // store IRQ status as TX done
     _statusIrq = SX127X_IRQ_TX_DONE;
 
-    // set back txen pin to low and detach interrupt
-    //if (_pinToLow != -1) digitalWrite(_pinToLow, LOW);
-    //detachInterrupt(_irqStatic);
+    // detach interrupt
+    sx127x_interruptDisable();
 
     // call onTransmit function
     if (_onTransmit) {
@@ -666,9 +646,8 @@ void SX127x::_interruptRx()
     // terminate receive mode by setting mode to standby
     sx127x_writeBits(SX127X_REG_OP_MODE, SX127X_MODE_STDBY, 0, 3);
 
-    // set back rxen pin to low and detach interrupt
-    //if (_pinToLow != -1) digitalWrite(_pinToLow, LOW);
-    //detachInterrupt(_irqStatic);
+    // detach interrupt
+    sx127x_interruptDisable();
 
     // set pointer to RX buffer base address and get packet payload length
     sx127x_writeRegister(SX127X_REG_FIFO_ADDR_PTR, sx127x_readRegister(SX127X_REG_FIFO_RX_CURRENT_ADDR));

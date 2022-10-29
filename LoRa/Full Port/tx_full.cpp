@@ -23,7 +23,6 @@ available in the SX127X.cpp library, so this will transmitted verbaitim
 
 //Referring mostly from: https://blog.fearcat.in/a?ID=01200-d182dba9-37eb-4290-acf8-19dc5e11adae
 
-#include "driverlib.h"
 #include <SX127x.h>
 
 
@@ -32,7 +31,6 @@ available in the SX127X.cpp library, so this will transmitted verbaitim
 char message[] = "HeLoRa World!";
 uint8_t nBytes = sizeof(message);
 uint8_t counter = 0;
-
 
 
 
@@ -47,12 +45,11 @@ void SPImain(void)
 {
 
     SX127x LoRa(0);
-
-    int8_t nssPin = 10, resetPin = 9, irqPin = -1, txenPin = 8, rxenPin = 7;
-      if (!LoRa.begin(nssPin, resetPin, irqPin, txenPin, rxenPin)){
+      if (!LoRa.begin()){
         // Serial.println("Something wrong, can't begin LoRa radio");
         while(1);
       }
+
 
       // ADDED, set Tx Frequency
       LoRa.setFrequency(916000000);
@@ -122,8 +119,7 @@ void SPImainReceive(void)
     // Begin LoRa radio and set NSS, reset, txen, and rxen pin with connected arduino pins
       // IRQ pin not used in this example (set to -1). Set txen and rxen pin to -1 if RF module doesn't have one
       //Serial.println("Begin LoRa radio");
-      int8_t nssPin = 10, resetPin = 9, irqPin = -1, txenPin = 8, rxenPin = 7;
-      if (!LoRa.begin(nssPin, resetPin, irqPin, txenPin, rxenPin)){
+      if (!LoRa.begin()){
         //Serial.println("Something wrong, can't begin LoRa radio");
         while(1);
       }
@@ -195,8 +191,24 @@ void SPImainReceive(void)
 
 int main(void) {
     WDT_A_hold(WDT_A_BASE); //shut up watchdog
-    //GPIO_setOutputHighOnPin(GPIO_PORT_P1,GPIO_PIN3);
+    //GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P4, GPIO_PIN1);
+    //GPIO_selectInterruptEdge(GPIO_PORT_P4, GPIO_PIN1, GPIO_HIGH_TO_LOW_TRANSITION);
+    //GPIO_clearInterrupt(GPIO_PORT_P4, GPIO_PIN1);
+    //GPIO_enableInterrupt(GPIO_PORT_P4, GPIO_PIN1);
+    //_enable_interrupt();
+    //volatile uint16_t test = HWREG16(0x220 + OFS_PAIFG);
+    //test = test;
+
+
     SPImain();
-    //GPIO_setOutputLowOnPin(GPIO_PORT_P1,GPIO_PIN3);
 }
+
+//#pragma vector=PORT4_VECTOR
+//__interrupt void Port_4(void)
+//{
+//    volatile uint16_t test = HWREG16(0x220 + OFS_PAIFG);
+//    test = test;
+//    delayMicroseconds(1);
+//    GPIO_clearInterrupt(GPIO_PORT_P4, GPIO_PIN1);
+//}
 
