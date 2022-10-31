@@ -24,11 +24,12 @@ available in the SX127X.cpp library, so this will transmitted verbaitim
 //Referring mostly from: https://blog.fearcat.in/a?ID=01200-d182dba9-37eb-4290-acf8-19dc5e11adae
 
 #include <SX127x.h>
+#include "FrameTranslater.h"
 
 
 
 // Message to transmit
-char message[] = "HeLoRa World!";
+char message[] = "Longer Message, chunk into a few frames each";
 uint8_t nBytes = sizeof(message);
 uint8_t counter = 0;
 
@@ -79,32 +80,36 @@ void SPImain(void)
       LoRa.setSyncWord(0x34);
 
       // Serial.println("\n-- LORA TRANSMITTER --\n");
+      FrameTranslater frameObj = FrameTranslater(&LoRa, nullptr);
 
       for(;;){
+          frameObj.sendFrame((uint8_t*)message, 35);
+          delayMicroseconds(5000);
+      }
           // Transmit message and counter
           // write() method must be placed between beginPacket() and endPacket()
-          LoRa.beginPacket();
-          LoRa.write(message, nBytes);
-          LoRa.write(counter);
-          LoRa.endPacket();
-
-          // Print message and counter in serial
-          // Serial.write(message, nBytes);
-          // Serial.print("  ");
-          // Serial.println(counter++);
-
-          // Wait until modulation process for transmitting packet finish
-          LoRa.wait();
-
-          // Print transmit time
-          // Serial.print("Transmit time: ");
-          // Serial.print(LoRa.transmitTime());
-          // Serial.println(" ms");
-          // Serial.println();
-
-          // Don't load RF module with continous transmit
-          delayMicroseconds(5000);
-    }
+//          LoRa.beginPacket();
+//          LoRa.write(message, nBytes);
+//          LoRa.write(counter);
+//          LoRa.endPacket();
+//
+//          // Print message and counter in serial
+//          // Serial.write(message, nBytes);
+//          // Serial.print("  ");
+//          // Serial.println(counter++);
+//
+//          // Wait until modulation process for transmitting packet finish
+//          LoRa.wait();
+//
+//          // Print transmit time
+//          // Serial.print("Transmit time: ");
+//          // Serial.print(LoRa.transmitTime());
+//          // Serial.println(" ms");
+//          // Serial.println();
+//
+//          // Don't load RF module with continous transmit
+//          delayMicroseconds(5000);
+//    }
 
 
 }
