@@ -17,7 +17,7 @@ void (*isr_ptr)(void);
 __interrupt void sx127x_ISR(void)
 {
     (*isr_ptr)(); // Call ISR
-    GPIO_clearInterrupt(GPIO_PORT_P4, GPIO_PIN1);
+    GPIO_clearInterrupt(sx127x_irq_port, sx127x_irq_pin);
 }
 
 // TODO:: REPLACE with RTOS block function to eliminate busy wait, for TEST use ONLY
@@ -31,14 +31,14 @@ void sx127x_setSPI(EUSCI_B_SPI_initMasterParam &SpiObject, bool port)
 {
     sx127x_spi_params = SpiObject;
     baseAddress = port ? SX127X_SPI_1 : SX127X_SPI_0;
-    sx127x_nss_port = port ? SX127X_PORT_0_NSS : SX127X_PORT_1_NSS;
-    sx127x_nss_pin = port ? SX127X_PIN_0_NSS : SX127X_PIN_1_NSS;
+    sx127x_nss_port = port ? SX127X_PORT_1_NSS : SX127X_PORT_0_NSS;
+    sx127x_nss_pin = port ? SX127X_PIN_1_NSS : SX127X_PIN_0_NSS;
 
-    sx127x_reset_port = port ? SX127X_PORT_0_RESET : SX127X_PORT_1_RESET;
-    sx127x_reset_pin = port ? SX127X_PIN_0_RESET : SX127X_PIN_1_RESET;
+    sx127x_reset_port = port ? SX127X_PORT_1_RESET : SX127X_PORT_0_RESET;
+    sx127x_reset_pin = port ? SX127X_PIN_1_RESET : SX127X_PIN_0_RESET;
 
-    sx127x_irq_port = port ? SX127X_PORT_0_IRQ : SX127X_PORT_1_IRQ ;
-    sx127x_irq_pin = port ? SX127X_PIN_0_IRQ : SX127X_PIN_1_IRQ ;
+    sx127x_irq_port = port ? SX127X_PORT_1_IRQ : SX127X_PORT_0_IRQ ;
+    sx127x_irq_pin = port ? SX127X_PIN_1_IRQ : SX127X_PIN_0_IRQ ;
 
 
 }
@@ -62,6 +62,7 @@ void sx127x_begin()
 
     EUSCI_B_SPI_initMaster(baseAddress, &sx127x_spi_params);
     EUSCI_B_SPI_enable(baseAddress);
+    _enable_interrupt();
     //EUSCI_B_SPI_clearInterrupt(EUSCI_B0_BASE,
              // EUSCI_B_SPI_RECEIVE_INTERRUPT);
         //Enable Receive interrupt

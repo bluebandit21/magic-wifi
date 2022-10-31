@@ -377,7 +377,7 @@ bool SX127x::endPacket(uint32_t timeout)
         sx127x_writeRegister(SX127X_REG_DIO_MAPPING_1, SX127X_DIO0_TX_DONE);
 
         //attachInterrupt(_irqStatic, SX127x::_interruptTx, RISING);
-        sx127x_interruptEnable(&SX127x::_interruptTx());
+        sx127x_interruptEnable(SX127x::_interruptTx);
     }
     return true;
 }
@@ -445,10 +445,10 @@ bool SX127x::request(uint32_t timeout)
     if (_irq != -1) {
         sx127x_writeRegister(SX127X_REG_DIO_MAPPING_1, SX127X_DIO0_RX_DONE);
         if (timeout == SX127X_RX_CONTINUOUS) {
-             sx127x_interruptEnable(&SX127x::_interruptRxContinuous());
+            sx127x_interruptEnable(SX127x::_interruptRxContinuous);
             //attachInterrupt(_irqStatic, SX127x::_interruptRxContinuous, RISING);
         } else {
-            sx127x_interruptEnable(&SX127x::_interruptRx());
+            sx127x_interruptEnable(SX127x::_interruptRx);
             //attachInterrupt(_irqStatic, SX127x::_interruptRx, RISING);
         }
     }
@@ -515,7 +515,7 @@ bool SX127x::wait(uint32_t timeout)
         // only check IRQ status register for non interrupt operation
         if (_irq == -1) irqFlag = sx127x_readRegister(SX127X_REG_IRQ_FLAGS);
         // return when timeout reached
-        if (millis() - t > timeout && timeout != 0) return false;
+        //if (millis() - t > timeout && timeout != 0) return false;
         //yield();
     }
 
@@ -619,7 +619,7 @@ uint32_t SX127x::random()
     return number;
 }
 
-void SX127x::_interruptTx()
+void SX127x::_interruptTx(void)
 {
     // calculate transmit time
     _transmitTime = millis() - _transmitTime;

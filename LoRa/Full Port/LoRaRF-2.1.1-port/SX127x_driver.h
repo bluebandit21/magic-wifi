@@ -126,15 +126,15 @@
 #define SX127X_PIN_0_NSS                        GPIO_PIN0
 #define SX127X_PORT_0_RESET                     GPIO_PORT_P1
 #define SX127X_PIN_0_RESET                      GPIO_PIN4
-#define SX127X_PORT_0_IRQ                       GPIO_PORT_P1
-#define SX127X_PIN_0_IRQ                        GPIO_PIN4
+#define SX127X_PORT_0_IRQ                       GPIO_PORT_P4
+#define SX127X_PIN_0_IRQ                        GPIO_PIN5
 #define SX127X_SPI_1                            EUSCI_B1_BASE
 #define SX127X_PORT_1_NSS                       GPIO_PORT_P1
 #define SX127X_PIN_1_NSS                        GPIO_PIN0
 #define SX127X_PORT_1_RESET                     GPIO_PORT_P1
 #define SX127X_PIN_1_RESET                      GPIO_PIN4
-#define SX127X_PORT_1_IRQ                       GPIO_PORT_P1
-#define SX127X_PIN_1_IRQ                        GPIO_PIN4
+#define SX127X_PORT_1_IRQ                       GPIO_PORT_P4
+#define SX127X_PIN_1_IRQ                        GPIO_PIN1
 #define SX127X_SPI_FREQUENCY                    16000000    // Maximum LoRa SPI frequency
 
 void sx127x_setSPI(EUSCI_B_SPI_initMasterParam &SpiObject, bool port);

@@ -103,8 +103,7 @@ void SPImain(void)
           // Serial.println();
 
           // Don't load RF module with continous transmit
-          //delay(5000);
-          delayMicroseconds(20000);
+          delayMicroseconds(5000);
     }
 
 

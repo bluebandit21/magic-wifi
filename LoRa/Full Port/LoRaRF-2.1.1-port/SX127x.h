@@ -125,7 +125,7 @@ class SX127x
 
         EUSCI_B_SPI_initMasterParam _spi;
         bool port;
-        int8_t _irq = -1; // change to enable/disable
+        int8_t _irq = 0; // change to enable/disable
         uint8_t _statusWait;
         volatile static uint8_t _statusIrq;
         static uint32_t _transmitTime;
@@ -140,7 +140,7 @@ class SX127x
         static void ICACHE_RAM_ATTR _interruptRx();
         static void ICACHE_RAM_ATTR _interruptRxContinuous();
 #else
-        static void _interruptTx();
+        static void _interruptTx(void);
         static void _interruptRx();
         static void _interruptRxContinuous();
 #endif
