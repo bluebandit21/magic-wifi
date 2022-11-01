@@ -52,14 +52,17 @@ extern "C" {
 
 #define CONF_WINC_USE_SPI				(1)
 
+
 /** SPI port and pin as well as module setups. */
+#define CONF_WINC_SPI_BASE				(EUSCI_A0_BASE)
+
 #define CONF_WINC_SPI_MODULE_PORT       (GPIO_PORT_P4)
 #define CONF_WINC_SPI_MOSI_PIN          (GPIO_PIN6)
 #define CONF_WINC_SPI_MISO_PIN          (GPIO_PIN7)
 #define CONF_WINC_SPI_SCK_PIN           (GPIO_PIN5)
 
 #define CONF_WINC_SPI_CS_PORT           (GPIO_PORT_P2)
-#define CONF_WINC_SPI_CS_PIN			    (GPIO_PIN1)
+#define CONF_WINC_SPI_CS_PIN			(GPIO_PIN1)
 
 #define CONF_WINC_EN_PORT               (GPIO_PORT_P2)
 #define CONF_WINC_EN_PIN                (GPIO_PIN0)
@@ -70,9 +73,13 @@ extern "C" {
 #define CONF_WINC_RST_PORT              (GPIO_PORT_P4)
 #define CONF_WINC_RST_PIN               (GPIO_PIN0)
 
-/** SPI clock. */
+// SPI frequency (for init)
 #define CONF_WINC_SPI_CLOCK				(8000000)
-#define CONF_WINC_MCLK_FREQ_KHZ        (16000)
+// CPU frequency (for delay func)
+#define CONF_WINC_MCLK_FREQ_KHZ			(16000)
+
+
+//TODO change to use A0 so that all EUSCI_A... functions are used
 /*
    ---------------------------------
    --------- Debug Options ---------
