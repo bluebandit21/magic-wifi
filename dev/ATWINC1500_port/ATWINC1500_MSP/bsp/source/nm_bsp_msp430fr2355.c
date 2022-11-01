@@ -48,22 +48,18 @@ static void chip_isr(void)
 
 /*
  *	@fn		init_chip_pins
- *	@brief	Initialize reset, chip enable and wake pin
-// */
-//static void init_chip_pins(void)
-//{
-//	struct port_config pin_conf;
-//
-//	port_get_config_defaults(&pin_conf);
-//
-//	/* Configure control pins as output. */
-//	pin_conf.direction  = PORT_PIN_DIR_OUTPUT;
-//	port_pin_set_config(CONF_WINC_PIN_RESET, &pin_conf);
-//	port_pin_set_config(CONF_WINC_PIN_CHIP_ENABLE, &pin_conf);
-//	port_pin_set_config(CONF_WINC_PIN_WAKE, &pin_conf);
-//	port_pin_set_output_level(CONF_WINC_PIN_CHIP_ENABLE, false);
-//	port_pin_set_output_level(CONF_WINC_PIN_RESET, false);
-//}
+ *	@brief	Initialize ALL pins except SPI pins (reset, EN, ~wake~)
+*/
+static void init_chip_pins(void)
+{
+	GPIO_setAsOutputPin(CONF_WINC_RST_PORT, CONF_WINC_RST_PIN);
+	GPIO_setOutputHighOnPin(CONF_WINC_RST_PORT, CONF_WINC_RST_PIN);
+
+	GPIO_setAsInputPin(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
+
+	GPIO_setAsOutputPin(CONF_WINC_EN_PORT, CONF_WINC_EN_PIN); //set as input pullup...?
+	GPIO_setOutputHighOnPin(CONF_WINC_EN_PORT, CONF_WINC_EN_PIN);
+}
 
 /*
  *	@fn		nm_bsp_init
@@ -72,19 +68,21 @@ static void chip_isr(void)
  */
 sint8 nm_bsp_init(void)
 {
-//	gpfIsr = NULL;
-//
-//	/* Initialize chip IOs. */
-//	init_chip_pins();
-//
+	gpfIsr = NULL;
+
+	/* Initialize chip IOs. */
+	init_chip_pins();
+	nm_bsp_reset();
+
+//	?? below needed?
 //    /* Make sure a 1ms Systick is configured. */
 //    if (!(SysTick->CTRL & SysTick_CTRL_ENABLE_Msk && SysTick->CTRL & SysTick_CTRL_TICKINT_Msk)) {
 //	    delay_init();
 //    }
 //
 //	system_interrupt_enable_global();
-//
-//	return M2M_SUCCESS;
+
+	return M2M_SUCCESS;
 }
 
 /**
@@ -94,15 +92,8 @@ sint8 nm_bsp_init(void)
  */
 sint8 nm_bsp_deinit(void)
 {
-//	struct port_config pin_conf;
-//	port_get_config_defaults(&pin_conf);
-//	/* Configure control pins as input no pull up. */
-//	pin_conf.direction  = PORT_PIN_DIR_INPUT;
-//	pin_conf.input_pull = PORT_PIN_PULL_NONE;
-//	port_pin_set_output_level(CONF_WINC_PIN_CHIP_ENABLE, false);
-//	port_pin_set_output_level(CONF_WINC_PIN_RESET, false);
-//	port_pin_set_config(CONF_WINC_SPI_INT_PIN, &pin_conf);
-//	return M2M_SUCCESS;
+	//not convinced this would ever happen and we probably don't need to do anything about it...
+	return M2M_SUCCESS;
 }
 
 /**
@@ -112,12 +103,10 @@ sint8 nm_bsp_deinit(void)
  */
 void nm_bsp_reset(void)
 {
-//	port_pin_set_output_level(CONF_WINC_PIN_CHIP_ENABLE, false);
-//	port_pin_set_output_level(CONF_WINC_PIN_RESET, false);
-//	nm_bsp_sleep(1);
-//	port_pin_set_output_level(CONF_WINC_PIN_CHIP_ENABLE, true);
-//	nm_bsp_sleep(10);
-//	port_pin_set_output_level(CONF_WINC_PIN_RESET, true);
+	GPIO_setOutputLowOnPin(CONF_WINC_RST_PORT, CONF_WINC_RST_PIN);
+	nm_bsp_sleep(100);
+	GPIO_setOutputHighOnPin(CONF_WINC_RST_PORT, CONF_WINC_RST_PIN);
+	nm_bsp_sleep(100);
 }
 
 /*
@@ -128,10 +117,11 @@ void nm_bsp_reset(void)
  */
 void nm_bsp_sleep(uint32 u32TimeMsec)
 {
-//	while (u32TimeMsec--) {
-//		delay_ms(1);
-//	}
+    for(;u32TimeMsec > 0; --u32TimeMsec){
+        __delay_cycles(CONF_WINC_MCLK_FREQ_KHZ);
+    }
 }
+//TODO test conversion is OK.
 
 /*
  *	@fn		nm_bsp_register_isr
@@ -139,23 +129,19 @@ void nm_bsp_sleep(uint32 u32TimeMsec)
  *	@param[IN]	pfIsr
  *				Pointer to ISR handler
  */
+// ISR...? from Andy
+// #pragma vector = PORT4_VECTOR
+// __interrupt void sx127x_ISR(void)
+// {
+// 	(*isr_ptr)(); // Call ISR
+// 	GPIO_clearInterrupt(sx127x_irq_port, sx127x_irq_pin);
+// }
 void nm_bsp_register_isr(tpfNmBspIsr pfIsr)
 {
-//	struct extint_chan_conf config_extint_chan;
-//
-//	gpfIsr = pfIsr;
-//
-//	extint_chan_get_config_defaults(&config_extint_chan);
-//	config_extint_chan.gpio_pin = CONF_WINC_SPI_INT_PIN;
-//	config_extint_chan.gpio_pin_mux = CONF_WINC_SPI_INT_MUX;
-//	config_extint_chan.gpio_pin_pull = EXTINT_PULL_UP;
-//	config_extint_chan.detection_criteria = EXTINT_DETECT_FALLING;
-//
-//	extint_chan_set_config(CONF_WINC_SPI_INT_EIC, &config_extint_chan);
-//	extint_register_callback(chip_isr, CONF_WINC_SPI_INT_EIC,
-//			EXTINT_CALLBACK_TYPE_DETECT);
-//	extint_chan_enable_callback(CONF_WINC_SPI_INT_EIC,
-//			EXTINT_CALLBACK_TYPE_DETECT);
+	gpfIsr = pfIsr;
+	GPIO_clearInterrupt(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
+	GPIO_enableInterrupt(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
+	//TODO is this it? Do we need to attach this
 }
 
 /*
@@ -166,11 +152,11 @@ void nm_bsp_register_isr(tpfNmBspIsr pfIsr)
  */
 void nm_bsp_interrupt_ctrl(uint8 u8Enable)
 {
-//	if (u8Enable) {
-//		extint_chan_enable_callback(CONF_WINC_SPI_INT_EIC,
-//				EXTINT_CALLBACK_TYPE_DETECT);
-//	} else {
-//		extint_chan_disable_callback(CONF_WINC_SPI_INT_EIC,
-//				EXTINT_CALLBACK_TYPE_DETECT);
-//	}
+	if (u8Enable) {
+		GPIO_enableInterrupt(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
+	}
+	else
+	{
+		GPIO_disableInterrupt(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
+	}
 }

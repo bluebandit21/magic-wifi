@@ -36,7 +36,7 @@
 #define _NM_BSP_SAMD21_H_
 
 #include "config/conf_winc.h"
-//#include "math.h"
+#include "math.h"
 
 #define NM_EDGE_INTERRUPT		(1)
 

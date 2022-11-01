@@ -42,44 +42,37 @@ extern "C" {
 
 //#include "board.h"
 #include "driverlib.h"
-/*
-   ---------------------------------
-   ---------- PIN settings ---------
-   ---------------------------------
-*/
 //m2m_types keeps saying 'expected a type specifier' for checking alignment. Since Arduino removed all of those, disabling them for now.
 #define _lint (1)
-
-
-#define CONF_WINC_PIN_RESET				0
-#define CONF_WINC_PIN_CHIP_ENABLE		0
-#define CONF_WINC_PIN_WAKE				0
-
 /*
    ---------------------------------
-   ---------- SPI settings ---------
+   ------ PIN & SPI settings -------
    ---------------------------------
 */
 
 #define CONF_WINC_USE_SPI				(1)
 
-/** SPI pin and instance settings. */
+/** SPI port and pin as well as module setups. */
+#define CONF_WINC_SPI_MODULE_PORT       (GPIO_PORT_P4)
+#define CONF_WINC_SPI_MOSI_PIN          (GPIO_PIN6)
+#define CONF_WINC_SPI_MISO_PIN          (GPIO_PIN7)
+#define CONF_WINC_SPI_SCK_PIN           (GPIO_PIN5)
 
-#define CONF_WINC_SPI_CS_PIN			0
+#define CONF_WINC_SPI_CS_PORT           (GPIO_PORT_P2)
+#define CONF_WINC_SPI_CS_PIN			    (GPIO_PIN1)
 
-#define CONF_WINC_SPI_MISO				0
-#define CONF_WINC_SPI_MOSI				0
-#define CONF_WINC_SPI_SCK				0
-#define CONF_WINC_SPI_SS				0
+#define CONF_WINC_EN_PORT               (GPIO_PORT_P2)
+#define CONF_WINC_EN_PIN                (GPIO_PIN0)
 
-/** SPI interrupt pin. */
-#define CONF_WINC_SPI_INT_PIN			0
-#define CONF_WINC_SPI_INT_MUX			0
-#define CONF_WINC_SPI_INT_EIC			(4)
+#define CONF_WINC_IRQ_PORT              (GPIO_PORT_P2)
+#define CONF_WINC_IRQ_PIN               (GPIO_PIN2)
+
+#define CONF_WINC_RST_PORT              (GPIO_PORT_P4)
+#define CONF_WINC_RST_PIN               (GPIO_PIN0)
 
 /** SPI clock. */
 #define CONF_WINC_SPI_CLOCK				(8000000)
-
+#define CONF_WINC_MCLK_FREQ_KHZ        (16000)
 /*
    ---------------------------------
    --------- Debug Options ---------
