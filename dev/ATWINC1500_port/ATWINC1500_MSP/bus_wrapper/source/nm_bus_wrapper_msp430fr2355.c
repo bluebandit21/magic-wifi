@@ -49,13 +49,15 @@ tstrNmBusCapabilities egstrNmBusCapabilities =
 //struct spi_module master;
 //struct spi_slave_inst slave_inst;
 
-
+//ASSUMES SMCLK is setup correctly.
 static inline sint8 spi_rw_pio(uint8* pu8Mosi, uint8* pu8Miso, uint16 u16Sz)
 {
+		// EUSCI_A_SPI_transmitData(CONF_WINC_SPI_BASE, pstrParam->pu8InBuf);
+		// 	pstrParam->pu8OutBuf = EUSCI_A_SPI_receiveData(CONF_WINC_SPI_BASE);
 	uint8 u8Dummy = 0;
 	uint8 u8SkipMosi = 0, u8SkipMiso = 0;
-	uint16_t txd_data = 0;
-	uint16_t rxd_data = 0;
+	// uint16_t txd_data = 0;
+	// uint16_t rxd_data = 0;
 
 	if(((pu8Miso == NULL) && (pu8Mosi == NULL)) ||(u16Sz == 0)) {
 		return M2M_ERR_INVALID_ARG;
@@ -72,18 +74,24 @@ static inline sint8 spi_rw_pio(uint8* pu8Mosi, uint8* pu8Miso, uint16 u16Sz)
 	else {
 		return M2M_ERR_BUS_FAIL;
 	}
+	GPIO_setOutputHighOnPin(CONF_WINC_SPI_CS_PORT, CONF_WINC_SPI_CS_PIN);
 
-	spi_select_slave(&master, &slave_inst, true);
+	// spi_select_slave(&master, &slave_inst, true);
 
 	while (u16Sz) {
-		txd_data = *pu8Mosi;
-       while(!spi_is_ready_to_write(&master));
-       while(spi_write(&master, txd_data) != STATUS_OK);
+		// txd_data = *pu8Mosi;
+    //    while(!spi_is_ready_to_write(&master));
+    //    while(spi_write(&master, txd_data) != STATUS_OK);
+		while(EUSCI_A_SPI_isBusy(CONF_WINC_SPI_BASE) == EUSCI_A_SPI_BUSY);
+		EUSCI_A_SPI_transmitData(CONF_WINC_SPI_BASE, *pu8Mosi);
 
 		/* Read SPI master data register. */
-       while(!spi_is_ready_to_read(&master));
-       while(spi_read(&master, &rxd_data) != STATUS_OK);
-		*pu8Miso = rxd_data;
+		// while(!spi_is_ready_to_read(&master));
+		// while(spi_read(&master, &rxd_data) != STATUS_OK);
+		// *pu8Miso = rxd_data;
+
+		while(EUSCI_A_SPI_isBusy(CONF_WINC_SPI_BASE) == EUSCI_A_SPI_BUSY);
+		*pu8Miso = EUSCI_A_SPI_receiveData(CONF_WINC_SPI_BASE);
 
 		u16Sz--;
 		if (!u8SkipMiso)
@@ -92,10 +100,11 @@ static inline sint8 spi_rw_pio(uint8* pu8Mosi, uint8* pu8Miso, uint16 u16Sz)
 			pu8Mosi++;
 	}
 
-	while (!spi_is_write_complete(&master))
-		;
+	// while (!spi_is_write_complete(&master))
+	// 	;
 
-	spi_select_slave(&master, &slave_inst, false);
+	//spi_select_slave(&master, &slave_inst, false);
+	GPIO_setOutputLowOnPin(CONF_WINC_SPI_CS_PORT, CONF_WINC_SPI_CS_PIN);
 
 	return M2M_SUCCESS;
 }
@@ -104,11 +113,8 @@ sint8 nm_spi_rw(uint8* pu8Mosi, uint8* pu8Miso, uint16 u16Sz)
 {
 	{
 		return spi_rw_pio(pu8Mosi, pu8Miso, u16Sz);
-		// EUSCI_A_SPI_transmitData(CONF_WINC_SPI_BASE, pstrParam->pu8InBuf);
-		// 	pstrParam->pu8OutBuf = EUSCI_A_SPI_receiveData(CONF_WINC_SPI_BASE);
 	}
 }
-
 
 /*
 *	@fn		nm_bus_init
@@ -117,38 +123,30 @@ sint8 nm_spi_rw(uint8* pu8Mosi, uint8* pu8Miso, uint16 u16Sz)
 */
 sint8 nm_bus_init(void *pvinit)
 {
-	sint8 result = M2M_SUCCESS;
+	GPIO_setAsPeripheralModuleFunctionInputPin(
+			CONF_WINC_SPI_MODULE_PORT, 
+			CONF_WINC_SPI_SCK_PIN + CONF_WINC_SPI_MISO_PIN + CONF_WINC_SPI_MOSI_PIN,
+			GPIO_PRIMARY_MODULE_FUNCTION);
+	
+	PMM_unlockLPM5();
+	EUSCI_A_SPI_initMasterParam param = {0};
+		param.selectClockSource = EUSCI_A_SPI_CLOCKSOURCE_SMCLK;
+		param.clockSourceFrequency = CS_getSMCLK(); //SMCLK capable of up to 24MHz. Non-jank around 8MHz.
+		param.desiredSpiClock = 8000000;
+		param.msbFirst = EUSCI_A_SPI_MSB_FIRST;
+		param.clockPhase = EUSCI_A_SPI_PHASE_DATA_CAPTURED_ONFIRST_CHANGED_ON_NEXT;
+		param.clockPolarity = EUSCI_A_SPI_CLOCKPOLARITY_INACTIVITY_LOW;
+		param.spiMode = EUSCI_A_SPI_3PIN;
+	EUSCI_A_SPI_initMaster(CONF_WINC_SPI_BASE, &param);
 
-	/* Structure for SPI configuration. */
-//	struct spi_config config;
-//	struct spi_slave_inst_config slave_config;
-//
-//	/* Select SPI slave CS pin. */
-//	/* This step will set the CS high */
-//	spi_slave_inst_get_config_defaults(&slave_config);
-//	slave_config.ss_pin = CONF_WINC_SPI_CS_PIN;
-//	spi_attach_slave(&slave_inst, &slave_config);
-//
-//	/* Configure the SPI master. */
-//	spi_get_config_defaults(&config);
-//	config.mux_setting = CONF_WINC_SPI_SERCOM_MUX;
-//	config.pinmux_pad0 = CONF_WINC_SPI_PINMUX_PAD0;
-//	config.pinmux_pad1 = CONF_WINC_SPI_PINMUX_PAD1;
-//	config.pinmux_pad2 = CONF_WINC_SPI_PINMUX_PAD2;
-//	config.pinmux_pad3 = CONF_WINC_SPI_PINMUX_PAD3;
-//	config.master_slave_select_enable = false;
-//
-//	config.mode_specific.master.baudrate = CONF_WINC_SPI_CLOCK;
-//	if (spi_init(&master, CONF_WINC_SPI_MODULE, &config) != STATUS_OK) {
-//		return M2M_ERR_BUS_FAIL;
-//	}
-//
-//	/* Enable the SPI master. */
-//	spi_enable(&master);
+	//Enable SPI Module
+	EUSCI_A_SPI_enable(CONF_WINC_SPI_BASE);
+	//Clear receive interrupt flag
+	EUSCI_A_SPI_clearInterrupt(CONF_WINC_SPI_BASE, EUSCI_A_SPI_RECEIVE_INTERRUPT);
 
 	nm_bsp_reset();
 	nm_bsp_sleep(1);
-	return result;
+	return M2M_SUCCESS;
 }
 
 /*

@@ -39,11 +39,14 @@
 
 static tpfNmBspIsr gpfIsr;
 
-static void chip_isr(void)
+
+#pragma vector=PORT3_VECTOR
+__interrupt void Port_3(void)
 {
 	if (gpfIsr) {
 		gpfIsr();
 	}
+    GPIO_clearInterrupt(GPIO_PORT_P3, GPIO_PIN4);
 }
 
 /*
@@ -56,9 +59,6 @@ static void init_chip_pins(void)
 	GPIO_setOutputHighOnPin(CONF_WINC_RST_PORT, CONF_WINC_RST_PIN);
 
 	GPIO_setAsInputPin(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
-
-	GPIO_setAsOutputPin(CONF_WINC_EN_PORT, CONF_WINC_EN_PIN); //set as input pullup...?
-	GPIO_setOutputHighOnPin(CONF_WINC_EN_PORT, CONF_WINC_EN_PIN);
 }
 
 /*
@@ -129,19 +129,13 @@ void nm_bsp_sleep(uint32 u32TimeMsec)
  *	@param[IN]	pfIsr
  *				Pointer to ISR handler
  */
-// ISR...? from Andy
-// #pragma vector = PORT4_VECTOR
-// __interrupt void sx127x_ISR(void)
-// {
-// 	(*isr_ptr)(); // Call ISR
-// 	GPIO_clearInterrupt(sx127x_irq_port, sx127x_irq_pin);
-// }
+
+//Registers ISR, then ISR is called whenever Port4 (for now) has an interrupt from 4.5
 void nm_bsp_register_isr(tpfNmBspIsr pfIsr)
 {
 	gpfIsr = pfIsr;
 	GPIO_clearInterrupt(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
 	GPIO_enableInterrupt(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
-	//TODO is this it? Do we need to attach this
 }
 
 /*

@@ -62,13 +62,11 @@ extern "C" {
 #define CONF_WINC_SPI_SCK_PIN           (GPIO_PIN5)
 
 #define CONF_WINC_SPI_CS_PORT           (GPIO_PORT_P2)
-#define CONF_WINC_SPI_CS_PIN			(GPIO_PIN1)
-
-#define CONF_WINC_EN_PORT               (GPIO_PORT_P2)
-#define CONF_WINC_EN_PIN                (GPIO_PIN0)
+#define CONF_WINC_SPI_CS_PIN			    (GPIO_PIN1)
 
 #define CONF_WINC_IRQ_PORT              (GPIO_PORT_P2)
 #define CONF_WINC_IRQ_PIN               (GPIO_PIN2)
+//Changing IRQ port/pin? Also see nm_bsp_msp430fr2355.c -> change port and pin and vector.
 
 #define CONF_WINC_RST_PORT              (GPIO_PORT_P4)
 #define CONF_WINC_RST_PIN               (GPIO_PIN0)
