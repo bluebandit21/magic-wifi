@@ -1586,6 +1586,13 @@
 <wire x1="2" y1="-1.7" x2="2" y2="1.8" width="0.127" layer="21"/>
 <text x="-2.35" y="-3.2" size="1.27" layer="27">&gt;VALUE</text>
 </package>
+<package name="BARREL_CONN_EXTERN">
+<smd name="POS" x="-5.08" y="3.81" dx="6.4516" dy="3.2512" layer="1" rot="R90"/>
+<smd name="GND" x="5.08" y="3.81" dx="6.4516" dy="3.2512" layer="1" rot="R90"/>
+<wire x1="-2.54" y1="5.08" x2="0" y2="5.08" width="0.127" layer="21"/>
+<wire x1="-1.27" y1="6.35" x2="-1.27" y2="3.81" width="0.127" layer="21"/>
+<wire x1="2.54" y1="1.27" x2="0" y2="1.27" width="0.127" layer="21"/>
+</package>
 </packages>
 <symbols>
 <symbol name="ATWINC15X0-MR210">
@@ -1861,6 +1868,15 @@
 <pin name="E/D" x="15.24" y="5.08" length="middle" rot="R180"/>
 <text x="-10.16" y="12.7" size="1.778" layer="95">&gt;NAME</text>
 <text x="-10.16" y="-12.7" size="1.778" layer="96">&gt;VALUE</text>
+</symbol>
+<symbol name="BARREL_CONN">
+<circle x="0" y="0" radius="5.08" width="0.254" layer="94"/>
+<wire x1="10.16" y1="-7.62" x2="-12.7" y2="0" width="0.254" layer="94" curve="-143.130102"/>
+<wire x1="-12.7" y1="0" x2="10.16" y2="7.62" width="0.254" layer="94" curve="-143.130102"/>
+<wire x1="-12.7" y1="0" x2="-20.32" y2="0" width="0.1651" layer="94"/>
+<wire x1="5.08" y1="0" x2="12.7" y2="0" width="0.1651" layer="94"/>
+<pin name="OUTER" x="-25.4" y="0" length="middle"/>
+<pin name="INNER" x="17.78" y="0" length="middle" rot="R180"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -2364,6 +2380,22 @@
 <connect gate="G$1" pin="GND" pad="GND"/>
 <connect gate="G$1" pin="OSC" pad="OSC"/>
 <connect gate="G$1" pin="VCC" pad="VCC"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="BARREL_CONN_EXTERN">
+<gates>
+<gate name="G$1" symbol="BARREL_CONN" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="BARREL_CONN_EXTERN">
+<connects>
+<connect gate="G$1" pin="INNER" pad="POS"/>
+<connect gate="G$1" pin="OUTER" pad="GND"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -4108,6 +4140,7 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <part name="!MSP_RST!_3V3" library="Resistor_Capacitor" library_urn="urn:adsk.eagle:library:15122775" deviceset="RC0603JR-070RL" device="" package3d_urn="urn:adsk.eagle:package:10872900/3" value="47 kOhm"/>
 <part name="X1" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="SMACONNECTOR" device="_EDGE" package3d_urn="urn:adsk.eagle:package:6240945/1"/>
 <part name="X2" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="SMACONNECTOR" device="_EDGE" package3d_urn="urn:adsk.eagle:package:6240945/1"/>
+<part name="U$7" library="473" deviceset="BARREL_CONN_EXTERN" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -4384,6 +4417,7 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <attribute name="NAME" x="-129.54" y="284.48" size="1.27" layer="95" rot="R180"/>
 <attribute name="VALUE" x="-129.54" y="287.02" size="1.27" layer="95" rot="R180"/>
 </instance>
+<instance part="U$7" gate="G$1" x="101.6" y="91.44" smashed="yes"/>
 </instances>
 <busses>
 </busses>
@@ -4687,6 +4721,11 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <pinref part="U6" gate="A" pin="SHELL_GND2"/>
 <wire x1="248.92" y1="68.58" x2="248.92" y2="63.5" width="0.1524" layer="91"/>
 <label x="248.92" y="63.5" size="1.778" layer="95" rot="R90"/>
+</segment>
+<segment>
+<pinref part="U$7" gate="G$1" pin="OUTER"/>
+<wire x1="76.2" y1="91.44" x2="66.04" y2="91.44" width="0.1524" layer="91"/>
+<label x="66.04" y="91.44" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="RFI" class="0">
@@ -5113,6 +5152,11 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <pinref part="!MSP_RST!_3V3" gate="G$1" pin="2"/>
 <wire x1="203.2" y1="-35.56" x2="213.36" y2="-35.56" width="0.1524" layer="91"/>
 <label x="213.36" y="-35.56" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$7" gate="G$1" pin="INNER"/>
+<wire x1="119.38" y1="91.44" x2="129.54" y2="91.44" width="0.1524" layer="91"/>
+<label x="124.46" y="91.44" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$4" class="0">
