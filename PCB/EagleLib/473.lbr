@@ -1929,6 +1929,13 @@
 <wire x1="2" y1="-1.7" x2="2" y2="1.8" width="0.127" layer="21"/>
 <text x="-2.35" y="-3.2" size="1.27" layer="27">&gt;VALUE</text>
 </package>
+<package name="BARREL_CONN_EXTERN">
+<smd name="POS" x="-5.08" y="3.81" dx="6.4516" dy="3.2512" layer="1" rot="R90"/>
+<smd name="GND" x="5.08" y="3.81" dx="6.4516" dy="3.2512" layer="1" rot="R90"/>
+<wire x1="-2.54" y1="5.08" x2="0" y2="5.08" width="0.127" layer="21"/>
+<wire x1="-1.27" y1="6.35" x2="-1.27" y2="3.81" width="0.127" layer="21"/>
+<wire x1="2.54" y1="1.27" x2="0" y2="1.27" width="0.127" layer="21"/>
+</package>
 </packages>
 <symbols>
 <symbol name="CONN16_2337822-1">
@@ -2557,6 +2564,15 @@
 <pin name="E/D" x="15.24" y="5.08" length="middle" rot="R180"/>
 <text x="-10.16" y="12.7" size="1.778" layer="95">&gt;NAME</text>
 <text x="-10.16" y="-12.7" size="1.778" layer="96">&gt;VALUE</text>
+</symbol>
+<symbol name="BARREL_CONN">
+<circle x="0" y="0" radius="5.08" width="0.254" layer="94"/>
+<wire x1="10.16" y1="-7.62" x2="-12.7" y2="0" width="0.254" layer="94" curve="-143.130102"/>
+<wire x1="-12.7" y1="0" x2="10.16" y2="7.62" width="0.254" layer="94" curve="-143.130102"/>
+<wire x1="-12.7" y1="0" x2="-20.32" y2="0" width="0.1651" layer="94"/>
+<wire x1="5.08" y1="0" x2="12.7" y2="0" width="0.1651" layer="94"/>
+<pin name="OUTER" x="-25.4" y="0" length="middle"/>
+<pin name="INNER" x="17.78" y="0" length="middle" rot="R180"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -3226,6 +3242,22 @@
 <connect gate="G$1" pin="GND" pad="GND"/>
 <connect gate="G$1" pin="OSC" pad="OSC"/>
 <connect gate="G$1" pin="VCC" pad="VCC"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="BARREL_CONN_EXTERN">
+<gates>
+<gate name="G$1" symbol="BARREL_CONN" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="BARREL_CONN_EXTERN">
+<connects>
+<connect gate="G$1" pin="INNER" pad="POS"/>
+<connect gate="G$1" pin="OUTER" pad="GND"/>
 </connects>
 <technologies>
 <technology name=""/>
