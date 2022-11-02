@@ -30,9 +30,6 @@ extern "C" {
 	#include "driver/include/m2m_wifi.h"
 }
 
-#include "WiFiClient.h"
-#include "WiFiSSLClient.h"
-#include "WiFiServer.h"
 
 typedef enum {
 	WL_NO_SHIELD = 255,
@@ -79,8 +76,6 @@ class WiFiClass
 public:
 	WiFiClass();
 
-	void setPins(int8_t cs, int8_t irq, int8_t rst, int8_t en = -1);
-
 	int init();
 	
 	char* firmwareVersion();
@@ -94,9 +89,6 @@ public:
 	uint8_t begin(const char *ssid);
 	uint8_t begin(const char *ssid, uint8_t key_idx, const char* key);
 	uint8_t begin(const char *ssid, const char *key);
-	uint8_t begin(const String &ssid) { return begin(ssid.c_str()); }
-	uint8_t begin(const String &ssid, uint8_t key_idx, const String &key) { return begin(ssid.c_str(), key_idx, key.c_str()); }
-	uint8_t begin(const String &ssid, const String &key) { return begin(ssid.c_str(), key.c_str()); }
 
 	/* Start Wifi in Access Point, with open security.
 	 * Only one client can connect to the AP at a time.
@@ -146,10 +138,8 @@ public:
 	uint8_t status();
 
 	int hostByName(const char* hostname, IPAddress& result);
-	int hostByName(const String &hostname, IPAddress& result) { return hostByName(hostname.c_str(), result); }
 
 	int ping(const char* hostname, uint8_t ttl = 128);
-	int ping(const String &hostname, uint8_t ttl = 128);
 	int ping(IPAddress host, uint8_t ttl = 128);
 
 	unsigned long getTime();

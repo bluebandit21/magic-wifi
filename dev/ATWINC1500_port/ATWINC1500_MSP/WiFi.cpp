@@ -17,12 +17,6 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifdef ARDUINO_ARCH_AVR
-#include <avr/version.h>
-#if (__AVR_LIBC_MAJOR__ < 2)
-#define WIFI_101_NO_TIME_H
-#endif
-#endif
 
 #ifndef WIFI_101_NO_TIME_H
 #include <time.h>
@@ -36,10 +30,10 @@
 #include "utility/WiFiSocket.h"
 
 #include "WiFi101.h"
-
+#include <string.h>
 extern "C" {
   #include "bsp/include/nm_bsp.h"
-  #include "bsp/include/nm_bsp_arduino.h"
+  #include "bsp/include/nm_bsp_msp430fr2355.h"
   #include "driver/include/m2m_periph.h"
   #include "driver/include/m2m_ssl.h"
   #include "driver/include/m2m_wifi.h"
@@ -268,13 +262,6 @@ WiFiClass::WiFiClass() :
 {
 }
 
-void WiFiClass::setPins(int8_t cs, int8_t irq, int8_t rst, int8_t en)
-{
-	gi8Winc1501CsPin = cs;
-	gi8Winc1501IntnPin = irq;
-	gi8Winc1501ResetPin = rst;
-	gi8Winc1501ChipEnPin = en;
-}
 
 int WiFiClass::init()
 {
@@ -738,7 +725,7 @@ void WiFiClass::end()
 uint8_t *WiFiClass::macAddress(uint8_t *mac)
 {
 	m2m_wifi_get_mac_address(mac);
-	byte tmpMac[6], i;
+	unsigned char tmpMac[6], i;
 	
 	m2m_wifi_get_mac_address(tmpMac);
 	
@@ -1080,11 +1067,6 @@ int WiFiClass::ping(const char* hostname, uint8_t ttl)
 	} else {
 		return WL_PING_UNKNOWN_HOST;
 	}
-}
-
-int WiFiClass::ping(const String &hostname, uint8_t ttl)
-{
-	return ping(hostname.c_str(), ttl);
 }
 
 int WiFiClass::ping(IPAddress host, uint8_t ttl)
