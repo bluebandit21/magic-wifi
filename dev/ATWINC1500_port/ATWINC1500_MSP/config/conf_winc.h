@@ -42,6 +42,7 @@ extern "C" {
 
 //#include "board.h"
 #include "driverlib.h"
+#include "stdio.h"
 //m2m_types keeps saying 'expected a type specifier' for checking alignment. Since Arduino removed all of those, disabling them for now.
 #define _lint (1)
 /*
@@ -84,7 +85,7 @@ extern "C" {
    ---------------------------------
 */
 
-#define CONF_WINC_DEBUG					(0)
+#define CONF_WINC_DEBUG					(1)
 #define CONF_WINC_PRINTF				printf
 
 #ifdef __cplusplus

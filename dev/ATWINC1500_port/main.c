@@ -46,8 +46,8 @@ static void wifi_cb(uint8_t u8MsgType, void *pvMsg)
     {
         uint8_t *pu8IPAddress = (uint8_t *)pvMsg;
         printf("Station connected\r\n");
-        printf("Station IP is %u.%u.%u.%u\r\n",
-                pu8IPAddress[0], pu8IPAddress[1], pu8IPAddress[2], pu8IPAddress[3]);
+//        printf("Station IP is %u.%u.%u.%u\r\n",
+//                pu8IPAddress[0], pu8IPAddress[1], pu8IPAddress[2], pu8IPAddress[3]);
         break;
     }
 
@@ -114,7 +114,7 @@ void main(void) {
         }
     }
 
-    printf("AP mode started. You can connect to %s.\r\n", (char *)MAIN_WLAN_SSID);
+    //printf("AP mode started. You can connect to %s.\r\n", (char *)MAIN_WLAN_SSID);
 
     while (1) {
         /* Handle pending events from network controller. */
