@@ -1,0 +1,1 @@
+../../EtherCard_minimized/src/enc28j60.h
