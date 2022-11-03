@@ -164,7 +164,7 @@ private:
 	uint32_t _gateway;
 	int _dhcp;
 	uint32_t _resolve;
-	char *_remoteMacAddress;
+	uint8_t *_remoteMacAddress;
 	wl_mode_t _mode;
 	wl_status_t _status;
 	char _scan_ssid[M2M_MAX_SSID_LEN];

@@ -28,9 +28,10 @@
 #endif
 
 #include "utility/WiFiSocket.h"
-
+#include "utility/MillisClock.h"
 #include "WiFi101.h"
 #include <string.h>
+#include <stdio.h>
 extern "C" {
   #include "bsp/include/nm_bsp.h"
   #include "bsp/include/nm_bsp_msp430fr2355.h"
@@ -781,7 +782,7 @@ uint8_t* WiFiClass::APClientMacAddress(uint8_t* mac)
 
 uint8_t* WiFiClass::remoteMacAddress(uint8_t* remoteMacAddress)
 {
-	_remoteMacAddress = remoteMacAddress;
+    _remoteMacAddress = remoteMacAddress;
 	memset(remoteMacAddress, 0, 6);
 
 	m2m_wifi_get_connection_info();

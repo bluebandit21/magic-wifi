@@ -27,6 +27,7 @@ extern "C" {
 #include "WiFiSocket.h"
 #include "IPAddress.h"
 #include <string.h>
+#include "MillisClock.h"
 #ifdef LIMITED_RAM_DEVICE
 #define SOCKET_BUFFER_SIZE 64
 #else
