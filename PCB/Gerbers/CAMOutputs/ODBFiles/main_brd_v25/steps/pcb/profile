@@ -1,0 +1,18 @@
+UNITS=MM
+ID=5075
+#
+#Num Features
+#
+F 1
+
+#
+#Layer features
+#
+S P 0
+OB 0 0 I
+OS 0 85.09
+OS 99.06 85.09
+OS 99.06 0
+OS 0 0
+OE
+SE
