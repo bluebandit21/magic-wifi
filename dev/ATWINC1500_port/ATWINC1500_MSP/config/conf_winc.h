@@ -56,20 +56,20 @@ extern "C" {
 /** SPI port and pin as well as module setups. */
 #define CONF_WINC_SPI_BASE				(EUSCI_A0_BASE)
 
-#define CONF_WINC_SPI_MODULE_PORT       (GPIO_PORT_P4)
-#define CONF_WINC_SPI_MOSI_PIN          (GPIO_PIN6)
-#define CONF_WINC_SPI_MISO_PIN          (GPIO_PIN7)
+#define CONF_WINC_SPI_MODULE_PORT       (GPIO_PORT_P1)
+#define CONF_WINC_SPI_MOSI_PIN          (GPIO_PIN7)
+#define CONF_WINC_SPI_MISO_PIN          (GPIO_PIN6)
 #define CONF_WINC_SPI_SCK_PIN           (GPIO_PIN5)
 
-#define CONF_WINC_SPI_CS_PORT           (GPIO_PORT_P2)
-#define CONF_WINC_SPI_CS_PIN			    (GPIO_PIN1)
+#define CONF_WINC_SPI_CS_PORT           (GPIO_PORT_P4)
+#define CONF_WINC_SPI_CS_PIN			    (GPIO_PIN0)
 
-#define CONF_WINC_IRQ_PORT              (GPIO_PORT_P2)
-#define CONF_WINC_IRQ_PIN               (GPIO_PIN2)
+#define CONF_WINC_IRQ_PORT              (GPIO_PORT_P3)
+#define CONF_WINC_IRQ_PIN               (GPIO_PIN4)
 //Changing IRQ port/pin? Also see nm_bsp_msp430fr2355.c -> change port and pin and vector.
 
-#define CONF_WINC_RST_PORT              (GPIO_PORT_P4)
-#define CONF_WINC_RST_PIN               (GPIO_PIN0)
+#define CONF_WINC_RST_PORT              (GPIO_PORT_P3)
+#define CONF_WINC_RST_PIN               (GPIO_PIN2)
 
 // SPI frequency (for init)
 #define CONF_WINC_SPI_CLOCK				(8000000)
@@ -84,7 +84,7 @@ extern "C" {
    ---------------------------------
 */
 
-#define CONF_WINC_DEBUG					(1)
+#define CONF_WINC_DEBUG					(0)
 #define CONF_WINC_PRINTF				printf
 
 #ifdef __cplusplus

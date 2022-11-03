@@ -68,7 +68,7 @@ static void init_chip_pins(void)
  */
 sint8 nm_bsp_init(void)
 {
-	gpfIsr = NULL;
+	gpfIsr = 0; //NULL
 
 	/* Initialize chip IOs. */
 	init_chip_pins();
