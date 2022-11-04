@@ -31,6 +31,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>FrameTranslater</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>LoRaRF_2.1.1_driver</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -59,6 +64,16 @@
 			<name>EtherCard_MSP430FR2355/src</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>FrameTranslater/FrameTranslater.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/FrameTranslater/FrameTranslater.cpp</locationURI>
+		</link>
+		<link>
+			<name>FrameTranslater/FrameTranslater.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/FrameTranslater/FrameTranslater.h</locationURI>
 		</link>
 		<link>
 			<name>LoRaRF_2.1.1_driver/BaseLoRa.h</name>

@@ -2,6 +2,7 @@
 #include "enc28j60.h"
 #include "driverlib.h"
 #include "SX127x.h"
+#include "FrameTranslater.h"
 
 
 // ethernet interface mac address, must be unique on the LAN
