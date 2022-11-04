@@ -31,6 +31,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>LoRaRF_2.1.1_driver</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>driverlib</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -54,6 +59,31 @@
 			<name>EtherCard_MSP430FR2355/src</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>LoRaRF_2.1.1_driver/BaseLoRa.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/LoRaRF_2.1.1_driver/BaseLoRa.h</locationURI>
+		</link>
+		<link>
+			<name>LoRaRF_2.1.1_driver/SX127x.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/LoRaRF_2.1.1_driver/SX127x.cpp</locationURI>
+		</link>
+		<link>
+			<name>LoRaRF_2.1.1_driver/SX127x.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/LoRaRF_2.1.1_driver/SX127x.h</locationURI>
+		</link>
+		<link>
+			<name>LoRaRF_2.1.1_driver/SX127x_driver.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/LoRaRF_2.1.1_driver/SX127x_driver.cpp</locationURI>
+		</link>
+		<link>
+			<name>LoRaRF_2.1.1_driver/SX127x_driver.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/LoRaRF_2.1.1_driver/SX127x_driver.h</locationURI>
 		</link>
 		<link>
 			<name>driverlib/MSP430FR2xx_4xx</name>

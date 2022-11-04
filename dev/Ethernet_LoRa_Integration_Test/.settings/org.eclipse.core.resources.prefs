@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
 encoding//Debug/EtherCard_MSP430FR2355/src/subdir_rules.mk=UTF-8
 encoding//Debug/EtherCard_MSP430FR2355/src/subdir_vars.mk=UTF-8
+encoding//Debug/LoRaRF_2.1.1_driver/subdir_rules.mk=UTF-8
+encoding//Debug/LoRaRF_2.1.1_driver/subdir_vars.mk=UTF-8
 encoding//Debug/driverlib/MSP430FR2xx_4xx/subdir_rules.mk=UTF-8
 encoding//Debug/driverlib/MSP430FR2xx_4xx/subdir_vars.mk=UTF-8
 encoding//Debug/makefile=UTF-8
