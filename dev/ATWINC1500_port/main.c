@@ -8,7 +8,7 @@
 #include <msp430.h>
 #include "driver/include/m2m_wifi.h"
 #include "driver/source/nmasic.h"
-#include <stdio.h>
+//#include <stdio.h>
 #include <string.h>
 
 #define MAIN_WLAN_SSID           "DEMO_AP"
@@ -36,7 +36,7 @@ static void wifi_cb(uint8_t u8MsgType, void *pvMsg)
         tstrM2mWifiStateChanged *pstrWifiState = (tstrM2mWifiStateChanged *)pvMsg;
         if (pstrWifiState->u8CurrState == M2M_WIFI_CONNECTED) {
         } else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED) {
-            printf("Station disconnected\r\n");
+            //printf("Station disconnected\r\n");
         }
 
         break;
@@ -45,8 +45,8 @@ static void wifi_cb(uint8_t u8MsgType, void *pvMsg)
     case M2M_WIFI_REQ_DHCP_CONF:
     {
         uint8_t *pu8IPAddress = (uint8_t *)pvMsg;
-        printf("Station connected\r\n");
-//        printf("Station IP is %u.%u.%u.%u\r\n",
+        //printf("Station connected\r\n");
+//        //printf("Station IP is %u.%u.%u.%u\r\n",
 //                pu8IPAddress[0], pu8IPAddress[1], pu8IPAddress[2], pu8IPAddress[3]);
         break;
     }
@@ -58,10 +58,12 @@ static void wifi_cb(uint8_t u8MsgType, void *pvMsg)
     }
 }
 
-
+//makes an AP.
 void main(void) {
     WDTCTL = WDTPW | WDTHOLD;               // Stop watchdog timer
     PM5CTL0 &= ~LOCKLPM5;                   // Disable the GPIO power-on default high-impedance mode
+    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0); GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN0); //Red ON as soon as we have power
+    GPIO_setAsOutputPin(GPIO_PORT_P6, GPIO_PIN6); GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
 
     tstrWifiInitParam param;
     tstrM2MAPConfig strM2MAPConfig;
@@ -84,7 +86,7 @@ void main(void) {
     param.pfAppWifiCb = wifi_cb;
     ret = m2m_wifi_init(&param);
     if (M2M_SUCCESS != ret) {
-        printf("main: m2m_wifi_init call error!(%d)\r\n", ret);
+        //printf("main: m2m_wifi_init call error!(%d)\r\n", ret);
         while (1) {
         }
     }
@@ -109,12 +111,13 @@ void main(void) {
     /* Bring up AP mode with parameters structure. */
     ret = m2m_wifi_enable_ap(&strM2MAPConfig);
     if (M2M_SUCCESS != ret) {
-        printf("main: m2m_wifi_enable_ap call error!\r\n");
+        //printf("main: m2m_wifi_enable_ap call error!\r\n");
         while (1) {
         }
     }
+    GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
 
-    printf("AP mode started. You can connect to %s.\r\n", (char *)MAIN_WLAN_SSID);
+    //printf("AP mode started. You can connect to %s.\r\n", (char *)MAIN_WLAN_SSID);
 
     while (1) {
         /* Handle pending events from network controller. */
