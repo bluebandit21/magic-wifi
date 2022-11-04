@@ -4,6 +4,6 @@
 .vscode/*
 .vscode
 *.o
-
-
 **/.DS_Store
+/Debug
+.DS_Store
