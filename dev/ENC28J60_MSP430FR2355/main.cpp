@@ -9,7 +9,7 @@
 static byte mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 };
 
 ENC28J60 ether;
-byte ENC28J60::buffer[700];
+byte ENC28J60::buffer[1518];
 
 void setup() {
     // put your setup code here, to run once:
