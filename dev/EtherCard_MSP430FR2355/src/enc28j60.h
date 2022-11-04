@@ -55,8 +55,8 @@ static uint_fast8_t SS_Port, MOSI_Port, SCK_Port, MISO_Port, select_Port;
 static uint_fast16_t SS_Pin, MOSI_Pin, SCK_Pin, MISO_Pin, select_Pin;
 */
 
-static uint_fast8_t select_Port = GPIO_PORT_P3;
-static uint_fast8_t select_Pin = GPIO_PIN6;
+static uint_fast8_t select_Port = GPIO_PORT_P1;
+static uint_fast8_t select_Pin = GPIO_PIN4;
 
 /** This class provide low-level interfacing with the ENC28J60 network interface. This is used by the EtherCard class and not intended for use by (normal) end users. */
 class ENC28J60 {

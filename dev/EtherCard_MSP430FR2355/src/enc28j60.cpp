@@ -252,7 +252,7 @@ void ENC28J60::initSPI () {
     //This is largely adapted(stolen) from initSPI on freertos_port branch
     //At some point should be more properly transitioned over
     uint8_t port = GPIO_PORT_P1;
-    uint16_t pins = GPIO_PIN4 + GPIO_PIN5 + GPIO_PIN6 + GPIO_PIN7;
+    uint16_t pins =  GPIO_PIN5 + GPIO_PIN6 + GPIO_PIN7;
     GPIO_setAsPeripheralModuleFunctionInputPin(port, pins, GPIO_PRIMARY_MODULE_FUNCTION);
     PMM_unlockLPM5();
 
