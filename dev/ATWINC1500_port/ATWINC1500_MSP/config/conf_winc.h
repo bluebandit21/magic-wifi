@@ -73,9 +73,9 @@ extern "C" {
 #define CONF_WINC_RST_PIN               (GPIO_PIN2)
 
 // SPI frequency (for init)
-#define CONF_WINC_SPI_CLOCK				(8000000)
+#define CONF_WINC_SPI_CLOCK				(1000000)
 // CPU frequency (for delay func)
-#define CONF_WINC_MCLK_FREQ_KHZ			(16000)
+#define CONF_WINC_MCLK_FREQ_KHZ			(2000)
 
 
 //TODO change to use A0 so that all EUSCI_A... functions are used

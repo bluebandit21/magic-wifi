@@ -74,7 +74,7 @@ static inline sint8 spi_rw_pio(uint8* pu8Mosi, uint8* pu8Miso, uint16 u16Sz)
 	else {
 		return M2M_ERR_BUS_FAIL;
 	}
-	GPIO_setOutputHighOnPin(CONF_WINC_SPI_CS_PORT, CONF_WINC_SPI_CS_PIN);
+	GPIO_setOutputLowOnPin(CONF_WINC_SPI_CS_PORT, CONF_WINC_SPI_CS_PIN);
 
 	// spi_select_slave(&master, &slave_inst, true);
 
@@ -82,16 +82,19 @@ static inline sint8 spi_rw_pio(uint8* pu8Mosi, uint8* pu8Miso, uint16 u16Sz)
 		// txd_data = *pu8Mosi;
     //    while(!spi_is_ready_to_write(&master));
     //    while(spi_write(&master, txd_data) != STATUS_OK);
-		while(EUSCI_A_SPI_isBusy(CONF_WINC_SPI_BASE) == EUSCI_A_SPI_BUSY);
+		//while(EUSCI_A_SPI_isBusy(CONF_WINC_SPI_BASE) == EUSCI_A_SPI_BUSY);
 		EUSCI_A_SPI_transmitData(CONF_WINC_SPI_BASE, *pu8Mosi);
+        while(EUSCI_A_SPI_isBusy(CONF_WINC_SPI_BASE) == EUSCI_A_SPI_BUSY);
 
 		/* Read SPI master data register. */
 		// while(!spi_is_ready_to_read(&master));
 		// while(spi_read(&master, &rxd_data) != STATUS_OK);
 		// *pu8Miso = rxd_data;
 
-		while(EUSCI_A_SPI_isBusy(CONF_WINC_SPI_BASE) == EUSCI_A_SPI_BUSY);
+		//wait here somehow
+
 		*pu8Miso = EUSCI_A_SPI_receiveData(CONF_WINC_SPI_BASE);
+        while(EUSCI_A_SPI_isBusy(CONF_WINC_SPI_BASE) == EUSCI_A_SPI_BUSY);
 
 		u16Sz--;
 		if (!u8SkipMiso)
@@ -104,7 +107,7 @@ static inline sint8 spi_rw_pio(uint8* pu8Mosi, uint8* pu8Miso, uint16 u16Sz)
 	// 	;
 
 	//spi_select_slave(&master, &slave_inst, false);
-	GPIO_setOutputLowOnPin(CONF_WINC_SPI_CS_PORT, CONF_WINC_SPI_CS_PIN);
+	GPIO_setOutputHighOnPin(CONF_WINC_SPI_CS_PORT, CONF_WINC_SPI_CS_PIN);
 
 	return M2M_SUCCESS;
 }
@@ -128,11 +131,14 @@ sint8 nm_bus_init(void *pvinit)
 			CONF_WINC_SPI_SCK_PIN + CONF_WINC_SPI_MISO_PIN + CONF_WINC_SPI_MOSI_PIN,
 			GPIO_PRIMARY_MODULE_FUNCTION);
 	
+	GPIO_setAsOutputPin(CONF_WINC_SPI_CS_PORT, CONF_WINC_SPI_CS_PIN);
+	GPIO_setOutputHighOnPin(CONF_WINC_SPI_CS_PORT, CONF_WINC_SPI_CS_PIN);
+
 	PMM_unlockLPM5();
 	EUSCI_A_SPI_initMasterParam param = {0};
 		param.selectClockSource = EUSCI_A_SPI_CLOCKSOURCE_SMCLK;
 		param.clockSourceFrequency = CS_getSMCLK(); //SMCLK capable of up to 24MHz. Non-jank around 8MHz.
-		param.desiredSpiClock = 8000000;
+		param.desiredSpiClock = 1000000;
 		param.msbFirst = EUSCI_A_SPI_MSB_FIRST;
 		param.clockPhase = EUSCI_A_SPI_PHASE_DATA_CAPTURED_ONFIRST_CHANGED_ON_NEXT;
 		param.clockPolarity = EUSCI_A_SPI_CLOCKPOLARITY_INACTIVITY_LOW;
@@ -196,6 +202,7 @@ sint8 nm_bus_deinit(void)
 */
 sint8 nm_bus_reinit(void* config)
 {
+    nm_bus_init(0);
 	return M2M_SUCCESS;
 }
 

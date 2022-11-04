@@ -69,7 +69,7 @@ void main(void) {
 
     /* Initialize the board. */
     //Do our thing
-    void clockSetup(void);
+    clockSetup();
 
     /* Initialize the UART console. */
     //configure_console();
@@ -114,7 +114,7 @@ void main(void) {
         }
     }
 
-    //printf("AP mode started. You can connect to %s.\r\n", (char *)MAIN_WLAN_SSID);
+    printf("AP mode started. You can connect to %s.\r\n", (char *)MAIN_WLAN_SSID);
 
     while (1) {
         /* Handle pending events from network controller. */
@@ -123,8 +123,8 @@ void main(void) {
     }
 }
 
-#define CS_MCLK_DESIRED_KHZ (16000)
-#define CS_MCLK_FLL_RATIO   (488) //= rounding MCLK desired HZ / 32768
+#define CS_MCLK_DESIRED_KHZ (2000)
+#define CS_MCLK_FLL_RATIO   (61) //= rounding MCLK desired HZ / 32768
 //Sets up Clock signals for the FR2355: MCLK @ 16M, SMCLK (SPI, etc.) @ 8M.
 void clockSetup(void){
     CS_initClockSignal(CS_FLLREF, CS_REFOCLK_SELECT, CS_CLOCK_DIVIDER_1);
