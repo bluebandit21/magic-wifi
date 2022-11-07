@@ -164,32 +164,66 @@ void setup_Receivelora(){
 int main(void)
 {
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
-    //setup_ethernet();
+    setup_ethernet();
     setup_Transmitlora();
     setup_Receivelora();
 
     char message[] = "Longer Message, chunk into a few frames each";
+
+
+    const char broadcastEth[] = {
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, //Broadcast Eth MAC dest
+        0x74, 0x69, 0x69, 0x2D, 0x30, 0x31, //Source Eth MAC addr (copied from above)
+        0x00, 0x05,                         //Length (five bytes)
+        'H', 'e', 'l', 'l', 'o'
+    };
+
+
+
     uint8_t nBytes = sizeof(message);
     uint8_t counter = 0;
     char receiveBuffer[100];
 
     while(1){
-        /*
-         *
-         int len = ether.packetReceive();
-        for(int i=len;i<ETH_MTU;i++){
-            ENC28J60::buffer[i] = 0;
+
+
+            //ETH RECEIVE
+
+        int len = 0;
+        while(len <= 0){
+            len = ether.packetReceive();
         }
 
-        if(len > 0){
-            volatile int x;
-            x = 1;
+
+        /*
+        //Probably not actually necessary
+        for(int i=len;i<ETH_MTU;i++){
+            ENC28J60::buffer[i] = 0;
         }
         */
 
 
-        /*------------____TRANSMIT GARBAGE--------------------
 
+        //ETH TRANSMIT
+
+        ENC28J60::buffer[0] = 0xFF;
+        ENC28J60::buffer[1] = 0xFF;
+        ENC28J60::buffer[2] = 0xFF;
+        ENC28J60::buffer[3] = 0xFF;
+        ENC28J60::buffer[4] = 0xFF;
+        ENC28J60::buffer[5] = 0xFF;
+
+
+        //memcpy(ENC28J60::buffer, broadcastEth, sizeof(broadcastEth));
+        ether.packetSend(len);
+
+
+
+
+
+
+        //-----------------TRANSMIT GARBAGE--------------------
+        /*
         // Transmit message and counter
                   // write() method must be placed between beginPacket() and endPacket()
         TransmitLoRa.beginPacket();
@@ -211,10 +245,13 @@ int main(void)
         // Serial.print(LoRa.transmitTime());
         // Serial.println(" ms");
         // Serial.println();
-         *
-         */
+        */
 
 
+
+        //-----------------------RECEIVING STUFF--------------------------
+
+        /*
         ReceiveLoRa.request();
         // Wait for incoming LoRa packet
         ReceiveLoRa.wait();
@@ -245,13 +282,13 @@ int main(void)
         else if (status == SX127X_STATUS_HEADER_ERR) error = 2; // Serial.println("Packet header error");
         //Serial.println();
         error = error; // *** Place breakpoint here ***
+        */
 
-        // Don't load RF module with continous transmit
-        for(volatile int i = 0; i<24000;i++){
-                for(volatile int j=0;j<10;j++); //Delay 2 ms ~= 24000 clock cycles
+        for(volatile int i=0;i<10000;i++){
+            for(volatile int j=0;j<10;j++){
+               //Do nothing
+            }
         }
-
-
 
     }
 
