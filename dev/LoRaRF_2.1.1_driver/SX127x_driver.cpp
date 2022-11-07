@@ -13,7 +13,7 @@ void (*isr_ptr)(void);
 
 
 // ISR
-#pragma vector=PORT4_VECTOR // TODO:: parameterize??
+#pragma vector=PORT3_VECTOR // TODO:: parameterize??
 __interrupt void sx127x_ISR(void)
 {
     (*isr_ptr)(); // Call ISR

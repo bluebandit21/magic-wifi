@@ -273,7 +273,7 @@ void ENC28J60::initSPI () {
     //Clear receive interrupt flag
     EUSCI_A_SPI_clearInterrupt(base, EUSCI_A_SPI_RECEIVE_INTERRUPT);
     //Enable Receive interrupt
-    EUSCI_A_SPI_enableInterrupt(base, EUSCI_A_SPI_RECEIVE_INTERRUPT);
+    //EUSCI_A_SPI_enableInterrupt(base, EUSCI_A_SPI_RECEIVE_INTERRUPT); //TODO: FIXME
 }
 
 static void enableChip () {
