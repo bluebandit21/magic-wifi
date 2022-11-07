@@ -80,8 +80,8 @@ void setup_ethernet() {
 
 //-----------------------------------LORA--------------------------
 
-SX127x TransmitLoRa(0);
-SX127x ReceiveLoRa(1);
+SX127x TransmitLoRa(LORA::SENDER);
+SX127x ReceiveLoRa(LORA::RECEIVER);
 
 
 void setup_Transmitlora() {

@@ -27,7 +27,7 @@ class SX127x
 {
     public:
 
-        SX127x(bool port);
+        SX127x(LORA port);
 
         // Common Operational methods
         bool begin();
@@ -124,7 +124,7 @@ class SX127x
     private:
 
         EUSCI_B_SPI_initMasterParam _spi;
-        LORA port;
+        LORA device;
         int8_t _irq = 0; // change to enable/disable
         uint8_t _statusWait;
         volatile static uint8_t _statusIrq;
@@ -135,15 +135,10 @@ class SX127x
         uint16_t _random;
 
         // Interrupt handler methods
-#ifdef ESP8266
-         void ICACHE_RAM_ATTR _interruptTx();
-         void ICACHE_RAM_ATTR _interruptRx();
-         void ICACHE_RAM_ATTR _interruptRxContinuous();
-#else
-         void _interruptTx(void);
-         void _interruptRx();
-         void _interruptRxContinuous();
-#endif
+         static void _interruptTx(void);
+         static void _interruptRx();
+         static void _interruptRxContinuous();
+
 
 };
 
