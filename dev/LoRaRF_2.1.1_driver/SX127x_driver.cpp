@@ -12,14 +12,6 @@ int8_t sx127x_irq_pin;
 void (*isr_ptr)(void);
 
 
-// ISR
-#pragma vector=PORT3_VECTOR // TODO:: parameterize??
-__interrupt void sx127x_ISR(void)
-{
-    (*isr_ptr)(); // Call ISR
-    GPIO_clearInterrupt(sx127x_irq_port, sx127x_irq_pin);
-}
-
 // TODO:: REPLACE with RTOS block function to eliminate busy wait, for TEST use ONLY
 void delay(int delay) {
     for(int i = 0; i < delay; ++i) {
@@ -107,6 +99,7 @@ uint8_t sx127x_transfer(uint8_t address, uint8_t data)
 }
 
 void sx127x_interruptEnable(void (*isr)(void)) {
+    //TODO: Associate appropriate isr pointer here!
    isr_ptr = isr;
    GPIO_clearInterrupt(sx127x_irq_port, sx127x_irq_pin);
    GPIO_enableInterrupt(sx127x_irq_port, sx127x_irq_pin);

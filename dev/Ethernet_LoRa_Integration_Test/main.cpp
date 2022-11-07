@@ -4,6 +4,62 @@
 #include "SX127x.h"
 #include "FrameTranslater.h"
 
+
+#define DEBUG_ABORT() while(1){}
+
+
+//-----------------------------------ISR HANDLING------------------
+
+
+//3.4 is the Wifi IRQ, 3.1 is the receive LoRa IRQ
+void (*lora_receive_isr)(void) = nullptr;
+void (*wifi_isr)(void) = nullptr;
+
+
+#pragma vector=PORT3_VECTOR
+__interrupt void port3_ISR(void)
+{
+    bool known = false;
+
+    if(GPIO_getInterruptStatus(GPIO_PORT_P3, GPIO_PIN4)){
+        if(wifi_isr) wifi_isr();
+        GPIO_clearInterrupt(GPIO_PORT_P3, GPIO_PIN4);
+        known = true;
+    }
+
+    if(GPIO_getInterruptStatus(GPIO_PORT_P3, GPIO_PIN1)){
+        if(lora_receive_isr) lora_receive_isr();
+        GPIO_clearInterrupt(GPIO_PORT_P3, GPIO_PIN1);
+        known = true;
+    }
+
+    if(!known) DEBUG_ABORT();
+}
+
+//2.1 is the Ethernet IRQ, 2.4 is the send LoRa IRQ
+void (*lora_send_isr)(void) = nullptr;
+void (*ethernet_isr)(void) = nullptr;
+
+#pragma vector=PORT2_VECTOR
+__interrupt void port2_ISR(void)
+{
+    bool known = false;
+
+    if(GPIO_getInterruptStatus(GPIO_PORT_P2, GPIO_PIN4)){
+        if(lora_send_isr) lora_send_isr();
+        GPIO_clearInterrupt(GPIO_PORT_P2, GPIO_PIN4);
+        known = true;
+    }
+
+    if(GPIO_getInterruptStatus(GPIO_PORT_P2, GPIO_PIN1)){
+        if(ethernet_isr) ethernet_isr();
+        GPIO_clearInterrupt(GPIO_PORT_P2, GPIO_PIN1);
+        known = true;
+    }
+
+    if(!known) DEBUG_ABORT();
+}
+
 //-----------------------------------ETHERNET----------------------
 ENC28J60 ether;
 constexpr ETH_MTU = 1518;
