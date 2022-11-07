@@ -136,7 +136,7 @@ bool FrameTranslater::checkFrame(uint8_t* dest, uint16_t length) {
         uint8_t* subframe_ptr = dest + (i * lora_frame_max);
 
         // for all other subframes and parity
-        if(active_frame_num[i] != defective_frame) {
+        if(active_frames[i] != defective_frame) {
             for(int j = 1; j < lora_frame_max; ++j) {
                 defective_ptr[j] = subframe_ptr[j];
             }

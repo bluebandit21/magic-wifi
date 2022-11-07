@@ -19,7 +19,7 @@ public:
     void sendFrame(uint8_t* ptr, uint16_t length);
 
     void receiveFrame(uint8_t* dest, uint16_t length);
-    bool checkFrame();
+    bool FrameTranslater::checkFrame(uint8_t* dest, uint16_t length);
 
 private:
     const uint8_t lora_frame_max = LORA_FRAME_MAX;
