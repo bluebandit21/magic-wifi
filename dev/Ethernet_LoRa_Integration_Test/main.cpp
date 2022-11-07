@@ -3,6 +3,7 @@
 #include "driverlib.h"
 #include "SX127x.h"
 #include "FrameTranslater.h"
+#include "defines.h"
 
 
 #define DEBUG_ABORT() while(1){}
@@ -21,15 +22,15 @@ __interrupt void port3_ISR(void)
 {
     bool known = false;
 
-    if(GPIO_getInterruptStatus(GPIO_PORT_P3, GPIO_PIN4)){
+    if(GPIO_getInterruptStatus(WIFI_IRQ_PORT, WIFI_IRQ_PIN)){
         if(wifi_isr) wifi_isr();
-        GPIO_clearInterrupt(GPIO_PORT_P3, GPIO_PIN4);
+        GPIO_clearInterrupt(WIFI_IRQ_PORT, WIFI_IRQ_PIN);
         known = true;
     }
 
-    if(GPIO_getInterruptStatus(GPIO_PORT_P3, GPIO_PIN1)){
+    if(GPIO_getInterruptStatus(LORA_RECEIVE_IRQ_PORT, LORA_RECEIVE_IRQ_PIN)){
         if(lora_receive_isr) lora_receive_isr();
-        GPIO_clearInterrupt(GPIO_PORT_P3, GPIO_PIN1);
+        GPIO_clearInterrupt(LORA_RECEIVE_IRQ_PORT, LORA_RECEIVE_IRQ_PIN);
         known = true;
     }
 
@@ -45,15 +46,15 @@ __interrupt void port2_ISR(void)
 {
     bool known = false;
 
-    if(GPIO_getInterruptStatus(GPIO_PORT_P2, GPIO_PIN4)){
+    if(GPIO_getInterruptStatus(LORA_SEND_IRQ_PORT, LORA_SEND_IRQ_PIN)){
         if(lora_send_isr) lora_send_isr();
-        GPIO_clearInterrupt(GPIO_PORT_P2, GPIO_PIN4);
+        GPIO_clearInterrupt(LORA_SEND_IRQ_PORT, LORA_SEND_IRQ_PIN);
         known = true;
     }
 
-    if(GPIO_getInterruptStatus(GPIO_PORT_P2, GPIO_PIN1)){
+    if(GPIO_getInterruptStatus(ETH_IRQ_PORT, ETH_IRQ_PIN)){
         if(ethernet_isr) ethernet_isr();
-        GPIO_clearInterrupt(GPIO_PORT_P2, GPIO_PIN1);
+        GPIO_clearInterrupt(ETH_IRQ_PORT, ETH_IRQ_PIN);
         known = true;
     }
 

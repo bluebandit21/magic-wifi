@@ -7,8 +7,6 @@ int8_t sx127x_nss_port;
 int8_t sx127x_nss_pin;
 int8_t sx127x_reset_port;
 int8_t sx127x_reset_pin;
-int8_t sx127x_irq_port;
-int8_t sx127x_irq_pin;
 void (*isr_ptr)(void);
 
 
@@ -19,20 +17,15 @@ void delay(int delay) {
     }
 }
 
-void sx127x_setSPI(EUSCI_B_SPI_initMasterParam &SpiObject, bool port)
+void sx127x_setSPI(EUSCI_B_SPI_initMasterParam &SpiObject, LORA port)
 {
     sx127x_spi_params = SpiObject;
-    baseAddress = port ? SX127X_SPI_1 : SX127X_SPI_0;
-    sx127x_nss_port = port ? SX127X_PORT_1_NSS : SX127X_PORT_0_NSS;
-    sx127x_nss_pin = port ? SX127X_PIN_1_NSS : SX127X_PIN_0_NSS;
+    baseAddress =     (port == LORA::RECEIVER) ? SX127X_SPI_1 : SX127X_SPI_0;
+    sx127x_nss_port = (port == LORA::RECEIVER) ? SX127X_PORT_1_NSS : SX127X_PORT_0_NSS;
+    sx127x_nss_pin  = (port == LORA::RECEIVER) ? SX127X_PIN_1_NSS : SX127X_PIN_0_NSS;
 
-    sx127x_reset_port = port ? SX127X_PORT_1_RESET : SX127X_PORT_0_RESET;
-    sx127x_reset_pin = port ? SX127X_PIN_1_RESET : SX127X_PIN_0_RESET;
-
-    sx127x_irq_port = port ? SX127X_PORT_1_IRQ : SX127X_PORT_0_IRQ ;
-    sx127x_irq_pin = port ? SX127X_PIN_1_IRQ : SX127X_PIN_0_IRQ ;
-
-
+    sx127x_reset_port = (port == LORA::RECEIVER) ? SX127X_PORT_1_RESET : SX127X_PORT_0_RESET;
+    sx127x_reset_pin  =  (port == LORA::RECEIVER) ? SX127X_PIN_1_RESET : SX127X_PIN_0_RESET;
 }
 
 
@@ -44,13 +37,19 @@ void sx127x_reset()
     delay(5);
 }
 
-void sx127x_begin()
+void sx127x_begin(LORA port)
 {
     GPIO_setAsOutputPin(sx127x_nss_port, sx127x_nss_pin);
     GPIO_setAsOutputPin(sx127x_reset_port, sx127x_reset_pin);
     GPIO_setOutputHighOnPin(sx127x_nss_port, sx127x_nss_pin);
-    GPIO_setAsInputPinWithPullUpResistor(sx127x_irq_port, sx127x_irq_pin);
-    GPIO_selectInterruptEdge(sx127x_irq_port, sx127x_irq_pin, GPIO_LOW_TO_HIGH_TRANSITION);
+
+    if(port == LORA::SENDER){
+        GPIO_setAsInputPinWithPullUpResistor(LORA_SEND_IRQ_PORT, LORA_SEND_IRQ_PIN);
+        GPIO_selectInterruptEdge(LORA_SEND_IRQ_PORT, LORA_SEND_IRQ_PIN, GPIO_LOW_TO_HIGH_TRANSITION);
+    }else{
+        GPIO_setAsInputPinWithPullUpResistor(LORA_RECEIVE_IRQ_PORT, LORA_RECEIVE_IRQ_PIN);
+        GPIO_selectInterruptEdge(LORA_RECEIVE_IRQ_PORT, LORA_RECEIVE_IRQ_PIN, GPIO_LOW_TO_HIGH_TRANSITION);
+    }
 
     EUSCI_B_SPI_initMaster(baseAddress, &sx127x_spi_params);
     EUSCI_B_SPI_enable(baseAddress);
@@ -98,13 +97,28 @@ uint8_t sx127x_transfer(uint8_t address, uint8_t data)
     return response;
 }
 
-void sx127x_interruptEnable(void (*isr)(void)) {
-    //TODO: Associate appropriate isr pointer here!
-   isr_ptr = isr;
-   GPIO_clearInterrupt(sx127x_irq_port, sx127x_irq_pin);
-   GPIO_enableInterrupt(sx127x_irq_port, sx127x_irq_pin);
+void sx127x_interruptEnable(void (*isr)(void), LORA port) {
+    switch(port){
+        case LORA::SENDER:
+            lora_send_isr = isr;
+            GPIO_clearInterrupt(LORA_SEND_IRQ_PORT, LORA_SEND_IRQ_PIN);
+            GPIO_enableInterrupt(LORA_SEND_IRQ_PORT, LORA_SEND_IRQ_PIN);
+            break;
+        case LORA::RECEIVER:
+            lora_receive_isr = isr;
+            GPIO_clearInterrupt(LORA_RECEIVE_IRQ_PORT, LORA_RECEIVE_IRQ_PIN);
+            GPIO_enableInterrupt(LORA_RECEIVE_IRQ_PORT, LORA_RECEIVE_IRQ_PIN);
+            break;
+    }
 }
 
-void sx127x_interruptDisable() {
-   GPIO_disableInterrupt(sx127x_irq_port, sx127x_irq_pin);
+void sx127x_interruptDisable(LORA port) {
+    switch(port){
+        case LORA::SENDER:
+            GPIO_disableInterrupt(LORA_SEND_IRQ_PORT, LORA_SEND_IRQ_PIN);
+            break;
+        case LORA::RECEIVER:
+            GPIO_disableInterrupt(LORA_RECEIVE_IRQ_PORT, LORA_RECEIVE_IRQ_PIN);
+            break;
+    }
 }

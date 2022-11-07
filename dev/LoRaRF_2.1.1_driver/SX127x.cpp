@@ -88,7 +88,7 @@ bool SX127x::begin()
 
     // begin spi and perform device reset
     sx127x_setSPI(_spi, port);
-    sx127x_begin();
+    sx127x_begin(port);
     if (!SX127x::reset()) return false;
 
     // set modem to LoRa
@@ -377,7 +377,7 @@ bool SX127x::endPacket(uint32_t timeout)
         sx127x_writeRegister(SX127X_REG_DIO_MAPPING_1, SX127X_DIO0_TX_DONE);
 
         //attachInterrupt(_irqStatic, SX127x::_interruptTx, RISING);
-        sx127x_interruptEnable(SX127x::_interruptTx);
+        sx127x_interruptEnable(SX127x::_interruptTx, port);
     }
     return true;
 }
@@ -445,10 +445,10 @@ bool SX127x::request(uint32_t timeout)
     if (_irq != -1) {
         sx127x_writeRegister(SX127X_REG_DIO_MAPPING_1, SX127X_DIO0_RX_DONE);
         if (timeout == SX127X_RX_CONTINUOUS) {
-            sx127x_interruptEnable(SX127x::_interruptRxContinuous);
+            sx127x_interruptEnable(SX127x::_interruptRxContinuous, port);
             //attachInterrupt(_irqStatic, SX127x::_interruptRxContinuous, RISING);
         } else {
-            sx127x_interruptEnable(SX127x::_interruptRx);
+            sx127x_interruptEnable(SX127x::_interruptRx, port);
             //attachInterrupt(_irqStatic, SX127x::_interruptRx, RISING);
         }
     }
@@ -628,7 +628,7 @@ void SX127x::_interruptTx(void)
     _statusIrq = SX127X_IRQ_TX_DONE;
 
     // detach interrupt
-    sx127x_interruptDisable();
+    sx127x_interruptDisable(port);
 
     // call onTransmit function
     if (_onTransmit) {
@@ -647,7 +647,7 @@ void SX127x::_interruptRx()
     sx127x_writeBits(SX127X_REG_OP_MODE, SX127X_MODE_STDBY, 0, 3);
 
     // detach interrupt
-    sx127x_interruptDisable();
+    sx127x_interruptDisable(port);
 
     // set pointer to RX buffer base address and get packet payload length
     sx127x_writeRegister(SX127X_REG_FIFO_ADDR_PTR, sx127x_readRegister(SX127X_REG_FIFO_RX_CURRENT_ADDR));

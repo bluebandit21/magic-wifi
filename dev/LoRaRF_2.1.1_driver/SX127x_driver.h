@@ -2,6 +2,7 @@
 #define _SX127X_DRIVER_H_
 
 #include "driverlib.h"
+#include "defines.h"
 
 // SX127X register map
 #define SX127X_REG_FIFO                         0x00
@@ -126,29 +127,37 @@
 #define SX127X_PIN_0_NSS                        GPIO_PIN0
 #define SX127X_PORT_0_RESET                     GPIO_PORT_P2
 #define SX127X_PIN_0_RESET                      GPIO_PIN2
-#define SX127X_PORT_0_IRQ                       GPIO_PORT_P2
-#define SX127X_PIN_0_IRQ                        GPIO_PIN4
+
+
 #define SX127X_SPI_1                            EUSCI_B1_BASE
 #define SX127X_PORT_1_NSS                       GPIO_PORT_P4
 #define SX127X_PIN_1_NSS                        GPIO_PIN4
 #define SX127X_PORT_1_RESET                     GPIO_PORT_P3
 #define SX127X_PIN_1_RESET                      GPIO_PIN0
-#define SX127X_PORT_1_IRQ                       GPIO_PORT_P3
-#define SX127X_PIN_1_IRQ                        GPIO_PIN1
+
+
 #define SX127X_SPI_FREQUENCY                    16000000    // Maximum LoRa SPI frequency
 
-void sx127x_setSPI(EUSCI_B_SPI_initMasterParam &SpiObject, bool port);
+
+enum struct LORA{
+    SENDER = 0,
+    RECEIVER = 1
+};
+
+
+
+void sx127x_setSPI(EUSCI_B_SPI_initMasterParam &SpiObject, LORA port);
 //void sx127x_setPins(int8_t nss);
 void sx127x_reset();
-void sx127x_begin();
+void sx127x_begin(LORA port);
 
 // SX126x driver: Register access functions
 void sx127x_writeBits(uint8_t address, uint8_t data, uint8_t position, uint8_t length);
 void sx127x_writeRegister(uint8_t address, uint8_t data);
 uint8_t sx127x_readRegister(uint8_t address);
 uint8_t sx127x_transfer(uint8_t address, uint8_t data);
-void sx127x_interruptEnable(void (*isr)(void));
-void sx127x_interruptDisable();
+void sx127x_interruptEnable(void (*isr)(void), LORA port);
+void sx127x_interruptDisable(LORA port);
 
 #endif
 
