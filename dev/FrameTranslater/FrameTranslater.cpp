@@ -86,14 +86,14 @@ void FrameTranslater::receiveFrame(uint8_t* dest, uint16_t length){
 }
 
 
-bool FrameTranslater::checkFrame() {
+bool FrameTranslater::checkFrame(uint8_t* dest, uint16_t length) {
     // TODO:: clear the active frame or  something
     bool parity_needed = false;
     uint8_t defective_frame;
 
     uint8_t active_frame_num = active_frames[0];
 
-    // find newest subframe frame
+    // find newest subframe, only can reconstruct newest
     for(int i = 1; i < MAX_SUBFRAME_ID - 1; ++i) {
            if(active_frames[i] > active_frame_num) {
                active_frame_num = active_frames[i];
@@ -104,25 +104,41 @@ bool FrameTranslater::checkFrame() {
     for(int i = 1; i < MAX_SUBFRAME_ID - 1; ++i) {
         if(active_frame_num != active_frames[i]) {
             // cannot handle more than one bad
+#ifdef USE_PARITY
             if(parity_needed) return false;
             defective_frame = i;
             parity_needed = true;
+#elif
+            return false;
+#endif
         }
     }
 
+    // no correction needed, return frame valid
     if(!parity_needed) return true;
 
 #ifdef USE_PARITY
-    // attempt correction
+    // perform correction
+    uint8_t* defective_ptr = dest + (defective_frame * lora_frame_max);
+
+    // verify parity subframe matches the same id
     if(active_frame_num != active_frames[MAX_SUBFRAME_ID]) {
         return false;
     }
 
+    // clear defective frame
+    for(int j = 1; j < lora_frame_max; ++j) {
+        defective_ptr[j] ^= 0;
+    }
+
+    // reconstruct using XOR
     for(int i = 1; i < MAX_SUBFRAME_ID; ++i) {
-        if(active_frame_num != defective_frame) {
-            for(int j = 0; j < lora_frame_max; ++j) {
-                parity_frame[j] = 0;
-                //parity_frame[j] ^= ptr[j]; // TODO:: fix
+        uint8_t* subframe_ptr = dest + (i * lora_frame_max);
+
+        // for all other subframes and parity
+        if(active_frame_num[i] != defective_frame) {
+            for(int j = 1; j < lora_frame_max; ++j) {
+                defective_ptr[j] = subframe_ptr[j];
             }
         }
     }
