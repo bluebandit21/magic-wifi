@@ -11,18 +11,20 @@
 //#include <stdio.h>
 #include <string.h>
 
-#define MAIN_WLAN_SSID           "DEMO_AP"
+#define MAIN_WLAN_SSID           "MSetup"
 #define MAIN_WLAN_AUTH           M2M_WIFI_SEC_OPEN
-#define MAIN_WLAN_CHANNEL        (6)
-
-void clockSetup(void);
-
-
+//#define MAIN_WLAN_PSK            (0)
+/** Index of scan list to request scan result. */
+static uint8_t scan_request_index = 0;
+/** Number of APs found. */
+static uint8_t num_founded_ap = 0;
 /**
  * \brief Callback to get the Wi-Fi status update.
  *
  * \param[in] u8MsgType type of Wi-Fi notification. Possible types are:
  *  - [M2M_WIFI_RESP_CON_STATE_CHANGED](@ref M2M_WIFI_RESP_CON_STATE_CHANGED)
+ *  - [M2M_WIFI_RESP_SCAN_DONE](@ref M2M_WIFI_RESP_SCAN_DONE)
+ *  - [M2M_WIFI_RESP_SCAN_RESULT](@ref M2M_WIFI_RESP_SCAN_RESULT)
  *  - [M2M_WIFI_REQ_DHCP_CONF](@ref M2M_WIFI_REQ_DHCP_CONF)
  * \param[in] pvMsg A pointer to a buffer containing the notification parameters
  * (if any). It should be casted to the correct data type corresponding to the
@@ -31,12 +33,74 @@ void clockSetup(void);
 static void wifi_cb(uint8_t u8MsgType, void *pvMsg)
 {
     switch (u8MsgType) {
+    case M2M_WIFI_RESP_SCAN_DONE:
+    {
+        tstrM2mScanDone *pstrInfo = (tstrM2mScanDone *)pvMsg;
+        scan_request_index = 0;
+        if (pstrInfo->u8NumofCh >= 1) {
+            m2m_wifi_req_scan_result(scan_request_index);
+            scan_request_index++;
+        } else {
+            m2m_wifi_request_scan(M2M_WIFI_CH_ALL);
+        }
+
+        break;
+    }
+
+    case M2M_WIFI_RESP_SCAN_RESULT:
+    {
+        tstrM2mWifiscanResult *pstrScanResult = (tstrM2mWifiscanResult *)pvMsg;
+        uint16_t demo_ssid_len;
+        uint16_t scan_ssid_len = strlen((const char *)pstrScanResult->au8SSID);
+
+        /* display founded AP. */
+        printf("[%d] SSID:%s\r\n", scan_request_index, pstrScanResult->au8SSID);
+
+        num_founded_ap = m2m_wifi_get_num_ap_found();
+        if (scan_ssid_len) {
+            /* check same SSID. */
+            demo_ssid_len = strlen((const char *)MAIN_WLAN_SSID);
+            if
+            (
+                (demo_ssid_len == scan_ssid_len) &&
+                (!memcmp(pstrScanResult->au8SSID, (uint8_t *)MAIN_WLAN_SSID, demo_ssid_len))
+            ) {
+                /* A scan result matches an entry in the preferred AP List.
+                 * Initiate a connection request.
+                 */
+                printf("Found %s \r\n", MAIN_WLAN_SSID);
+                m2m_wifi_connect((char *)MAIN_WLAN_SSID,
+                        sizeof(MAIN_WLAN_SSID),
+                        MAIN_WLAN_AUTH,
+                        (void *)0, //passwd
+                        6);//channel
+                break;
+            }
+        }
+
+        if (scan_request_index < num_founded_ap) {
+            m2m_wifi_req_scan_result(scan_request_index);
+            scan_request_index++;
+        } else {
+            printf("can not find AP %s\r\n", MAIN_WLAN_SSID);
+            m2m_wifi_request_scan(M2M_WIFI_CH_ALL);
+        }
+
+        break;
+    }
+
     case M2M_WIFI_RESP_CON_STATE_CHANGED:
     {
         tstrM2mWifiStateChanged *pstrWifiState = (tstrM2mWifiStateChanged *)pvMsg;
         if (pstrWifiState->u8CurrState == M2M_WIFI_CONNECTED) {
+            printf("Wi-Fi waiting for DHCP...");
+            GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
+            m2m_wifi_request_dhcp_client();
         } else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED) {
-            //printf("Station disconnected\r\n");
+            printf("Wi-Fi disconnected\r\n");
+
+            /* Request scan. */
+            m2m_wifi_request_scan(M2M_WIFI_CH_ALL);
         }
 
         break;
@@ -45,9 +109,8 @@ static void wifi_cb(uint8_t u8MsgType, void *pvMsg)
     case M2M_WIFI_REQ_DHCP_CONF:
     {
         uint8_t *pu8IPAddress = (uint8_t *)pvMsg;
-        //printf("Station connected\r\n");
-//        //printf("Station IP is %u.%u.%u.%u\r\n",
-//                pu8IPAddress[0], pu8IPAddress[1], pu8IPAddress[2], pu8IPAddress[3]);
+        printf("Wi-Fi connected\r\n");
+        printf("Wi-Fi IP is %u.%u.%u.%u\r\n", pu8IPAddress[0], pu8IPAddress[1], pu8IPAddress[2], pu8IPAddress[3]);
         break;
     }
 
@@ -62,11 +125,10 @@ static void wifi_cb(uint8_t u8MsgType, void *pvMsg)
 void main(void) {
     WDTCTL = WDTPW | WDTHOLD;               // Stop watchdog timer
     PM5CTL0 &= ~LOCKLPM5;                   // Disable the GPIO power-on default high-impedance mode
-    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0); GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN0); //Red ON as soon as we have power
+    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0); GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0); //Red ON as soon as we have power
     GPIO_setAsOutputPin(GPIO_PORT_P6, GPIO_PIN6); GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
 
     tstrWifiInitParam param;
-    tstrM2MAPConfig strM2MAPConfig;
     int8_t ret;
 
     /* Initialize the board. */
@@ -86,39 +148,15 @@ void main(void) {
     param.pfAppWifiCb = wifi_cb;
     ret = m2m_wifi_init(&param);
     if (M2M_SUCCESS != ret) {
-        //printf("main: m2m_wifi_init call error!(%d)\r\n", ret);
+        printf("main: m2m_wifi_init call error!(%d)\r\n", ret);
         while (1) {
         }
     }
+    printf("requesting scan\r\n");
 
-    /* Initialize AP mode parameters structure with SSID, channel and OPEN security type. */
-    memset(&strM2MAPConfig, 0x00, sizeof(tstrM2MAPConfig));
-    strcpy((char *)&strM2MAPConfig.au8SSID, MAIN_WLAN_SSID);
-    strM2MAPConfig.u8ListenChannel = MAIN_WLAN_CHANNEL;
-    strM2MAPConfig.u8SecType = MAIN_WLAN_AUTH;
-
-    strM2MAPConfig.au8DHCPServerIP[0] = 192;
-    strM2MAPConfig.au8DHCPServerIP[1] = 168;
-    strM2MAPConfig.au8DHCPServerIP[2] = 1;
-    strM2MAPConfig.au8DHCPServerIP[3] = 1;
-
-    #if USE_WEP
-        strcpy((char *)&strM2MAPConfig.au8WepKey, MAIN_WLAN_WEP_KEY);
-        strM2MAPConfig.u8KeySz = strlen(MAIN_WLAN_WEP_KEY);
-        strM2MAPConfig.u8KeyIndx = MAIN_WLAN_WEP_KEY_INDEX;
-    #endif
-
-    /* Bring up AP mode with parameters structure. */
-    ret = m2m_wifi_enable_ap(&strM2MAPConfig);
-    if (M2M_SUCCESS != ret) {
-        //printf("main: m2m_wifi_enable_ap call error!\r\n");
-        while (1) {
-        }
-    }
-    GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
-
-    //printf("AP mode started. You can connect to %s.\r\n", (char *)MAIN_WLAN_SSID);
-
+    /* Request scan. */
+    m2m_wifi_request_scan(M2M_WIFI_CH_ALL);
+    GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN0);
     while (1) {
         /* Handle pending events from network controller. */
         while (m2m_wifi_handle_events(NULL) != M2M_SUCCESS) {
@@ -149,7 +187,7 @@ void clockSetup(void){
  *
  * \file
  *
- * \brief WINC1500 AP Mode Example.
+ * \brief WINC1500 AP Scan Example.
  *
  * Copyright (c) 2016-2018 Microchip Technology Inc. and its subsidiaries.
  *
@@ -181,21 +219,21 @@ void clockSetup(void){
 
 /** \mainpage
  * \section intro Introduction
- * This example demonstrates the use of the WINC1500 with the SAMD21 Xplained Pro
- * board to behave as an AP.<br>
+ * This example demonstrates the use of the WINC1500 with the SAM Xplained Pro
+ * board to scan for access point.<br>
  * It uses the following hardware:
- * - the SAMD21 Xplained Pro.
+ * - the SAM Xplained Pro.
  * - the WINC1500 on EXT1.
  *
  * \section files Main Files
- * - main.c : Initialize the WINC1500 and act as an AP.
+ * - main.c : Initialize the WINC1500 and scan AP until defined AP is founded.
  *
  * \section usage Usage
- * -# Configure below code in the main.h for AP information.
+ * -# Configure below code in the main.h for AP to be connected.
  * \code
- *    #define MAIN_WLAN_SSID           "DEMO_AP"
- *    #define MAIN_WLAN_AUTH           M2M_WIFI_SEC_OPEN
- *    #define MAIN_WLAN_CHANNEL        (6)
+ *    #define MAIN_WLAN_SSID         "DEMO_AP"
+ *    #define MAIN_WLAN_AUTH         M2M_WIFI_SEC_WPA_PSK
+ *    #define MAIN_WLAN_PSK          "12345678"
  * \endcode
  * -# Build the program and download it into the board.
  * -# On the computer, open and configure a terminal application as the follows.
@@ -209,12 +247,16 @@ void clockSetup(void){
  * -# Start the application.
  * -# In the terminal window, the following text should appear:
  * \code
- *    -- WINC1500 AP mode example --
- *    -- SAMD21_XPLAINED_PRO --
+ *    -- WINC1500 AP scan example --
+ *    -- SAM_XPLAINED_PRO --
  *    -- Compiled: xxx xx xxxx xx:xx:xx --
- *    AP mode started. You can connect to XXXXXX.
- *    Station connected
- *    Station IP is xxx.xxx.xxx.xxx
+ *
+ *    [1] SSID:DEMO_AP1
+ *    [2] SSID:DEMO_AP2
+ *    [3] SSID:DEMO_AP
+ *    Found DEMO_AP
+ *    Wi-Fi connected
+ *    Wi-Fi IP is xxx.xxx.xxx.xxx
  * \endcode
  *
  * \section compinfo Compilation Information
@@ -225,4 +267,3 @@ void clockSetup(void){
  * For further information, visit
  * <A href="http://www.microchip.com">Microchip</A>.\n
  */
-

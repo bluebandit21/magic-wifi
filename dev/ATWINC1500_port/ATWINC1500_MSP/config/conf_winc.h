@@ -53,7 +53,6 @@ extern "C" {
 
 #define CONF_WINC_USE_SPI				(1)
 
-
 /** SPI port and pin as well as module setups. */
 #define CONF_WINC_SPI_BASE				(EUSCI_A0_BASE)
 
@@ -77,8 +76,6 @@ extern "C" {
 // CPU frequency (for delay func)
 #define CONF_WINC_MCLK_FREQ_KHZ			(2000)
 
-
-//TODO change to use A0 so that all EUSCI_A... functions are used
 /*
    ---------------------------------
    --------- Debug Options ---------

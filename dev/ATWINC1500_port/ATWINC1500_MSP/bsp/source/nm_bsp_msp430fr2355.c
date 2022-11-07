@@ -46,7 +46,7 @@ __interrupt void Port_3(void)
 	if (gpfIsr) {
 		gpfIsr();
 	}
-    GPIO_clearInterrupt(GPIO_PORT_P3, GPIO_PIN4);
+    GPIO_clearInterrupt(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
 }
 
 /*
@@ -59,6 +59,8 @@ static void init_chip_pins(void)
 	GPIO_setOutputHighOnPin(CONF_WINC_RST_PORT, CONF_WINC_RST_PIN);
 
 	GPIO_setAsInputPin(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
+	PM5CTL0 &= ~LOCKLPM5;                   // Disable the GPIO power-on default high-impedance mode
+
 }
 
 /*
@@ -130,12 +132,15 @@ void nm_bsp_sleep(uint32 u32TimeMsec)
  *				Pointer to ISR handler
  */
 
-//Registers ISR, then ISR is called whenever Port4 (for now) has an interrupt from 4.5
 void nm_bsp_register_isr(tpfNmBspIsr pfIsr)
 {
 	gpfIsr = pfIsr;
-	GPIO_clearInterrupt(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
-	GPIO_enableInterrupt(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
+	GPIO_setAsInputPinWithPullUpResistor(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
+    GPIO_clearInterrupt(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
+    GPIO_enableInterrupt(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
+    GPIO_selectInterruptEdge(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN, GPIO_HIGH_TO_LOW_TRANSITION); //ATWINC has IRQn (active low)
+    _enable_interrupt();
+
 }
 
 /*
