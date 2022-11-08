@@ -128,14 +128,14 @@ MACROS
 
 #ifndef BLDTESTVERSION1
 // the real version number must appear first as the release script greps it out to create folder.
-#define M2M_RELEASE_VERSION_MINOR_NO                        (3)//(7)
+#define M2M_RELEASE_VERSION_MINOR_NO                        (6)//(7)
 #else
 #define M2M_RELEASE_VERSION_MINOR_NO                        (8)
 #endif
 /*!< Firmware Minor release version number.
 */
 
-#define M2M_RELEASE_VERSION_PATCH_NO                        (3)
+#define M2M_RELEASE_VERSION_PATCH_NO                        (1)//(3)
 /*!< Firmware patch release version number.
 */
 
