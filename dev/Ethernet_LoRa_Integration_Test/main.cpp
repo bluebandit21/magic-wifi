@@ -165,7 +165,7 @@ int main(void)
 {
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
     setup_ethernet();
-    setup_Transmitlora();
+    //setup_Transmitlora();
     setup_Receivelora();
 
     char message[] = "Longer Message, chunk into a few frames each";
@@ -208,14 +208,16 @@ int main(void)
 
         ENC28J60::buffer[0] = 0xFF;
         ENC28J60::buffer[1] = 0xFF;
-        ENC28J60::buffer[2] = 0xFF;
+        ENC28J60::buffer[2] = 0xAF;
         ENC28J60::buffer[3] = 0xFF;
-        ENC28J60::buffer[4] = 0xFF;
+        ENC28J60::buffer[4] = 0xFE;
         ENC28J60::buffer[5] = 0xFF;
 
+        ether.packetSend(len);
 
         //memcpy(ENC28J60::buffer, broadcastEth, sizeof(broadcastEth));
-        ether.packetSend(len);
+        //ether.packetSend( sizeof(broadcastEth));
+
 
 
 

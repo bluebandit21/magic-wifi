@@ -324,12 +324,14 @@ static void readBuf(uint16_t len, byte* data) {
         EUSCI_A_SPI_transmitData(EUSCI_A0_BASE, 0x00);
 
         while (--len) {
+            while(EUSCI_A_SPI_isBusy(EUSCI_A0_BASE));
             nextbyte = EUSCI_A_SPI_receiveData(EUSCI_A0_BASE);
             EUSCI_A_SPI_transmitData(EUSCI_A0_BASE, 0x00);
 
             *data++ = nextbyte;
         }
 
+        while(EUSCI_A_SPI_isBusy(EUSCI_A0_BASE));
         *data++ = EUSCI_A_SPI_receiveData(EUSCI_A0_BASE);
     }
     disableChip();
