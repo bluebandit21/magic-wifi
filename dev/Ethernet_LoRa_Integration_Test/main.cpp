@@ -168,7 +168,11 @@ int main(void)
     //setup_Transmitlora();
     setup_Receivelora();
 
+
     char message[] = "Longer Message, chunk into a few frames each";
+    uint8_t nBytes = sizeof(message);
+    uint8_t counter = 0;
+    char receiveBuffer[150];
 
 
     const char broadcastEth[] = {
@@ -178,11 +182,12 @@ int main(void)
         'H', 'e', 'l', 'l', 'o'
     };
 
+    // populate LoRa buffer for test
+    for(int i = 0; i < 18; ++i) {
+        receiveBuffer[i] = broadcastEth[i];
+    }
 
 
-    uint8_t nBytes = sizeof(message);
-    uint8_t counter = 0;
-    char receiveBuffer[100];
 
     while(1){
 
@@ -205,7 +210,7 @@ int main(void)
 
 
         //ETH TRANSMIT
-
+        /*
         ENC28J60::buffer[0] = 0xFF;
         ENC28J60::buffer[1] = 0xFF;
         ENC28J60::buffer[2] = 0xAF;
@@ -214,9 +219,10 @@ int main(void)
         ENC28J60::buffer[5] = 0xFF;
 
         ether.packetSend(len);
+        */
 
-        //memcpy(ENC28J60::buffer, broadcastEth, sizeof(broadcastEth));
-        //ether.packetSend( sizeof(broadcastEth));
+        memcpy(ENC28J60::buffer, receiveBuffer, 150);
+        ether.packetSend(150);
 
 
 
@@ -253,7 +259,7 @@ int main(void)
 
         //-----------------------RECEIVING STUFF--------------------------
 
-        /*
+
         ReceiveLoRa.request();
         // Wait for incoming LoRa packet
         ReceiveLoRa.wait();
@@ -262,7 +268,7 @@ int main(void)
         // read() and available() method must be called after request() method
         const uint8_t msgLen = ReceiveLoRa.available() - 1;
         //char message[msgLen];
-        ReceiveLoRa.read(receiveBuffer, msgLen);
+        ReceiveLoRa.read(receiveBuffer + 18, msgLen);
         uint8_t counter = ReceiveLoRa.read();
 
         // Print received message and counter in serial
@@ -284,7 +290,8 @@ int main(void)
         else if (status == SX127X_STATUS_HEADER_ERR) error = 2; // Serial.println("Packet header error");
         //Serial.println();
         error = error; // *** Place breakpoint here ***
-        */
+
+
 
         for(volatile int i=0;i<10000;i++){
             for(volatile int j=0;j<10;j++){
