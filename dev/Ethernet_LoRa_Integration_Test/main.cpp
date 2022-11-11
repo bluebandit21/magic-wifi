@@ -167,9 +167,9 @@ void setup_Receivelora(){
 int main(void)
 {
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
-    setup_ethernet();
-    //setup_Transmitlora();
-    //setup_Receivelora();
+    //setup_ethernet();
+    setup_Transmitlora();
+    setup_Receivelora();
 
 
     char message[] = "Longer Message, chunk into a few frames each";
@@ -196,12 +196,12 @@ int main(void)
 
 
             //ETH RECEIVE
-
+/*
         int len = 0;
         while(len <= 0){
             len = ether.packetReceive();
         }
-
+*/
 
         /*
         //Probably not actually necessary
@@ -211,7 +211,7 @@ int main(void)
         */
 
 
-
+/*
         //ETH TRANSMIT
 
         ENC28J60::buffer[0] = 0xFF;
@@ -227,14 +227,14 @@ int main(void)
         //memcpy(ENC28J60::buffer, receiveBuffer, 150);
         //ether.packetSend(150);
 
-
+*/
 
 
 
 
 
         //-----------------TRANSMIT GARBAGE--------------------
-        /*
+
         // Transmit message and counter
                   // write() method must be placed between beginPacket() and endPacket()
         TransmitLoRa.beginPacket();
@@ -256,12 +256,12 @@ int main(void)
         // Serial.print(LoRa.transmitTime());
         // Serial.println(" ms");
         // Serial.println();
-        */
 
 
+/*
 
         //-----------------------RECEIVING STUFF--------------------------
-/*
+
 
         ReceiveLoRa.request();
         // Wait for incoming LoRa packet

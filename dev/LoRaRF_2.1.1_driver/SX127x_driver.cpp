@@ -7,7 +7,6 @@ int8_t sx127x_nss_port;
 int8_t sx127x_nss_pin;
 int8_t sx127x_reset_port;
 int8_t sx127x_reset_pin;
-void (*isr_ptr)(void);
 
 
 // TODO:: REPLACE with RTOS block function to eliminate busy wait, for TEST use ONLY
