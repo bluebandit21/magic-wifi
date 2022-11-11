@@ -16,7 +16,6 @@ SX127x ReceiveLoRa(LORA::RECEIVER);
 
 //-----------------------------------ISR HANDLING------------------
 
-
 //3.4 is the Wifi IRQ, 3.1 is the receive LoRa IRQ
 
 void (*wifi_isr)(void) = nullptr;
@@ -86,7 +85,6 @@ void setup_ethernet() {
 
 
 
-
 void setup_Transmitlora() {
     if(!TransmitLoRa.begin()){
         while(1){
@@ -95,7 +93,7 @@ void setup_Transmitlora() {
     }
 
     // ADDED, set Tx Frequency
-    TransmitLoRa.setFrequency(916000000);
+    TransmitLoRa.setFrequency(LORA_TRANSMIT_FREQ);
 
     // Set TX power, this function will set PA config with optimal setting for requested TX power
     // Serial.println("Set TX power to +17 dBm");
@@ -131,7 +129,7 @@ void setup_Receivelora(){
 
     // Set frequency to 917 Mhz
     //Serial.println("Set frequency to 917 Mhz");
-    ReceiveLoRa.setFrequency(917E6);
+    ReceiveLoRa.setFrequency(LORA_RECEIVE_FREQ);
 
     // Set RX gain. RX gain option are power saving gain or boosted gain
     // Serial.println("Set RX gain to power saving gain");
@@ -167,13 +165,11 @@ void setup_Receivelora(){
 int main(void)
 {
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
-    //setup_ethernet();
+    setup_ethernet();
     setup_Transmitlora();
-    setup_Receivelora();
+    //setup_Receivelora();
 
 
-    char message[] = "Longer Message, chunk into a few frames each";
-    uint8_t nBytes = sizeof(message);
     uint8_t counter = 0;
     char receiveBuffer[150];
 
@@ -194,42 +190,14 @@ int main(void)
 
     while(1){
 
+#ifdef BOARD_A
+        //Simple Eth receive -> Lora transmit loop
 
-            //ETH RECEIVE
-/*
+        //ETH RECEIVE
         int len = 0;
         while(len <= 0){
             len = ether.packetReceive();
         }
-*/
-
-        /*
-        //Probably not actually necessary
-        for(int i=len;i<ETH_MTU;i++){
-            ENC28J60::buffer[i] = 0;
-        }
-        */
-
-
-/*
-        //ETH TRANSMIT
-
-        ENC28J60::buffer[0] = 0xFF;
-        ENC28J60::buffer[1] = 0xFF;
-        ENC28J60::buffer[2] = 0xFF;
-        ENC28J60::buffer[3] = 0xFF;
-        ENC28J60::buffer[4] = 0xFF;
-        ENC28J60::buffer[5] = 0xFF;
-
-        ether.packetSend(len);
-
-
-        //memcpy(ENC28J60::buffer, receiveBuffer, 150);
-        //ether.packetSend(150);
-
-*/
-
-
 
 
 
@@ -238,30 +206,16 @@ int main(void)
         // Transmit message and counter
                   // write() method must be placed between beginPacket() and endPacket()
         TransmitLoRa.beginPacket();
-        TransmitLoRa.write(message, nBytes);
+        TransmitLoRa.write(ENC28J60::buffer, (len > 100) ? 100 : len);
         TransmitLoRa.write(counter);
         TransmitLoRa.endPacket();
         counter++;
 
-        // Print message and counter in serial
-        // Serial.write(message, nBytes);
-        // Serial.print("  ");
-        // Serial.println(counter++);
-
         // Wait until modulation process for transmitting packet finish
         TransmitLoRa.wait();
 
-        // Print transmit time
-        // Serial.print("Transmit time: ");
-        // Serial.print(LoRa.transmitTime());
-        // Serial.println(" ms");
-        // Serial.println();
-
-
-/*
-
+#else
         //-----------------------RECEIVING STUFF--------------------------
-
 
         ReceiveLoRa.request();
         // Wait for incoming LoRa packet
@@ -270,39 +224,30 @@ int main(void)
         // Put received packet to message and counter variable
         // read() and available() method must be called after request() method
         const uint8_t msgLen = ReceiveLoRa.available() - 1;
-        //char message[msgLen];
-        ReceiveLoRa.read(receiveBuffer + 18, msgLen);
+
+        ReceiveLoRa.read(ENC28J60::buffer, msgLen);
         uint8_t counter = ReceiveLoRa.read();
 
-        // Print received message and counter in serial
-        // Serial.write(message, msgLen);
-        // Serial.print("  ");
-        // Serial.println(counter);
-
-        // Print packet / signal status
-        // Serial.print("RSSI: ");
-        // Serial.print(LoRa.packetRssi());
-        // Serial.print(" dBm | SNR: ");
-        // Serial.print(LoRa.snr());
-        // Serial.println(" dB");
 
         // Show received status in case CRC or header error occur
         volatile int error = 0;
         uint8_t status = ReceiveLoRa.status();
         if (status == SX127X_STATUS_CRC_ERR) error = 1; // Serial.println("CRC error");
         else if (status == SX127X_STATUS_HEADER_ERR) error = 2; // Serial.println("Packet header error");
-        //Serial.println();
+
         error = error; // *** Place breakpoint here ***
 
-*/
+        ether.packetSend(msgLen);
 
+#endif
+
+        //Delay (common)
 
         for(volatile int i=0;i<10000;i++){
             for(volatile int j=0;j<10;j++){
                //Do nothing
             }
         }
-
 
     }
 
