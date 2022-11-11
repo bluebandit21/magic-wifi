@@ -96,11 +96,6 @@
 			<locationURI>PARENT-1-PROJECT_LOC/LoRaRF_2.1.1_driver/SX127x_driver.cpp</locationURI>
 		</link>
 		<link>
-			<name>LoRaRF_2.1.1_driver/SX127x_driver.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/LoRaRF_2.1.1_driver/SX127x_driver.h</locationURI>
-		</link>
-		<link>
 			<name>driverlib/MSP430FR2xx_4xx</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
