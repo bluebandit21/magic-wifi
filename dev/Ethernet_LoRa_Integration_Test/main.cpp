@@ -167,14 +167,14 @@ int main(void)
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
     setup_ethernet();
     setup_Transmitlora();
-    //setup_Receivelora();
+    setup_Receivelora();
 
 
     uint8_t counter = 0;
     char receiveBuffer[150];
 
 
-    const char broadcastEth[] = {
+    char broadcastEth[] = {
         0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, //Broadcast Eth MAC dest
         0x74, 0x69, 0x69, 0x2D, 0x30, 0x31, //Source Eth MAC addr (copied from above)
         0x00, 0x05,                         //Length (five bytes)
