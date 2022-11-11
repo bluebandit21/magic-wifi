@@ -1,14 +1,5 @@
 #include <SX127x_driver.h>
 
-uint16_t baseAddress = SX127X_SPI_0;
-EUSCI_B_SPI_initMasterParam sx127x_spi_params;
-uint32_t sx127x_spiFrequency = SX127X_SPI_FREQUENCY;
-int8_t sx127x_nss_port;
-int8_t sx127x_nss_pin;
-int8_t sx127x_reset_port;
-int8_t sx127x_reset_pin;
-
-
 // TODO:: REPLACE with RTOS block function to eliminate busy wait, for TEST use ONLY
 void delay(int delay) {
     for(int i = 0; i < delay; ++i) {
@@ -16,7 +7,7 @@ void delay(int delay) {
     }
 }
 
-void sx127x_setSPI(EUSCI_B_SPI_initMasterParam &SpiObject, LORA port)
+void SX127x::sx127x_setSPI(EUSCI_B_SPI_initMasterParam &SpiObject, LORA port)
 {
     sx127x_spi_params = SpiObject;
     baseAddress =     (port == LORA::RECEIVER) ? SX127X_SPI_1 : SX127X_SPI_0;
@@ -28,7 +19,7 @@ void sx127x_setSPI(EUSCI_B_SPI_initMasterParam &SpiObject, LORA port)
 }
 
 
-void sx127x_reset()
+void SX127x::sx127x_reset()
 {
     GPIO_setOutputHighOnPin(sx127x_reset_port, sx127x_reset_pin);
     delay(1);
@@ -36,7 +27,7 @@ void sx127x_reset()
     delay(5);
 }
 
-void sx127x_begin(LORA port)
+void SX127x::sx127x_begin(LORA port)
 {
     GPIO_setAsOutputPin(sx127x_nss_port, sx127x_nss_pin);
     GPIO_setAsOutputPin(sx127x_reset_port, sx127x_reset_pin);
@@ -60,7 +51,7 @@ void sx127x_begin(LORA port)
               //EUSCI_B_SPI_RECEIVE_INTERRUPT);
 }
 
-void sx127x_writeBits(uint8_t address, uint8_t data, uint8_t position, uint8_t length)
+void SX127x::sx127x_writeBits(uint8_t address, uint8_t data, uint8_t position, uint8_t length)
 {
     uint8_t read = sx127x_transfer(address & 0x7F, 0x00);
     uint8_t mask = (0xFF >> (8 - length)) << position;
@@ -68,17 +59,17 @@ void sx127x_writeBits(uint8_t address, uint8_t data, uint8_t position, uint8_t l
     sx127x_transfer(address | 0x80, write);
 }
 
-void sx127x_writeRegister(uint8_t address, uint8_t data)
+void SX127x::sx127x_writeRegister(uint8_t address, uint8_t data)
 {
     sx127x_transfer(address | 0x80, data);
 }
 
-uint8_t sx127x_readRegister(uint8_t address)
+uint8_t SX127x::sx127x_readRegister(uint8_t address)
 {
     return sx127x_transfer(address & 0x7F, 0x00);
 }
 
-uint8_t sx127x_transfer(uint8_t address, uint8_t data)
+uint8_t SX127x::sx127x_transfer(uint8_t address, uint8_t data)
 {
 
     delay(10);
@@ -96,7 +87,7 @@ uint8_t sx127x_transfer(uint8_t address, uint8_t data)
     return response;
 }
 
-void sx127x_interruptEnable(LORA port) {
+void SX127x::sx127x_interruptEnable(LORA port) {
     switch(port){
         case LORA::SENDER:
             GPIO_clearInterrupt(LORA_SEND_IRQ_PORT, LORA_SEND_IRQ_PIN);
@@ -109,7 +100,7 @@ void sx127x_interruptEnable(LORA port) {
     }
 }
 
-void sx127x_interruptDisable(LORA port) {
+void SX127x::sx127x_interruptDisable(LORA port) {
     switch(port){
         case LORA::SENDER:
             GPIO_disableInterrupt(LORA_SEND_IRQ_PORT, LORA_SEND_IRQ_PIN);

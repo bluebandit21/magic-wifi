@@ -144,22 +144,11 @@ enum struct LORA{
     RECEIVER = 1
 };
 
-class SX127x; //Forward declare
+
+#include "SX127x.h"
 
 
 
-void sx127x_setSPI(EUSCI_B_SPI_initMasterParam &SpiObject, LORA port);
-//void sx127x_setPins(int8_t nss);
-void sx127x_reset();
-void sx127x_begin(LORA port);
-
-// SX126x driver: Register access functions
-void sx127x_writeBits(uint8_t address, uint8_t data, uint8_t position, uint8_t length);
-void sx127x_writeRegister(uint8_t address, uint8_t data);
-uint8_t sx127x_readRegister(uint8_t address);
-uint8_t sx127x_transfer(uint8_t address, uint8_t data);
-void sx127x_interruptEnable(LORA port);
-void sx127x_interruptDisable(LORA port);
 
 #endif
 
