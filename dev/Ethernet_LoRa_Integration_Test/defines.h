@@ -17,9 +17,7 @@ constexpr short ETH_IRQ_PIN           = GPIO_PIN1;
 
 
 //These live in main.cpp
-extern void (*lora_receive_isr)(void);
 extern void (*wifi_isr)(void);
-extern void (*lora_send_isr)(void);
 extern void (*ethernet_isr)(void);
 
 #endif

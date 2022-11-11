@@ -7,17 +7,7 @@ uint32_t millis() {
   return i++;
 }
 
-void (*SX127x::_onTransmit)();
 
-void (*SX127x::_onReceive)();
-
-volatile uint8_t SX127x::_statusIrq = 0xFF;
-
-uint32_t SX127x::_transmitTime = 0;
-
-uint8_t SX127x::_payloadTxRx = 0;
-
-int8_t SX127x::_irqStatic = -1;
 
 //int8_t SX127x::_pinToLow = -1;
 
@@ -377,7 +367,8 @@ bool SX127x::endPacket(uint32_t timeout)
         sx127x_writeRegister(SX127X_REG_DIO_MAPPING_1, SX127X_DIO0_TX_DONE);
 
         //attachInterrupt(_irqStatic, SX127x::_interruptTx, RISING);
-        sx127x_interruptEnable(SX127x::_interruptTx, device);
+        curr_callback = &SX127x::_interruptTx;
+        sx127x_interruptEnable(device);
     }
     return true;
 }
@@ -445,10 +436,12 @@ bool SX127x::request(uint32_t timeout)
     if (_irq != -1) {
         sx127x_writeRegister(SX127X_REG_DIO_MAPPING_1, SX127X_DIO0_RX_DONE);
         if (timeout == SX127X_RX_CONTINUOUS) {
-            sx127x_interruptEnable(SX127x::_interruptRxContinuous, device);
+            curr_callback = &SX127x::_interruptRxContinuous;
+            sx127x_interruptEnable(device);
             //attachInterrupt(_irqStatic, SX127x::_interruptRxContinuous, RISING);
         } else {
-            sx127x_interruptEnable(SX127x::_interruptRx, device);
+            curr_callback = &SX127x::_interruptRx;
+            sx127x_interruptEnable(device);
             //attachInterrupt(_irqStatic, SX127x::_interruptRx, RISING);
         }
     }

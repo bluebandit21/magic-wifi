@@ -9,13 +9,17 @@
 #define DEBUG_ABORT() while(1){}
 
 
+//----------------------------------GLOBALS----------------------
+SX127x TransmitLoRa(LORA::SENDER);
+SX127x ReceiveLoRa(LORA::RECEIVER);
+
+
 //-----------------------------------ISR HANDLING------------------
 
 
 //3.4 is the Wifi IRQ, 3.1 is the receive LoRa IRQ
-void (*lora_receive_isr)(void) = nullptr;
-void (*wifi_isr)(void) = nullptr;
 
+void (*wifi_isr)(void) = nullptr;
 
 #pragma vector=PORT3_VECTOR
 __interrupt void port3_ISR(void)
@@ -29,7 +33,7 @@ __interrupt void port3_ISR(void)
     }
 
     if(GPIO_getInterruptStatus(LORA_RECEIVE_IRQ_PORT, LORA_RECEIVE_IRQ_PIN)){
-        if(lora_receive_isr) lora_receive_isr();
+        (ReceiveLoRa.*(ReceiveLoRa.curr_callback))();
         GPIO_clearInterrupt(LORA_RECEIVE_IRQ_PORT, LORA_RECEIVE_IRQ_PIN);
         known = true;
     }
@@ -38,7 +42,7 @@ __interrupt void port3_ISR(void)
 }
 
 //2.1 is the Ethernet IRQ, 2.4 is the send LoRa IRQ
-void (*lora_send_isr)(void) = nullptr;
+
 void (*ethernet_isr)(void) = nullptr;
 
 #pragma vector=PORT2_VECTOR
@@ -47,7 +51,7 @@ __interrupt void port2_ISR(void)
     bool known = false;
 
     if(GPIO_getInterruptStatus(LORA_SEND_IRQ_PORT, LORA_SEND_IRQ_PIN)){
-        if(lora_send_isr) lora_send_isr();
+        (TransmitLoRa.*(TransmitLoRa.curr_callback))();
         GPIO_clearInterrupt(LORA_SEND_IRQ_PORT, LORA_SEND_IRQ_PIN);
         known = true;
     }
@@ -80,8 +84,7 @@ void setup_ethernet() {
 
 //-----------------------------------LORA--------------------------
 
-SX127x TransmitLoRa(LORA::SENDER);
-SX127x ReceiveLoRa(LORA::RECEIVER);
+
 
 
 void setup_Transmitlora() {
@@ -166,7 +169,7 @@ int main(void)
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
     setup_ethernet();
     //setup_Transmitlora();
-    setup_Receivelora();
+    //setup_Receivelora();
 
 
     char message[] = "Longer Message, chunk into a few frames each";
@@ -210,19 +213,19 @@ int main(void)
 
 
         //ETH TRANSMIT
-        /*
+
         ENC28J60::buffer[0] = 0xFF;
         ENC28J60::buffer[1] = 0xFF;
-        ENC28J60::buffer[2] = 0xAF;
+        ENC28J60::buffer[2] = 0xFF;
         ENC28J60::buffer[3] = 0xFF;
-        ENC28J60::buffer[4] = 0xFE;
+        ENC28J60::buffer[4] = 0xFF;
         ENC28J60::buffer[5] = 0xFF;
 
         ether.packetSend(len);
-        */
 
-        memcpy(ENC28J60::buffer, receiveBuffer, 150);
-        ether.packetSend(150);
+
+        //memcpy(ENC28J60::buffer, receiveBuffer, 150);
+        //ether.packetSend(150);
 
 
 
@@ -258,7 +261,7 @@ int main(void)
 
 
         //-----------------------RECEIVING STUFF--------------------------
-
+/*
 
         ReceiveLoRa.request();
         // Wait for incoming LoRa packet
@@ -291,6 +294,7 @@ int main(void)
         //Serial.println();
         error = error; // *** Place breakpoint here ***
 
+*/
 
 
         for(volatile int i=0;i<10000;i++){
@@ -298,6 +302,7 @@ int main(void)
                //Do nothing
             }
         }
+
 
     }
 

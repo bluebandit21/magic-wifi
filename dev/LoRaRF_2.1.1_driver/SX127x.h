@@ -118,8 +118,8 @@ class SX127x
         uint32_t _bw = 125000;
         uint8_t _headerType;
         uint8_t _payloadLength;
-        static void (*_onTransmit)();
-        static void (*_onReceive)();
+         void (*_onTransmit)();
+         void (*_onReceive)();
 
     private:
 
@@ -127,17 +127,20 @@ class SX127x
         LORA device;
         int8_t _irq = 0; // change to enable/disable
         uint8_t _statusWait;
-        volatile static uint8_t _statusIrq;
-        static uint32_t _transmitTime;
-        static uint8_t _payloadTxRx;
-        static int8_t _irqStatic;
+        volatile uint8_t _statusIrq = 0xFF;
+        uint32_t _transmitTime  = 0;
+        uint8_t _payloadTxRx = 0;
+        int8_t _irqStatic;
         //static int8_t _pinToLow;
         uint16_t _random;
 
         // Interrupt handler methods
-         static void _interruptTx(void);
-         static void _interruptRx();
-         static void _interruptRxContinuous();
+        void _interruptTx(void);
+        void _interruptRx();
+        void _interruptRxContinuous();
+
+public:
+         void (SX127x::*curr_callback)( void );
 
 
 };

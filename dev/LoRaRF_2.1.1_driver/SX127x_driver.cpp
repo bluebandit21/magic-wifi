@@ -97,15 +97,13 @@ uint8_t sx127x_transfer(uint8_t address, uint8_t data)
     return response;
 }
 
-void sx127x_interruptEnable(void (*isr)(void), LORA port) {
+void sx127x_interruptEnable(LORA port) {
     switch(port){
         case LORA::SENDER:
-            lora_send_isr = isr;
             GPIO_clearInterrupt(LORA_SEND_IRQ_PORT, LORA_SEND_IRQ_PIN);
             GPIO_enableInterrupt(LORA_SEND_IRQ_PORT, LORA_SEND_IRQ_PIN);
             break;
         case LORA::RECEIVER:
-            lora_receive_isr = isr;
             GPIO_clearInterrupt(LORA_RECEIVE_IRQ_PORT, LORA_RECEIVE_IRQ_PIN);
             GPIO_enableInterrupt(LORA_RECEIVE_IRQ_PORT, LORA_RECEIVE_IRQ_PIN);
             break;
