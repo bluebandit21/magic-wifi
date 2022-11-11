@@ -76,13 +76,17 @@ extern "C" {
 // CPU frequency (for delay func)
 #define CONF_WINC_MCLK_FREQ_KHZ			(2000)
 
+
+//Ethernet/bypass mode for Layer 2 comms
+#define ETH_MODE                        (1)
 /*
    ---------------------------------
    --------- Debug Options ---------
    ---------------------------------
 */
 
-#define CONF_WINC_DEBUG					(0)
+#define CONF_WINC_DEBUG					(1)
+#define M2M_LOG_LEVEL                   M2M_LOG_ERR
 #define CONF_WINC_PRINTF				printf
 
 #ifdef __cplusplus

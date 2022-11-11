@@ -241,11 +241,11 @@ int main(void)
     GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN0);
 
     while (1) {
-        if (packetCnt == MAIN_WIFI_M2M_PACKET_COUNT){
-            close(tx_socket);
-            tx_socket = -1;
-            break;
-        }
+//        if (packetCnt == MAIN_WIFI_M2M_PACKET_COUNT){
+//            close(tx_socket);
+//            tx_socket = -1;
+//            break;
+//        }
 
         m2m_wifi_handle_events(NULL);
 
