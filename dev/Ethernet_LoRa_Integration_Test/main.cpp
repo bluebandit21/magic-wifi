@@ -168,6 +168,7 @@ int main(void)
     setup_ethernet();
     setup_Transmitlora();
     setup_Receivelora();
+    FrameTranslater frameTranslater = FrameTranslater(&TransmitLoRa, &ReceiveLoRa);
 
 
     uint8_t counter = 0;
@@ -200,7 +201,7 @@ int main(void)
         }
 
 
-
+/*
         //-----------------TRANSMIT GARBAGE--------------------
 
         // Transmit message and counter
@@ -213,6 +214,10 @@ int main(void)
 
         // Wait until modulation process for transmitting packet finish
         TransmitLoRa.wait();
+        */
+
+        //-----------USING FRAMETRANSLATER ----------------------
+        frameTranslater.sendFrame(ENC28J60::buffer, 1518);
 
 #else
         //-----------------------RECEIVING STUFF--------------------------

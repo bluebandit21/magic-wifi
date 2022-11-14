@@ -15,7 +15,7 @@ FrameTranslater::FrameTranslater(SX127x *send, SX127x *receive) :
 
 void FrameTranslater::sendFrame(uint8_t* ptr, uint16_t length)
 {
-    for(int i = 0; i < (length/lora_frame_max); i++) {
+    for(int i = 0; i < (length/lora_frame_max) + 1; i++) {
         // compute parity frame
 #ifdef USE_PARITY
         for(int j = 0; j < lora_frame_max; j++) {
@@ -25,28 +25,34 @@ void FrameTranslater::sendFrame(uint8_t* ptr, uint16_t length)
         lora_send->beginPacket();
 
         // packet number
-        lora_send->write(i + (frame_number++ << SUBFRAMES_NUM_MASK));
+        lora_send->write(i + (frame_number << SUBFRAMES_NUM_SHIFT));
 
         // message
         lora_send->write(ptr, lora_frame_max);
         ptr += lora_frame_max;
-        lora_send->write('\0');
+        //lora_send->write('\0');
         lora_send->endPacket();
         lora_send->wait();
 
 
 
     }
+
+#ifdef USE_PARITY
     // send parity frame if applicable
     lora_send->beginPacket();
     // packet number
-    lora_send->write(length/lora_frame_max);
+    lora_send->write(MAX_SUBFRAME_ID + (frame_number << SUBFRAMES_NUM_SHIFT));
 
     // message
     lora_send->write(parity_frame, lora_frame_max);
-    lora_send->write('\0');
+    //lora_send->write('\0');
     lora_send->endPacket();
     lora_send->wait();
+#endif
+
+    // increment frame number
+    frame_number++;
 
 }
 
@@ -60,14 +66,14 @@ void FrameTranslater::receiveFrame(uint8_t* dest, uint16_t length){
 
     // Put received packet to message and counter variable
     // read() and available() method must be called after request() method
-    const uint8_t msgLen = lora_receive->available() - 2; // also skip the header
+    const uint8_t msgLen = lora_receive->available() - 1; // skip the header
 
     // Read header (contains frame number)
     uint8_t subFrameNum = 0;
     lora_receive->read(&subFrameNum, 1);
 
     // update segment tracker array
-    active_frames[subFrameNum & SUBFRAMES_NUM_MASK] = subFrameNum &~ SUBFRAMES_NUM_MASK;
+    active_frames[subFrameNum & SUBFRAMES_NUM_MASK] = (subFrameNum &~ SUBFRAMES_NUM_MASK) >> SUBFRAMES_NUM_SHIFT;
     subFrameNum &= SUBFRAMES_NUM_MASK; // remove packet number for ease of use
 
 
@@ -81,7 +87,7 @@ void FrameTranslater::receiveFrame(uint8_t* dest, uint16_t length){
     }
 #endif
 
-    lora_receive->read(dest_ptr, msgLen - 1);
+    lora_receive->read(dest_ptr, msgLen);
 
 }
 
