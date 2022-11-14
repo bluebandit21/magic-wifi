@@ -17,7 +17,7 @@
  * notification type.
  */
 
-#define MAIN_WLAN_SSID           "DEMO_AP"
+#define MAIN_WLAN_SSID           "DEMO_AP2"
 #define MAIN_WLAN_AUTH           M2M_WIFI_SEC_OPEN
 
 /** Wi-Fi connection state */
@@ -30,7 +30,9 @@ static void wifi_cb(uint8_t u8MsgType, void *pvMsg)
         tstrM2mWifiStateChanged *pstrWifiState = (tstrM2mWifiStateChanged *)pvMsg;
         if (pstrWifiState->u8CurrState == M2M_WIFI_CONNECTED) {
             printf("wifi_cb: M2M_WIFI_RESP_CON_STATE_CHANGED: CONNECTED\r\n");
-            m2m_wifi_request_dhcp_client();
+            wifi_connected = M2M_WIFI_CONNECTED;
+
+            //m2m_wifi_request_dhcp_client();
         } else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED) {
             printf("wifi_cb: M2M_WIFI_RESP_CON_STATE_CHANGED: DISCONNECTED\r\n");
             m2m_wifi_connect((char *)MAIN_WLAN_SSID, sizeof(MAIN_WLAN_SSID), MAIN_WLAN_AUTH, (char *)0, M2M_WIFI_CH_ALL);
@@ -147,12 +149,13 @@ void main(void) {
         if (wifi_connected == M2M_WIFI_CONNECTED) {
 
 //            ret = sendto(tx_socket, &msg_wifi_product_main, sizeof(t_msg_wifi_product_main), 0, (struct sockaddr *)&addr, sizeof(addr));
-            printf("About to send message");
+            //printf("About to send message");
+            nm_bsp_sleep(10);
             ret = m2m_wifi_send_ethernet_pkt(msg_wifi_product_main.u8Packet, sizeof(t_msg_wifi_product_main));
             if (ret == M2M_SUCCESS) {
                 GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
-                printf("main: message sent\r\n");
-                packetCnt += 1;
+                //printf("main: message sent\r\n");
+                //packetCnt += 1;
                 if (packetCnt == MAIN_WIFI_M2M_PACKET_COUNT) {
                     printf("Eth level client test Complete!\r\n");
                 }
