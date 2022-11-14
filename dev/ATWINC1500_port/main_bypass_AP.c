@@ -3,6 +3,10 @@
 //#include <stdio.h>
 #include <string.h>
 
+#define MAIN_WLAN_SSID           "DEMO_uhhh"
+#define MAIN_WLAN_AUTH           M2M_WIFI_SEC_OPEN
+#define MAIN_WLAN_CHANNEL        (6)
+
 
 /**
  * \brief Callback to get the Wi-Fi status update.
@@ -17,8 +21,6 @@
  * notification type.
  */
 
-#define MAIN_WLAN_SSID           "DEMO_AP"
-#define MAIN_WLAN_AUTH           M2M_WIFI_SEC_OPEN
 
 /** Wi-Fi connection state */
 static uint8_t wifi_connected;
@@ -108,10 +110,6 @@ void clockSetup(void){
     CS_initClockSignal(CS_SMCLK, CS_DCOCLKDIV_SELECT, CS_CLOCK_DIVIDER_2);
 }
 
-
-#define MAIN_WLAN_SSID           "DEMO_AP"
-#define MAIN_WLAN_AUTH           M2M_WIFI_SEC_OPEN
-#define MAIN_WLAN_CHANNEL        (6)
 
 void main(void) {
     WDTCTL = WDTPW | WDTHOLD;               // Stop watchdog timer
