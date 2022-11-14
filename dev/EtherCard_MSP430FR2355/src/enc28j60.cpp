@@ -292,6 +292,7 @@ static void disableChip () {
 static void xferSPI (byte data) {
 
     EUSCI_A_SPI_transmitData(EUSCI_A0_BASE, data);
+    while(EUSCI_A_SPI_isBusy(EUSCI_A0_BASE));
 }
 
 static byte readOp (byte op, byte address) {
@@ -348,9 +349,10 @@ static void writeBuf(uint16_t len, const byte* data) {
 
         while (--len) {
             uint8_t nextbyte = *data++;
-
+            while(EUSCI_A_SPI_isBusy(EUSCI_A0_BASE));
             EUSCI_A_SPI_transmitData(EUSCI_A0_BASE, nextbyte);
      	};
+        while(EUSCI_A_SPI_isBusy(EUSCI_A0_BASE));
     }
     disableChip();
 }
