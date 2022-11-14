@@ -3,7 +3,7 @@
 //#include <stdio.h>
 #include <string.h>
 
-#define MAIN_WLAN_SSID           "DEMO_uhhh"
+#define MAIN_WLAN_SSID           "DEMO_AP2"
 #define MAIN_WLAN_AUTH           M2M_WIFI_SEC_OPEN
 #define MAIN_WLAN_CHANNEL        (6)
 
@@ -72,10 +72,11 @@ static uint8_t rx_buf[WINC_RX_BUF_SZ];
 
 void winc_netif_rx_callback(uint8 u8MsgType, void* pvMsg, void* pvCtrlBuf){
     switch(u8MsgType){
-    volatile tstrM2mIpCtrlBuf *ctrl = (tstrM2mIpCtrlBuf *)pvCtrlBuf;
+//    volatile tstrM2mIpCtrlBuf *ctrl = (tstrM2mIpCtrlBuf *)pvCtrlBuf;
         case M2M_WIFI_RESP_ETHERNET_RX_PACKET:
             GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
-            printf("Processing raw packet\r\n");
+            printf("Processing raw packet, %s\r\n", rx_buf);
+
             break;
         default:
             break;
