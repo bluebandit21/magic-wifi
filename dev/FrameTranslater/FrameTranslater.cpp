@@ -10,7 +10,6 @@
 FrameTranslater::FrameTranslater(SX127x *send, SX127x *receive) :
     lora_send(send), lora_receive(receive)
 {
-    // EMPTY CTOR for now
 }
 
 void FrameTranslater::sendFrame(uint8_t* ptr, uint16_t length)
@@ -72,8 +71,8 @@ void FrameTranslater::receiveFrame(uint8_t* dest, uint16_t length){
     uint8_t subFrameNum = 0;
     lora_receive->read(&subFrameNum, 1);
 
-    // update segment tracker array
-    active_frames[subFrameNum & SUBFRAMES_NUM_MASK] = (subFrameNum &~ SUBFRAMES_NUM_MASK) >> SUBFRAMES_NUM_SHIFT;
+    // update segment tracker array, note offset of 1 to ensure correct initialization
+    active_frames[subFrameNum & SUBFRAMES_NUM_MASK] = ((subFrameNum &~ SUBFRAMES_NUM_MASK) >> SUBFRAMES_NUM_SHIFT) + 1;
     subFrameNum &= SUBFRAMES_NUM_MASK; // remove packet number for ease of use
 
 

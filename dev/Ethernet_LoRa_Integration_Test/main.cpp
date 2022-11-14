@@ -222,6 +222,7 @@ int main(void)
 #else
         //-----------------------RECEIVING STUFF--------------------------
 
+        /*
         ReceiveLoRa.request();
         // Wait for incoming LoRa packet
         ReceiveLoRa.wait();
@@ -241,8 +242,9 @@ int main(void)
         else if (status == SX127X_STATUS_HEADER_ERR) error = 2; // Serial.println("Packet header error");
 
         error = error; // *** Place breakpoint here ***
-
-        ether.packetSend(msgLen);
+        */
+        frameTranslater.receiveFrame(ENC28J60::buffer, 1518);
+        if(frameTranslater.checkFrame(ENC28J60::buffer, 1518)) ether.packetSend(1518);
 
 #endif
 
