@@ -22,7 +22,9 @@ public:
     void receiveFrame(uint8_t* dest, uint16_t length);
     bool checkFrame(uint8_t* dest, uint16_t length);
 
+#ifndef TEST
 private:
+#endif
     const uint8_t lora_frame_max = LORA_FRAME_MAX;
     SX127x* const lora_send;
     SX127x* const lora_receive;
