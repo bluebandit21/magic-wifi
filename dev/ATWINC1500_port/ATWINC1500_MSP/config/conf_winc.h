@@ -78,14 +78,14 @@ extern "C" {
 
 
 //Ethernet/bypass mode for Layer 2 comms
-#define ETH_MODE                        (1)
+//#define ETH_MODE                        (1)
 /*
    ---------------------------------
    --------- Debug Options ---------
    ---------------------------------
 */
 
-#define CONF_WINC_DEBUG					(1)
+#define CONF_WINC_DEBUG					(0)
 #define M2M_LOG_LEVEL                   M2M_LOG_ERR
 #define CONF_WINC_PRINTF				printf
 

@@ -107,7 +107,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="main_host.c|ATWINC1500_MSP/spi_flash/source/flexible_flash.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="main_UDP_AP.c|main_bypass_AP.c|main_UDP_client.c|main_host.c|main_connect.c|ATWINC1500_MSP/spi_flash/source/flexible_flash.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
