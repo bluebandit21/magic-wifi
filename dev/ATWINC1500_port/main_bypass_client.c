@@ -36,6 +36,7 @@ static void wifi_cb(uint8_t u8MsgType, void *pvMsg)
         } else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED) {
             printf("wifi_cb: M2M_WIFI_RESP_CON_STATE_CHANGED: DISCONNECTED\r\n");
             m2m_wifi_connect((char *)MAIN_WLAN_SSID, sizeof(MAIN_WLAN_SSID), MAIN_WLAN_AUTH, (char *)0, M2M_WIFI_CH_ALL);
+            wifi_connected = M2M_WIFI_DISCONNECTED;
         }
     }
     break;
@@ -53,16 +54,10 @@ static void wifi_cb(uint8_t u8MsgType, void *pvMsg)
     }
 }
 //makes an AP.
-#define MAIN_WIFI_M2M_PACKET_COUNT 4
-typedef struct s_msg_wifi_product_main {
-    uint8* u8Packet;
-} t_msg_wifi_product_main;
 
 /** Message format declarations. */
 
-static t_msg_wifi_product_main msg_wifi_product_main = {
-    .u8Packet = "Hello eth",
-};
+
 
 
 #define WINC_RX_BUF_SZ  256
@@ -136,10 +131,11 @@ void main(void) {
     }
 
     /* Connect to router. */
-    printf("requesting connect");
+    printf("requesting connect\r\n");
     m2m_wifi_connect((char *)MAIN_WLAN_SSID, sizeof(MAIN_WLAN_SSID), MAIN_WLAN_AUTH, (char *)0, M2M_WIFI_CH_ALL);
     GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN0);
 
+    uint8 msg[68] = {0x44, 0xe5, 0x17, 0xd2, 0xe6, 0xf5, 0x2c, 0x21, 0x31, 0x27, 0x58, 0xf0, 0x08, 0x00, 0x45, 0x80, 0x00, 0x36, 0x00, 0x00, 0x40, 0x00, 0x3b, 0x11, 0xca, 0xf8, 0xac, 0xd9, 0x00, 0xae, 0x23, 0x03, 0xa3, 0xb4, 0x01, 0xbb, 0xe6, 0xfb, 0x00, 0x22, 0xea, 0xec, 0x5e, 0x35, 0x94, 0x2a, 0x16, 0x08, 0x36, 0xb4, 0xc1, 0x12, 0x98, 0xc7, 0x19, 0x5b, 0x3b, 0x67, 0xe3, 0xcf, 0xc8, 0x55, 0x99, 0x38, 0x78, 0xd1, 0x0b, 0xdf};
 
     /** UDP packet count */
     static uint8_t packetCnt = 0;
@@ -151,12 +147,13 @@ void main(void) {
 //            ret = sendto(tx_socket, &msg_wifi_product_main, sizeof(t_msg_wifi_product_main), 0, (struct sockaddr *)&addr, sizeof(addr));
             //printf("About to send message");
             nm_bsp_sleep(10);
-            ret = m2m_wifi_send_ethernet_pkt(msg_wifi_product_main.u8Packet, sizeof(t_msg_wifi_product_main));
+            ret = m2m_wifi_send_ethernet_pkt(msg, 68);
+            printf("%u, %u", sizeof(msg), sizeof(msg[0]));
             if (ret == M2M_SUCCESS) {
                 GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
                 //printf("main: message sent\r\n");
                 //packetCnt += 1;
-                if (packetCnt == MAIN_WIFI_M2M_PACKET_COUNT) {
+                if (packetCnt == 100) {
                     printf("Eth level client test Complete!\r\n");
                 }
             } else {
