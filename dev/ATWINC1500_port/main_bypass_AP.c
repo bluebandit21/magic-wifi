@@ -49,33 +49,31 @@ static void wifi_cb(uint8_t u8MsgType, void *pvMsg)
         printf("wifi_cb: M2M_WIFI_REQ_DHCP_CONF : IP is %u.%u.%u.%u\r\n", pu8IPAddress[0], pu8IPAddress[1], pu8IPAddress[2], pu8IPAddress[3]);
     }
     break;
-
+    case M2M_WIFI_RESP_ETHERNET_RX_PACKET:
+    {
+        printf("wifi_cb for rx packet \r\n");
+        break;
+    }
     default:
         break;
     }
 }
-//makes an AP.
-#define MAIN_WIFI_M2M_PACKET_COUNT 4
-typedef struct s_msg_wifi_product_main {
-    uint8* u8Packet;
-} t_msg_wifi_product_main;
-
-/** Message format declarations. */
-
-static t_msg_wifi_product_main msg_wifi_product_main = {
-    .u8Packet = "Hello eth",
-};
-
 
 #define WINC_RX_BUF_SZ  256
 static uint8_t rx_buf[WINC_RX_BUF_SZ];
 
 void winc_netif_rx_callback(uint8 u8MsgType, void* pvMsg, void* pvCtrlBuf){
+//    uint8* msg = (uint8*) pvMsg;
+//    printf("msg, %s\r\n", msg);
+
+    tstrM2mIpCtrlBuf *ctrl = (tstrM2mIpCtrlBuf *)pvCtrlBuf;
     switch(u8MsgType){
-//    volatile tstrM2mIpCtrlBuf *ctrl = (tstrM2mIpCtrlBuf *)pvCtrlBuf;
+
         case M2M_WIFI_RESP_ETHERNET_RX_PACKET:
-            GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
+            //GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
             printf("Processing raw packet, %s\r\n", rx_buf);
+            printf("Pkt total size should be %u, has %u remaining\r\n", ctrl->u16DataSize, ctrl->u16RemainingDataSize);
+            m2m_wifi_set_receive_buffer(rx_buf, sizeof(rx_buf));
 
             break;
         default:
