@@ -8,11 +8,22 @@
 #include "defines.h"
 
 
+volatile int lock;
 byte buffer[1518];
 FrameTranslater frameTranslater = FrameTranslater(nullptr, nullptr);
 
-#define DEBUG_ABORT() while(1){}
-#define SUCCESSFUL() while(1){}
+void debug_abort() {
+
+    while(1){
+        lock = 0;
+    }
+}
+
+void successful() {
+    while(1){
+        lock = 1;
+    }
+}
 
 
 
@@ -34,39 +45,44 @@ void main() {
     for(int i = 0; i < 6; ++i) {
         frameTranslater.active_frames[i] = 1;
         // not all frames, check should fail
-        if(frameTranslater.checkFrame(buffer, 1518)) DEBUG_ABORT();
+        if(frameTranslater.checkFrame(buffer, 1518)) debug_abort();
     }
 
     frameTranslater.active_frames[6] = 1;
     // all frames, check should pass even without parity
-    if(!frameTranslater.checkFrame(buffer, 1518)) DEBUG_ABORT();
+    if(!frameTranslater.checkFrame(buffer, 1518)) debug_abort();
 
     frameTranslater.active_frames[7] = 1;
     // all frames, check should pass
-    if(!frameTranslater.checkFrame(buffer, 1518)) DEBUG_ABORT();
+    if(!frameTranslater.checkFrame(buffer, 1518)) debug_abort();
 
     frameTranslater.active_frames[1] = 2;
     // check should fail since newest frame is not complete
-    if(frameTranslater.checkFrame(buffer, 1518)) DEBUG_ABORT();
+    if(frameTranslater.checkFrame(buffer, 1518)) debug_abort();
 
     frameTranslater.active_frames[1] = 0;
     buffer[218] = 0xDE;
     // missing frame #1, check should still complete, and fix error
-    if(!frameTranslater.checkFrame(buffer, 1518)) DEBUG_ABORT();
-    if(buffer[218] != 0xFE) DEBUG_ABORT();
+    if(!frameTranslater.checkFrame(buffer, 1518)) debug_abort();
+    if(buffer[218] != 0xFE) debug_abort();
 
     frameTranslater.active_frames[4] = 0;
     // check should fail since two frames are missing
-    if(frameTranslater.checkFrame(buffer, 1518)) DEBUG_ABORT();
+    if(frameTranslater.checkFrame(buffer, 1518)) debug_abort();
 
     buffer[869] = 0x31;
     frameTranslater.active_frames[1] = 1;
     // missing frame #4, check should still complete, and fix error
-    if(!frameTranslater.checkFrame(buffer, 1518)) DEBUG_ABORT();
-    if(buffer[869] != 0xFB) DEBUG_ABORT();
+    if(!frameTranslater.checkFrame(buffer, 1518)) debug_abort();
+    if(buffer[869] != 0xFB) debug_abort();
+
+    frameTranslater.active_frames[4] = 1;
+    // check should pass all working
+    if(frameTranslater.checkFrame(buffer, 1518)) debug_abort();
 
     // should reach here if the code is working properly
-    SUCCESSFUL();
+    lock = 2;
+    successful();
 
 }
 

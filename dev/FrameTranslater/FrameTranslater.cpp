@@ -99,14 +99,14 @@ bool FrameTranslater::checkFrame(uint8_t* dest, uint16_t length) {
     uint8_t active_frame_num = active_frames[0];
 
     // find newest subframe, only can reconstruct newest
-    for(int i = 1; i < MAX_SUBFRAME_ID - 1; ++i) {
+    for(int i = 1; i < MAX_SUBFRAME_ID; ++i) {
            if(active_frames[i] > active_frame_num) {
                active_frame_num = active_frames[i];
            }
        }
 
     // verify all subframes correspond to correct frame
-    for(int i = 1; i < MAX_SUBFRAME_ID - 1; ++i) {
+    for(int i = 1; i < MAX_SUBFRAME_ID; ++i) {
         if(active_frame_num != active_frames[i]) {
             // cannot handle more than one bad
 #ifdef USE_PARITY
@@ -131,19 +131,18 @@ bool FrameTranslater::checkFrame(uint8_t* dest, uint16_t length) {
         return false;
     }
 
-    // clear defective frame
-    for(int j = 1; j < lora_frame_max; ++j) {
-        defective_ptr[j] ^= 0;
-    }
+    // replace defective frame with parity frame
+    memcpy(defective_ptr, &parity_frame, lora_frame_max);
 
-    // reconstruct using XOR
-    for(int i = 1; i < MAX_SUBFRAME_ID; ++i) {
+
+    // reconstruct
+    for(int i = 0; i < MAX_SUBFRAME_ID; ++i) {
         uint8_t* subframe_ptr = dest + (i * lora_frame_max);
 
-        // for all other subframes and parity
-        if(active_frames[i] != defective_frame) {
-            for(int j = 1; j < lora_frame_max; ++j) {
-                defective_ptr[j] = subframe_ptr[j];
+        // XOR for all other subframes
+        if(defective_ptr != subframe_ptr) {
+            for(int j = 0; j < lora_frame_max; ++j) {
+                defective_ptr[j] ^= subframe_ptr[j];
             }
         }
     }
