@@ -83,8 +83,21 @@ void clockSetup(void){
 ENC28J60 ether;
 constexpr ETH_MTU = 1518;
 byte ENC28J60::buffer[ETH_MTU];
+//WARNING: This is not the right way to do it and is heavily vulnerable to race conditions.
+// We'll need to figure out a better solution later...
+// (Maybe something really stupid like busy polling once in a while to manually check interrupt line statuses?)
+volatile bool eth_available = false;
 
 static byte mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 };
+
+void ethernet_receive_handler(){
+    eth_available = true;
+}
+
+void check_set_eth_pending(){
+    //See note above, this is possibly a major race condition that will block us forever if the stars align
+    eth_available = !GPIO_getInputPinValue(ETH_IRQ_PORT, ETH_IRQ_PIN);
+}
 
 void setup_ethernet() {
     // put your setup code here, to run once:
@@ -94,7 +107,18 @@ void setup_ethernet() {
     ether.enablePromiscuous(false);
     ether.enableMulticast();
     ether.enableBroadcast(false);
+
+    GPIO_setAsInputPin(ETH_IRQ_PORT, ETH_IRQ_PIN);
+    GPIO_selectInterruptEdge(ETH_IRQ_PORT, ETH_IRQ_PIN, GPIO_HIGH_TO_LOW_TRANSITION);
+
+    ethernet_isr = ethernet_receive_handler;
+    GPIO_clearInterrupt(ETH_IRQ_PORT, ETH_IRQ_PIN);
+    GPIO_enableInterrupt(ETH_IRQ_PORT, ETH_IRQ_PIN);
+
+    __enable_interrupt();
 }
+
+
 
 //-----------------------------------LORA--------------------------
 
@@ -213,30 +237,11 @@ int main(void)
 #ifdef BOARD_A
         //Simple Eth receive -> Lora transmit loop
 
-        //ETH RECEIVE
-        int len = 0;
-        while(len <= 0){
-            len = ether.packetReceive();
+        if(eth_available){
+            int len = ether.packetReceive();
+            frameTranslater.sendFrame(ENC28J60::buffer, 1518);
+            check_set_eth_pending();
         }
-
-
-/*
-        //-----------------TRANSMIT GARBAGE--------------------
-
-        // Transmit message and counter
-                  // write() method must be placed between beginPacket() and endPacket()
-        TransmitLoRa.beginPacket();
-        TransmitLoRa.write(ENC28J60::buffer, (len > 100) ? 100 : len);
-        TransmitLoRa.write(counter);
-        TransmitLoRa.endPacket();
-        counter++;
-
-        // Wait until modulation process for transmitting packet finish
-        TransmitLoRa.wait();
-        */
-
-        //-----------USING FRAMETRANSLATER ----------------------
-        frameTranslater.sendFrame(ENC28J60::buffer, 1518);
 
 #else
         //-----------------------RECEIVING STUFF--------------------------
@@ -266,14 +271,6 @@ int main(void)
         if(frameTranslater.checkFrame(ENC28J60::buffer, 1518)) ether.packetSend(1518);
 
 #endif
-
-        //Delay (common)
-
-        for(volatile int i=0;i<10000;i++){
-            for(volatile int j=0;j<10;j++){
-               //Do nothing
-            }
-        }
 
     }
 
