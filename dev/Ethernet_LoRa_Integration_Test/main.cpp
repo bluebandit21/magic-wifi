@@ -81,8 +81,7 @@ void clockSetup(void){
 
 //-----------------------------------ETHERNET----------------------
 ENC28J60 ether;
-constexpr ETH_MTU = 1518;
-byte ENC28J60::buffer[ETH_MTU];
+byte ENC28J60::buffer[ETH_BACKING_SIZE];
 //WARNING: This is not the right way to do it and is heavily vulnerable to race conditions.
 // We'll need to figure out a better solution later...
 // (Maybe something really stupid like busy polling once in a while to manually check interrupt line statuses?)
@@ -247,7 +246,7 @@ int main(void)
 
         if(eth_available){
             int len = ether.packetReceive();
-            frameTranslater.sendFrame(ENC28J60::buffer, 1518);
+            frameTranslater.sendFrame(ENC28J60::buffer, ETH_BUFF_SIZE);
             check_set_eth_pending();
         }
 
@@ -275,8 +274,8 @@ int main(void)
 
         error = error; // *** Place breakpoint here ***
         */
-        frameTranslater.receiveFrame(ENC28J60::buffer, 1518);
-        if(frameTranslater.checkFrame(ENC28J60::buffer, 1518)) ether.packetSend(1518);
+        frameTranslater.receiveFrame(ENC28J60::buffer, ETH_BUFF_SIZE);
+        if(frameTranslater.checkFrame(ENC28J60::buffer, ETH_BUFF_SIZE)) ether.packetSend(ETH_BUFF_SIZE);
 
 #endif
 
