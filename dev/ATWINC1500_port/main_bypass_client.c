@@ -1,27 +1,18 @@
 #include <msp430.h>
 #include "driver/include/m2m_wifi.h"
-//#include <stdio.h>
+#include <stdio.h>
 #include <string.h>
-
-
-/**
- * \brief Callback to get the Wi-Fi status update.
- *
- * \param[in] u8MsgType type of Wi-Fi notification. Possible types are:
- *  - [M2M_WIFI_RESP_CON_STATE_CHANGED](@ref M2M_WIFI_RESP_CON_STATE_CHANGED)
- *  - [M2M_WIFI_RESP_SCAN_DONE](@ref M2M_WIFI_RESP_SCAN_DONE)
- *  - [M2M_WIFI_RESP_SCAN_RESULT](@ref M2M_WIFI_RESP_SCAN_RESULT)
- *  - [M2M_WIFI_REQ_DHCP_CONF](@ref M2M_WIFI_REQ_DHCP_CONF)
- * \param[in] pvMsg A pointer to a buffer containing the notification parameters
- * (if any). It should be casted to the correct data type corresponding to the
- * notification type.
- */
 
 #define MAIN_WLAN_SSID           "DEMO_AP2"
 #define MAIN_WLAN_AUTH           M2M_WIFI_SEC_OPEN
+#define ETH_MTU 1518
 typedef uint8 byte;
 
-static uint8_t mac_addr[M2M_MAC_ADDRES_LEN];
+// Leaving 12 to pad packet since WINC's overwrite first 12B with send/recv of MAC's between the two
+byte eth_full_tx_buf[ETH_MTU + 12];
+byte* eth_tx_buf = eth_full_tx_buf + 12;
+uint16 eth_tx_full_buf_len;
+
 
 /** Wi-Fi connection state */
 static uint8_t wifi_connected;
@@ -56,16 +47,10 @@ static void wifi_cb(uint8_t u8MsgType, void *pvMsg)
         break;
     }
 }
-//makes an AP.
 
-/** Message format declarations. */
-
-
-
-
+//placeholder for tx
 #define WINC_RX_BUF_SZ  256
 static uint8_t rx_buf[WINC_RX_BUF_SZ];
-
 void winc_netif_rx_callback(uint8 u8MsgType, void* pvMsg, void* pvCtrlBuf){
     switch(u8MsgType){
     volatile tstrM2mIpCtrlBuf *ctrl = (tstrM2mIpCtrlBuf *)pvCtrlBuf;
@@ -76,9 +61,6 @@ void winc_netif_rx_callback(uint8 u8MsgType, void* pvMsg, void* pvCtrlBuf){
             break;
     }
 }
-/**
- * \brief Configure RX callback and buffer.
- */
 void winc_fill_callback_info(tstrEthInitParam *info)
 {
     info->pfAppEthCb = winc_netif_rx_callback;
@@ -86,7 +68,6 @@ void winc_fill_callback_info(tstrEthInitParam *info)
     info->u16ethRcvBufSize = sizeof(rx_buf);
     info->u8EthernetEnable = 1; //For bypassing the TCPIP Stack of WINC
 }
-
 void os_hook_isr(){
     return;
 }
@@ -96,14 +77,25 @@ void os_hook_isr(){
 //Sets up Clock signals for the FR2355: MCLK @ 16M, SMCLK (SPI, etc.) @ 8M.
 void clockSetup(void){
     CS_initClockSignal(CS_FLLREF, CS_REFOCLK_SELECT, CS_CLOCK_DIVIDER_1);
-
-    // Set Ratio and Desired MCLK Frequency and initialize DCO. Returns 1 (STATUS_SUCCESS) if good
-    // By default, MCLK = DCOCLK = 16M after this settles.
     CS_initFLLSettle(CS_MCLK_DESIRED_KHZ, CS_MCLK_FLL_RATIO);
-
-    // SMCLK = DCOCLK / 2 = 8M
     CS_initClockSignal(CS_SMCLK, CS_DCOCLKDIV_SELECT, CS_CLOCK_DIVIDER_2);
 }
+
+//Method to set tx buffer and size.
+void set_wifi_tx_buf(byte* in_buf, uint16 in_buf_len){
+    memcpy(eth_tx_buf, in_buf, in_buf_len);
+    eth_tx_full_buf_len = in_buf_len + 12;
+}
+
+sint8 send_wifi_tx_buf(){
+    //Check if wifi still connected.
+    if (wifi_connected == M2M_WIFI_CONNECTED){
+        sint8 ret = m2m_wifi_send_ethernet_pkt(eth_full_tx_buf, eth_tx_full_buf_len);
+        return ret;
+    }
+    return M2M_ERR_SEND;
+}
+
 
 void main(void) {
     WDTCTL = WDTPW | WDTHOLD;               // Stop watchdog timer
@@ -132,40 +124,28 @@ void main(void) {
         while (1) {
         }
     }
-    m2m_wifi_get_mac_address(mac_addr);
 
-    printf("%02X:%02X:%02X:%02X:%02X:%02X\r\n",
-            mac_addr[0], mac_addr[1], mac_addr[2],
-            mac_addr[3], mac_addr[4], mac_addr[5]);
+    /* Initialize buffer. */
+    memset(eth_full_tx_buf, 0xFF, 12); //TODO ?
+
     /* Connect to router. */
     printf("requesting connect\r\n");
     m2m_wifi_connect((char *)MAIN_WLAN_SSID, sizeof(MAIN_WLAN_SSID), MAIN_WLAN_AUTH, (char *)0, M2M_WIFI_CH_ALL);
     GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN0);
+\
+
 
     byte msg[68] = {0x44, 0xe5, 0x17, 0xd2, 0xe6, 0xf5, 0x2c, 0x21, 0x31, 0x27, 0x58, 0xf0, 0x08, 0x00, 0x45, 0x80, 0x00, 0x36, 0x00, 0x00, 0x40, 0x00, 0x3b, 0x11, 0xca, 0xf8, 0xac, 0xd9, 0x00, 0xae, 0x23, 0x03, 0xa3, 0xb4, 0x01, 0xbb, 0xe6, 0xfb, 0x00, 0x22, 0xea, 0xec, 0x5e, 0x35, 0x94, 0x2a, 0x16, 0x08, 0x36, 0xb4, 0xc1, 0x12, 0x98, 0xc7, 0x19, 0x5b, 0x3b, 0x67, 0xe3, 0xcf, 0xc8, 0x55, 0x99, 0x38, 0x78, 0xd1, 0x0b, 0xdf};
-
-    /** UDP packet count */
-    static uint8_t packetCnt = 0;
     while (1) {
         m2m_wifi_handle_events(NULL);
-
-        if (wifi_connected == M2M_WIFI_CONNECTED) {
-
-//            ret = sendto(tx_socket, &msg_wifi_product_main, sizeof(t_msg_wifi_product_main), 0, (struct sockaddr *)&addr, sizeof(addr));
-            //printf("About to send message");
-            nm_bsp_sleep(10);
-            ret = m2m_wifi_send_ethernet_pkt(msg, 68);
-            printf("%u, %u", sizeof(msg), sizeof(msg[0]));
-            if (ret == M2M_SUCCESS) {
+        nm_bsp_sleep(100);
+        if(wifi_connected == M2M_WIFI_CONNECTED){
+            set_wifi_tx_buf(msg, 68);
+            sint8 ret = send_wifi_tx_buf();
+            if(ret == M2M_SUCCESS){
                 GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
-                //printf("main: message sent\r\n");
-                //packetCnt += 1;
-                if (packetCnt == 100) {
-                    printf("Eth level client test Complete!\r\n");
-                }
-            } else {
+            }else{
                 GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
-                printf("main: failed to send status report error!\r\n");
             }
         }
     }

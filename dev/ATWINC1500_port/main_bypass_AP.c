@@ -7,21 +7,11 @@
 #define MAIN_WLAN_AUTH           M2M_WIFI_SEC_OPEN
 #define MAIN_WLAN_CHANNEL        (6)
 
-static uint8_t mac_addr[M2M_MAC_ADDRES_LEN];
-
-/**
- * \brief Callback to get the Wi-Fi status update.
- *
- * \param[in] u8MsgType type of Wi-Fi notification. Possible types are:
- *  - [M2M_WIFI_RESP_CON_STATE_CHANGED](@ref M2M_WIFI_RESP_CON_STATE_CHANGED)
- *  - [M2M_WIFI_RESP_SCAN_DONE](@ref M2M_WIFI_RESP_SCAN_DONE)
- *  - [M2M_WIFI_RESP_SCAN_RESULT](@ref M2M_WIFI_RESP_SCAN_RESULT)
- *  - [M2M_WIFI_REQ_DHCP_CONF](@ref M2M_WIFI_REQ_DHCP_CONF)
- * \param[in] pvMsg A pointer to a buffer containing the notification parameters
- * (if any). It should be casted to the correct data type corresponding to the
- * notification type.
- */
-
+#define ETH_MTU 1518
+typedef uint8 byte;
+byte eth_full_rx_buf[ETH_MTU+12];
+byte* eth_rx_buf = eth_full_rx_buf + 12;
+uint16 eth_rx_full_buf_size;
 
 /** Wi-Fi connection state */
 static uint8_t wifi_connected;
@@ -60,26 +50,27 @@ static void wifi_cb(uint8_t u8MsgType, void *pvMsg)
     }
 }
 
-#define WINC_RX_BUF_SZ  256
-static uint8_t rx_buf[WINC_RX_BUF_SZ];
-
 void winc_netif_rx_callback(uint8 u8MsgType, void* pvMsg, void* pvCtrlBuf){
-//    uint8* msg = (uint8*) pvMsg;
-//    printf("msg, %s\r\n", msg);
-
     tstrM2mIpCtrlBuf *ctrl = (tstrM2mIpCtrlBuf *)pvCtrlBuf;
     switch(u8MsgType){
-
         case M2M_WIFI_RESP_ETHERNET_RX_PACKET:
-            //GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
-            printf("Processing raw packet, %s\r\n", rx_buf);
             printf("Pkt total size should be %u, has %u remaining\r\n", ctrl->u16DataSize, ctrl->u16RemainingDataSize);
-            m2m_wifi_set_receive_buffer(rx_buf, sizeof(rx_buf));
-
+            eth_rx_full_buf_size = ctrl->u16DataSize;
+            m2m_wifi_set_receive_buffer(eth_full_rx_buf, ETH_MTU + 12);
+            printf("Pkt says %s \r\n", eth_rx_buf);
+            printf("Pkt is %u long", eth_rx_full_buf_size);
             break;
         default:
             break;
     }
+}
+
+byte* get_rx_buf(){
+    return eth_rx_buf;
+}
+
+uint16 get_rx_buf_size(){
+    return eth_rx_full_buf_size - 12;
 }
 /**
  * \brief Configure RX callback and buffer.
@@ -87,8 +78,8 @@ void winc_netif_rx_callback(uint8 u8MsgType, void* pvMsg, void* pvCtrlBuf){
 void winc_fill_callback_info(tstrEthInitParam *info)
 {
     info->pfAppEthCb = winc_netif_rx_callback;
-    info->au8ethRcvBuf = rx_buf;
-    info->u16ethRcvBufSize = sizeof(rx_buf);
+    info->au8ethRcvBuf = eth_full_rx_buf;
+    info->u16ethRcvBufSize = ETH_MTU+12;
     info->u8EthernetEnable = 1; //For bypassing the TCPIP Stack of WINC
 }
 
@@ -138,12 +129,6 @@ void main(void) {
         while (1) {
         }
     }
-
-    m2m_wifi_get_mac_address(mac_addr);
-
-    printf("%02X:%02X:%02X:%02X:%02X:%02X\r\n",
-            mac_addr[0], mac_addr[1], mac_addr[2],
-            mac_addr[3], mac_addr[4], mac_addr[5]);
     tstrM2MAPConfig strM2MAPConfig;
 
     /* Initialize AP mode parameters structure with SSID, channel and OPEN security type. */
