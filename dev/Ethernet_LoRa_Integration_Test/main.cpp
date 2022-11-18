@@ -165,9 +165,9 @@ void setup_Receivelora(){
 int main(void)
 {
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
-    setup_ethernet();
     setup_Transmitlora();
     setup_Receivelora();
+    setup_ethernet();
     FrameTranslater frameTranslater = FrameTranslater(&TransmitLoRa, &ReceiveLoRa);
 
 
