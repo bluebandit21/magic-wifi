@@ -17,9 +17,11 @@
 
 #include "enc28j60.h"
 
-uint16_t ENC28J60::bufferSize;
 bool ENC28J60::broadcast_enabled = false;
 bool ENC28J60::promiscuous_enabled = false;
+uint8_t* ENC28J60::send_buffer = nullptr;
+uint8_t* ENC28J60::receive_buffer = nullptr;
+uint16_t ENC28J60::bufferSize;
 
 // ENC28J60 Control Registers
 // Control register definitions are a combination of address,
@@ -400,8 +402,10 @@ static void writePhy (byte address, uint16_t data) {
         ;
 }
 
-byte ENC28J60::initialize (uint16_t size, const byte* macaddr) {
+byte ENC28J60::initialize (uint16_t size, const byte* macaddr, uint8_t* send_buf, uint8_t* receive_buf) {
     bufferSize = size;
+    send_buffer = send_buf;
+    receive_buffer = receive_buf;
 
     static bool is_initialized = false;
 
@@ -522,7 +526,7 @@ void ENC28J60::packetSend(uint16_t len) {
             writeReg(EWRPT, TXSTART_INIT);
             writeReg(ETXND, TXSTART_INIT+len);
             writeOp(ENC28J60_WRITE_BUF_MEM, 0, 0x00);
-            writeBuf(len, buffer);
+            writeBuf(len, send_buffer);
         }
 
         // initiate transmission
@@ -606,8 +610,8 @@ uint16_t ENC28J60::packetReceive() {
         if ((header.status & 0x80)==0)
             len = 0;
         else
-            readBuf(len, buffer);
-        buffer[len] = 0;
+            readBuf(len, receive_buffer);
+        receive_buffer[len] = 0;  //TODO: Is this a UB write-past-the-end theoretically?
         unreleasedPacket = true;
 
         writeOp(ENC28J60_BIT_FIELD_SET, ECON2, ECON2_PKTDEC);

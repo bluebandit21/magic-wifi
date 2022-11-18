@@ -13,6 +13,10 @@
 SX127x TransmitLoRa(LORA::SENDER);
 SX127x ReceiveLoRa(LORA::RECEIVER);
 
+//TODO: Describe thoroughly and possibly give better names!
+byte eth_in_buff[ETH_BACKING_SIZE];
+byte eth_out_buff[ETH_BACKING_SIZE];
+
 
 //-----------------------------------ISR HANDLING------------------
 
@@ -81,7 +85,6 @@ void clockSetup(void){
 
 //-----------------------------------ETHERNET----------------------
 ENC28J60 ether;
-byte ENC28J60::buffer[ETH_BACKING_SIZE];
 volatile bool eth_available = false;
 
 static byte mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 };
@@ -103,7 +106,7 @@ void check_set_eth_pending(){
 
 void setup_ethernet() {
     // put your setup code here, to run once:
-    ether.initialize(sizeof Ethernet::buffer, mymac);
+    ether.initialize(ETH_BACKING_SIZE, mymac, eth_out_buff, eth_in_buff);
 
     //Enable all the things
     ether.enablePromiscuous(false);
@@ -216,53 +219,22 @@ int main(void)
     FrameTranslater frameTranslater = FrameTranslater(&TransmitLoRa, &ReceiveLoRa);
 
 
-    uint8_t counter = 0;
-    char receiveBuffer[150];
-
-
-    char broadcastEth[] = {
-        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, //Broadcast Eth MAC dest
-        0x74, 0x69, 0x69, 0x2D, 0x30, 0x31, //Source Eth MAC addr (copied from above)
-        0x00, 0x05,                         //Length (five bytes)
-        'H', 'e', 'l', 'l', 'o'
-    };
-
-    // populate LoRa buffer for test
-    for(int i = 0; i < 18; ++i) {
-        receiveBuffer[i] = broadcastEth[i];
-    }
-
-
-    /* test ethernet
-    memcpy(ENC28J60::buffer, broadcastEth, 18);
-    while(1) {
-        ether.packetSend(1514);
-        for(volatile uint32_t i = 0; i < 100000; ++i);
-    }
-    */
-
-
     ReceiveLoRa.request();
     while(1){
-        //Simple Eth receive -> Lora transmit loop
 
-
-#ifdef BOARD_A
         if(eth_available){
             int len = ether.packetReceive();
-            frameTranslater.sendFrame(ENC28J60::buffer, ETH_BUFF_SIZE);
+            frameTranslater.sendFrame(eth_in_buff, ETH_BUFF_SIZE);
             check_set_eth_pending();
         }
-#else
 
         if(ReceiveLoRa._statusIrq != 0){
-            frameTranslater.receiveFrame(ENC28J60::buffer, ETH_BUFF_SIZE);
-            if(frameTranslater.checkFrame(ENC28J60::buffer, ETH_BUFF_SIZE)){
+            frameTranslater.receiveFrame(eth_out_buff, ETH_BUFF_SIZE);
+            if(frameTranslater.checkFrame(eth_out_buff, ETH_BUFF_SIZE)){
                 ether.packetSend(ETH_BUFF_SIZE);
             }
             ReceiveLoRa.request();
         }
-#endif
 
     }
 
