@@ -64,6 +64,21 @@ __interrupt void port2_ISR(void)
     if(!known) DEBUG_ABORT();
 }
 
+//---------------------------------CLOCK SETUP--------------------------------
+constexpr unsigned CS_MCLK_DESIRED_KHZ = (16000);
+constexpr unsigned CS_MCLK_FLL_RATIO  = (((uint32_t) CS_MCLK_DESIRED_KHZ) * 1000) / 32768;
+//Sets up Clock signals for the FR2355: MCLK @ 16M, SMCLK (SPI, etc.) @ 8M.
+void clockSetup(void){
+    CS_initClockSignal(CS_FLLREF, CS_REFOCLK_SELECT, CS_CLOCK_DIVIDER_1);
+
+    // Set Ratio and Desired MCLK Frequency and initialize DCO. Returns 1 (STATUS_SUCCESS) if good
+    // By default, MCLK = DCOCLK = 16M after this settles.
+    CS_initFLLSettle(CS_MCLK_DESIRED_KHZ, CS_MCLK_FLL_RATIO);
+
+    // SMCLK = DCOCLK / 2 = 8M
+    CS_initClockSignal(CS_SMCLK, CS_DCOCLKDIV_SELECT, CS_CLOCK_DIVIDER_2);
+}
+
 //-----------------------------------ETHERNET----------------------
 ENC28J60 ether;
 constexpr ETH_MTU = 1518;
