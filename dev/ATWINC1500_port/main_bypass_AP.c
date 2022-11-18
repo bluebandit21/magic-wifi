@@ -9,8 +9,8 @@
 
 #define ETH_MTU 1518
 typedef uint8 byte;
-byte eth_full_rx_buf[ETH_MTU+12];
-byte* eth_rx_buf = eth_full_rx_buf + 12;
+byte eth_full_rx_buf[ETH_MTU+14];
+byte* eth_rx_buf = eth_full_rx_buf + 14;
 uint16 eth_rx_full_buf_size;
 
 /** Wi-Fi connection state */
@@ -56,7 +56,7 @@ void winc_netif_rx_callback(uint8 u8MsgType, void* pvMsg, void* pvCtrlBuf){
         case M2M_WIFI_RESP_ETHERNET_RX_PACKET:
             printf("Pkt total size should be %u, has %u remaining\r\n", ctrl->u16DataSize, ctrl->u16RemainingDataSize);
             eth_rx_full_buf_size = ctrl->u16DataSize;
-            m2m_wifi_set_receive_buffer(eth_full_rx_buf, ETH_MTU + 12);
+            m2m_wifi_set_receive_buffer(eth_full_rx_buf, ETH_MTU + 14);
             printf("Pkt says %s \r\n", eth_rx_buf);
             printf("Pkt is %u long", eth_rx_full_buf_size);
             break;
@@ -70,7 +70,7 @@ byte* get_rx_buf(){
 }
 
 uint16 get_rx_buf_size(){
-    return eth_rx_full_buf_size - 12;
+    return eth_rx_full_buf_size - 14;
 }
 /**
  * \brief Configure RX callback and buffer.
@@ -79,7 +79,7 @@ void winc_fill_callback_info(tstrEthInitParam *info)
 {
     info->pfAppEthCb = winc_netif_rx_callback;
     info->au8ethRcvBuf = eth_full_rx_buf;
-    info->u16ethRcvBufSize = ETH_MTU+12;
+    info->u16ethRcvBufSize = ETH_MTU+14;
     info->u8EthernetEnable = 1; //For bypassing the TCPIP Stack of WINC
 }
 
