@@ -242,46 +242,26 @@ int main(void)
     */
 
 
+    ReceiveLoRa.request();
     while(1){
-
-#ifdef BOARD_A
         //Simple Eth receive -> Lora transmit loop
 
+
+#ifdef BOARD_A
         if(eth_available){
             int len = ether.packetReceive();
             frameTranslater.sendFrame(ENC28J60::buffer, ETH_BUFF_SIZE);
             check_set_eth_pending();
         }
-
 #else
-        //-----------------------RECEIVING STUFF--------------------------
 
-        /*
-        ReceiveLoRa.request();
-        // Wait for incoming LoRa packet
-        ReceiveLoRa.wait();
-
-        // Put received packet to message and counter variable
-        // read() and available() method must be called after request() method
-        const uint8_t msgLen = ReceiveLoRa.available() - 1;
-
-        ReceiveLoRa.read(ENC28J60::buffer, msgLen);
-        uint8_t counter = ReceiveLoRa.read();
-
-
-        // Show received status in case CRC or header error occur
-        volatile int error = 0;
-        uint8_t status = ReceiveLoRa.status();
-        if (status == SX127X_STATUS_CRC_ERR) error = 1; // Serial.println("CRC error");
-        else if (status == SX127X_STATUS_HEADER_ERR) error = 2; // Serial.println("Packet header error");
-
-        error = error; // *** Place breakpoint here ***
-        */
-        frameTranslater.receiveFrame(ENC28J60::buffer, ETH_BUFF_SIZE);
-        if(frameTranslater.checkFrame(ENC28J60::buffer, ETH_BUFF_SIZE)){
-            ether.packetSend(ETH_BUFF_SIZE);
+        if(ReceiveLoRa._statusIrq != 0){
+            frameTranslater.receiveFrame(ENC28J60::buffer, ETH_BUFF_SIZE);
+            if(frameTranslater.checkFrame(ENC28J60::buffer, ETH_BUFF_SIZE)){
+                ether.packetSend(ETH_BUFF_SIZE);
+            }
+            ReceiveLoRa.request();
         }
-
 #endif
 
     }

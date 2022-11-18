@@ -269,7 +269,7 @@ class SX127x
         LORA device;
         int8_t _irq = 0; // change to enable/disable
         uint8_t _statusWait;
-        volatile uint8_t _statusIrq = 0xFF;
+
         uint32_t _transmitTime  = 0;
         uint8_t _payloadTxRx = 0;
         int8_t _irqStatic;
@@ -282,6 +282,7 @@ class SX127x
         void _interruptRxContinuous();
 
 public:
+         volatile uint8_t _statusIrq = 0xFF;
          void (SX127x::*curr_callback)( void );
 
 

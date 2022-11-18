@@ -60,11 +60,6 @@ void FrameTranslater::sendFrame(uint8_t* ptr, uint16_t length)
 void FrameTranslater::receiveFrame(uint8_t* dest, uint16_t length){
     uint8_t * dest_ptr;
 
-    // Request for receiving new LoRa packet
-    lora_receive->request();
-    // Wait for incoming LoRa packet
-    lora_receive->wait();
-
     // Put received packet to message and counter variable
     // read() and available() method must be called after request() method
     const uint8_t msgLen = lora_receive->available() - 1; // skip the header
