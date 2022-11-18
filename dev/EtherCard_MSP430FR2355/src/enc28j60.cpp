@@ -226,7 +226,7 @@ bool ENC28J60::promiscuous_enabled = false;
 
 // max frame length which the controller will accept:
 // (note: maximum ethernet frame length would be 1518)
-#define MAX_FRAMELEN      1500
+#define MAX_FRAMELEN      1518
 
 #define FULL_SPEED  1   // switch to full-speed SPI for bulk transfers
 

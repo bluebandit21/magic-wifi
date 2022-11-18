@@ -231,6 +231,14 @@ int main(void)
     }
 
 
+    /* test ethernet
+    memcpy(ENC28J60::buffer, broadcastEth, 18);
+    while(1) {
+        ether.packetSend(1514);
+        for(volatile uint32_t i = 0; i < 100000; ++i);
+    }
+    */
+
 
     while(1){
 
