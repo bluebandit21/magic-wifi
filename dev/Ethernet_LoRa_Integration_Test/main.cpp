@@ -76,7 +76,7 @@ void clockSetup(void){
     CS_initFLLSettle(CS_MCLK_DESIRED_KHZ, CS_MCLK_FLL_RATIO);
 
     // SMCLK = DCOCLK / 2 = 8M
-    CS_initClockSignal(CS_SMCLK, CS_DCOCLKDIV_SELECT, CS_CLOCK_DIVIDER_2);
+    CS_initClockSignal(CS_SMCLK, CS_DCOCLKDIV_SELECT, CS_CLOCK_DIVIDER_4);
 }
 
 //-----------------------------------ETHERNET----------------------
@@ -180,9 +180,13 @@ void setup_Receivelora(){
 int main(void)
 {
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
+
+    clockSetup();
+
+    setup_ethernet();
     setup_Transmitlora();
     setup_Receivelora();
-    setup_ethernet();
+
     FrameTranslater frameTranslater = FrameTranslater(&TransmitLoRa, &ReceiveLoRa);
 
 

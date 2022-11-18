@@ -37,30 +37,6 @@ bool SX127x::begin()
         /* Disable the GPIO power-on default high-impedance mode. */
              PMM_unlockLPM5();
 
-             //Target frequency for MCLK in kHz
-             #define CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ 24000
-             //MCLK/FLLRef Ratio
-             #define CS_SMCLK_FLLREF_RATIO 732 // = Desired HZ / 32768
-             //Variable to store current Clock values
-             volatile uint32_t clockValue = 0;
-             // Set DCO FLL reference = REFO
-             CS_initClockSignal(
-                 CS_FLLREF,
-                 CS_REFOCLK_SELECT,
-                 CS_CLOCK_DIVIDER_1);
-             // Set ACLK = REFO
-             CS_initClockSignal(
-                 CS_ACLK,
-                 CS_REFOCLK_SELECT,
-                 CS_CLOCK_DIVIDER_1);
-             // Set Ratio and Desired MCLK Frequency and initialize DCO
-                  // Returns 1 (STATUS_SUCCESS) if good
-
-              volatile int result = CS_initFLLSettle(
-                  CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ,
-                  CS_SMCLK_FLLREF_RATIO
-                  );
-
         EUSCI_B_SPI_initMasterParam param = {0};
         param.selectClockSource = EUSCI_B_SPI_CLOCKSOURCE_SMCLK;
         param.clockSourceFrequency = CS_getSMCLK(); //SMCLK capable of up to 24MHz.
