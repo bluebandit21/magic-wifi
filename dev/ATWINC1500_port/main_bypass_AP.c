@@ -7,6 +7,7 @@
 #define MAIN_WLAN_AUTH           M2M_WIFI_SEC_OPEN
 #define MAIN_WLAN_CHANNEL        (6)
 
+static uint8_t mac_addr[M2M_MAC_ADDRES_LEN];
 
 /**
  * \brief Callback to get the Wi-Fi status update.
@@ -137,6 +138,12 @@ void main(void) {
         while (1) {
         }
     }
+
+    m2m_wifi_get_mac_address(mac_addr);
+
+    printf("%02X:%02X:%02X:%02X:%02X:%02X\r\n",
+            mac_addr[0], mac_addr[1], mac_addr[2],
+            mac_addr[3], mac_addr[4], mac_addr[5]);
     tstrM2MAPConfig strM2MAPConfig;
 
     /* Initialize AP mode parameters structure with SSID, channel and OPEN security type. */
