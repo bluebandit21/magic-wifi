@@ -278,7 +278,9 @@ int main(void)
         error = error; // *** Place breakpoint here ***
         */
         frameTranslater.receiveFrame(ENC28J60::buffer, ETH_BUFF_SIZE);
-        if(frameTranslater.checkFrame(ENC28J60::buffer, ETH_BUFF_SIZE)) ether.packetSend(ETH_BUFF_SIZE);
+        if(frameTranslater.checkFrame(ENC28J60::buffer, ETH_BUFF_SIZE)){
+            ether.packetSend(ETH_BUFF_SIZE);
+        }
 
 #endif
 

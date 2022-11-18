@@ -33,6 +33,8 @@ void FrameTranslater::sendFrame(uint8_t* ptr, uint16_t length)
         lora_send->endPacket();
         lora_send->wait();
 
+        for(volatile uint32_t i=0;i<50000;i++); //Wait so we don't send the LoRa frames too fast!
+
 
 
     }
