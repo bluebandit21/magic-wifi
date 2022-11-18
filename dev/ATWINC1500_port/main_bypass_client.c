@@ -6,11 +6,12 @@
 #define MAIN_WLAN_SSID           "DEMO_AP2"
 #define MAIN_WLAN_AUTH           M2M_WIFI_SEC_OPEN
 #define ETH_MTU 1518
+#define WINC_FAKE_HDR_LEN 14
 typedef uint8 byte;
 
-// Leaving 12 to pad packet since WINC's overwrite first 12B with send/recv of MAC's between the two
-byte eth_full_tx_buf[ETH_MTU + 12];
-byte* eth_tx_buf = eth_full_tx_buf + 12;
+// Leaving 14 to pad packet since WINC's overwrite first 12B with send/recv of MAC's between the two
+byte eth_full_tx_buf[ETH_MTU + WINC_FAKE_HDR_LEN];
+byte* eth_tx_buf = eth_full_tx_buf + WINC_FAKE_HDR_LEN;
 uint16 eth_tx_full_buf_len;
 
 
@@ -84,7 +85,7 @@ void clockSetup(void){
 //Method to set tx buffer and size.
 void set_wifi_tx_buf(byte* in_buf, uint16 in_buf_len){
     memcpy(eth_tx_buf, in_buf, in_buf_len);
-    eth_tx_full_buf_len = in_buf_len + 12;
+    eth_tx_full_buf_len = in_buf_len + WINC_FAKE_HDR_LEN;
 }
 
 sint8 send_wifi_tx_buf(){
@@ -126,7 +127,7 @@ void main(void) {
     }
 
     /* Initialize buffer. */
-    memset(eth_full_tx_buf, 0xFF, 12); //TODO ?
+    memset(eth_full_tx_buf, 0xFF, WINC_FAKE_HDR_LEN);
 
     /* Connect to router. */
     printf("requesting connect\r\n");
