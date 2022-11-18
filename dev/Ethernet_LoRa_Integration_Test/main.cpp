@@ -82,9 +82,6 @@ void clockSetup(void){
 //-----------------------------------ETHERNET----------------------
 ENC28J60 ether;
 byte ENC28J60::buffer[ETH_BACKING_SIZE];
-//WARNING: This is not the right way to do it and is heavily vulnerable to race conditions.
-// We'll need to figure out a better solution later...
-// (Maybe something really stupid like busy polling once in a while to manually check interrupt line statuses?)
 volatile bool eth_available = false;
 
 static byte mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 };
@@ -94,8 +91,14 @@ void ethernet_receive_handler(){
 }
 
 void check_set_eth_pending(){
-    //See note above, this is possibly a major race condition that will block us forever if the stars align
     eth_available = !GPIO_getInputPinValue(ETH_IRQ_PORT, ETH_IRQ_PIN);
+    //Prevent possible race condition -- the above line could theoretically be pre-empted by the Ethernet ISR in between
+    // us checking the GPIO's value and actually writing it into eth_available. This would, if it happened, result
+    // in us blocking forever as the ISR would never trigger again (falling edge interrupt) and this function would never be called.
+    // In that very specific case, re-checking the value of the pin *after* the assignment lets us safely avoid this scenario being a possibility.
+    if(!GPIO_getInputPinValue(ETH_IRQ_PORT, ETH_IRQ_PIN)){
+        eth_available = true;
+    }
 }
 
 void setup_ethernet() {
