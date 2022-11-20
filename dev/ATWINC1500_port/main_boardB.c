@@ -41,6 +41,7 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg){
         } else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED) {
             GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
             m2m_wifi_connect((char *)MAIN_WLAN_SSID, sizeof(MAIN_WLAN_SSID), M2M_WIFI_SEC_OPEN, (char *)0, MAIN_WLAN_CHANNEL);
+            nm_bsp_sleep(1000);
             wifi_connected = M2M_WIFI_DISCONNECTED;
         }
     }
