@@ -219,12 +219,23 @@ int main(void)
     FrameTranslater frameTranslater = FrameTranslater(&TransmitLoRa, &ReceiveLoRa);
 
 
+    bool in_progress_ethernet = false;
+    int ethernet_len;
+    unsigned curr_eth_subframe = 0;
+
     ReceiveLoRa.request();
+
     while(1){
 
-        if(eth_available){
-            int len = ether.packetReceive();
+        if(eth_available && !in_progress_ethernet){
+            ethernet_len = ether.packetReceive();
+            in_progress_ethernet = true;
+        }
+
+        if(in_progress_ethernet){
+            frameTranslater.initSend(eth_in_buff, ETH_BUFF_SIZE);
             frameTranslater.sendFrame(eth_in_buff, ETH_BUFF_SIZE);
+            in_progress_ethernet = false;
             check_set_eth_pending();
         }
 

@@ -12,15 +12,22 @@ FrameTranslater::FrameTranslater(SX127x *send, SX127x *receive) :
 {
 }
 
-void FrameTranslater::sendFrame(uint8_t* ptr, uint16_t length)
+void FrameTranslater::initSend(uint8_t* ptr, uint16_t length)
 {
-    for(int i = 0; i < (length/lora_frame_max) + 1; i++) {
-        // compute parity frame
+
 #ifdef USE_PARITY
+    for(int i = 0; i < (length/lora_frame_max) + 1; i++) {
         for(int j = 0; j < lora_frame_max; j++) {
             parity_frame[j] ^= ptr[j];
         }
+        ptr += lora_frame_max;
+    }
 #endif
+}
+
+void FrameTranslater::sendFrame(uint8_t* ptr, uint16_t length)
+{
+    for(int i = 0; i < (length/lora_frame_max) + 1; i++) {
         lora_send->beginPacket();
 
         // packet number
@@ -29,13 +36,11 @@ void FrameTranslater::sendFrame(uint8_t* ptr, uint16_t length)
         // message
         lora_send->write(ptr, lora_frame_max);
         ptr += lora_frame_max;
-        //lora_send->write('\0');
+
         lora_send->endPacket();
         lora_send->wait();
 
         for(volatile uint32_t i=0;i<50000;i++); //Wait so we don't send the LoRa frames too fast!
-
-
 
     }
 

@@ -17,6 +17,7 @@ class FrameTranslater
 
 public:
     FrameTranslater(SX127x *send, SX127x *receive);
+    void initSend(uint8_t* ptr, uint16_t length);
     void sendFrame(uint8_t* ptr, uint16_t length);
 
     void receiveFrame(uint8_t* dest, uint16_t length);
@@ -30,7 +31,7 @@ private:
     SX127x* const lora_receive;
 
     uint8_t active_frames[8] = {0};
-    uint8_t frame_number = 0;
+    volatile uint8_t frame_number = 0;
 
 
 #ifdef USE_PARITY
