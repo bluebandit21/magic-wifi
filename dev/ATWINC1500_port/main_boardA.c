@@ -22,7 +22,7 @@ byte eth_full_tx_buf[ETH_MTU + FAKE_ETH_HDR_LEN];
 byte* eth_rx_buf = eth_full_rx_buf + FAKE_ETH_HDR_LEN;
 byte* eth_tx_buf = eth_full_tx_buf + FAKE_ETH_HDR_LEN;
 
-uint16 eth_rx_full_buf_len, eth_tx_full_buf_len;
+uint16 eth_rx_full_buf_len = 0, eth_tx_full_buf_len;
 
 uint8 wifi_connected;
 
@@ -36,9 +36,7 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg){
         tstrM2mWifiStateChanged *pstrWifiState = (tstrM2mWifiStateChanged *)pvMsg;
         if (pstrWifiState->u8CurrState == M2M_WIFI_CONNECTED) {
             wifi_connected = M2M_WIFI_CONNECTED;
-            //m2m_wifi_request_dhcp_client(); //?
         } else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED) {
-            GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
             wifi_connected = M2M_WIFI_DISCONNECTED;
         }
     }
@@ -52,12 +50,13 @@ void eth_rx_cb(uint8 u8MsgType, void* pvMsg, void* pvCtrlBuf){
     tstrM2mIpCtrlBuf *ctrl = (tstrM2mIpCtrlBuf *)pvCtrlBuf;
     switch(u8MsgType){
         case M2M_WIFI_RESP_ETHERNET_RX_PACKET:
-            //printf("Pkt total size should be %u, has %u remaining\r\n", ctrl->u16DataSize, ctrl->u16RemainingDataSize);
             eth_rx_full_buf_len = ctrl->u16DataSize;
             m2m_wifi_set_receive_buffer(eth_full_rx_buf, ETH_MTU + 14);
-            GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
-            //printf("Pkt says %s \r\n", eth_rx_buf);
-            //printf("Pkt is %u long", eth_rx_full_buf_len);
+            set_leds(1, 0);
+            //send a packet back
+            generate_test_pkt(50, 0x01);
+            send_wifi_tx_buf();
+            set_leds(1, 1);
             break;
         default:
             break;
@@ -97,6 +96,18 @@ sint8 init_AP(void){
 }
 //------- Helper functions -------
 
+void set_leds(uint8 red, uint8 green){
+    if(red){
+        GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN0);
+    }else{
+        GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0);
+    }
+    if(green){
+        GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
+    }else{
+        GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
+    }
+}
 //Method to set tx buffer and size.
 void set_wifi_tx_buf(byte* in_buf, uint16 in_buf_len){
     memcpy(eth_tx_buf, in_buf, in_buf_len);
@@ -131,8 +142,10 @@ void generate_test_pkt(uint16 length, uint8 textStart){
 void main(void){
     WDTCTL = WDTPW | WDTHOLD;               // Stop watchdog timer
     PM5CTL0 &= ~LOCKLPM5;                   // Disable the GPIO power-on default high-impedance mode
-    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0); GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0); //Red ON as soon as we have power
-    GPIO_setAsOutputPin(GPIO_PORT_P6, GPIO_PIN6); GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
+    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0); //enable both LEDs onboard
+    GPIO_setAsOutputPin(GPIO_PORT_P6, GPIO_PIN6);
+
+    set_leds(1, 1);
 
     clockSetup();
 
@@ -157,11 +170,9 @@ void main(void){
     }
 
     //Indicate initialization success
-    GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN0);
+    set_leds(0, 0);
+
     while(1){
         m2m_wifi_handle_events(NULL);
-        if(wifi_connected == M2M_WIFI_CONNECTED){
-            //do something...
-        }
     }
 }

@@ -57,6 +57,7 @@ void eth_rx_cb(uint8 u8MsgType, void* pvMsg, void* pvCtrlBuf){
         case M2M_WIFI_RESP_ETHERNET_RX_PACKET:
             eth_rx_full_buf_len = ctrl->u16DataSize;
             m2m_wifi_set_receive_buffer(eth_full_rx_buf, ETH_MTU + 14);
+            set_leds(1,1);
             break;
         default:
             break;
@@ -95,6 +96,18 @@ sint8 init_AP(void){
     return m2m_wifi_enable_ap(&strM2MAPConfig);
 }
 //------- Helper functions -------
+void set_leds(uint8 red, uint8 green){
+    if(red){
+        GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN0);
+    }else{
+        GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0);
+    }
+    if(green){
+        GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
+    }else{
+        GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
+    }
+}
 
 //Method to set tx buffer and size.
 void set_wifi_tx_buf(byte* in_buf, uint16 in_buf_len){
@@ -130,9 +143,9 @@ void generate_test_pkt(uint16 length, uint8 textStart){
 void main(void){
     WDTCTL = WDTPW | WDTHOLD;               // Stop watchdog timer
     PM5CTL0 &= ~LOCKLPM5;                   // Disable the GPIO power-on default high-impedance mode
-    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0); GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0); //Red ON as soon as we have power
-    GPIO_setAsOutputPin(GPIO_PORT_P6, GPIO_PIN6); GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
-
+    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0);
+    GPIO_setAsOutputPin(GPIO_PORT_P6, GPIO_PIN6);
+    set_leds(1,1);
     clockSetup();
 
     //Wifi Initialization
@@ -150,28 +163,20 @@ void main(void){
     m2m_wifi_connect((char *)MAIN_WLAN_SSID, sizeof(MAIN_WLAN_SSID), M2M_WIFI_SEC_OPEN, (char *)0, MAIN_WLAN_CHANNEL);
 
     //Indicate initialization success
-    GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN0);
+    set_leds(0,0);
 
     uint8 alt = 0;
 
-    while(1){
+    while(wifi_connected == M2M_WIFI_DISCONNECTED){
         m2m_wifi_handle_events(NULL);
         nm_bsp_sleep(100);
-        if(wifi_connected == M2M_WIFI_CONNECTED){
-            if(alt){
-                generate_test_pkt(1500, 0x01);
-                ret = send_wifi_tx_buf();
-                alt = 0;
-            }else{
-                generate_test_pkt(50, 0x03);
-                ret = send_wifi_tx_buf();
-                alt = 1;
-            }
-            if(ret == M2M_SUCCESS){
-                GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
-            }else{
-                GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
-            }
-        }
+    }
+    //Send one packet after connect
+    generate_test_pkt(1500, 0x01);
+    ret = send_wifi_tx_buf();
+    set_leds(1,0);
+
+    while(1){
+        m2m_wifi_handle_events(NULL);
     }
 }
