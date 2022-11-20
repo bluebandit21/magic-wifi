@@ -26,6 +26,9 @@ uint16 eth_rx_full_buf_len, eth_tx_full_buf_len;
 
 uint8 wifi_connected;
 
+//------- Headers -------
+void set_leds(uint8 red, uint8 green);
+
 //------- Callback functions -------
 void os_hook_isr(){return;}
 
@@ -35,14 +38,17 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg){
     {
         tstrM2mWifiStateChanged *pstrWifiState = (tstrM2mWifiStateChanged *)pvMsg;
         if (pstrWifiState->u8CurrState == M2M_WIFI_CONNECTED) {
-            GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
             wifi_connected = M2M_WIFI_CONNECTED;
+            set_leds(1,0);
+            nm_bsp_sleep(500);
+            generate_test_pkt(50, 0x01);
+            send_wifi_tx_buf();
             //m2m_wifi_request_dhcp_client(); //?
         } else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED) {
-            GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
             m2m_wifi_connect((char *)MAIN_WLAN_SSID, sizeof(MAIN_WLAN_SSID), M2M_WIFI_SEC_OPEN, (char *)0, MAIN_WLAN_CHANNEL);
-            nm_bsp_sleep(1000);
+            nm_bsp_sleep(500);
             wifi_connected = M2M_WIFI_DISCONNECTED;
+            set_leds(0,0);
         }
     }
     break;
@@ -58,6 +64,10 @@ void eth_rx_cb(uint8 u8MsgType, void* pvMsg, void* pvCtrlBuf){
             eth_rx_full_buf_len = ctrl->u16DataSize;
             m2m_wifi_set_receive_buffer(eth_full_rx_buf, ETH_MTU + 14);
             set_leds(1,1);
+            nm_bsp_sleep(200);
+            generate_test_pkt(50, 0x01);
+            send_wifi_tx_buf();
+            set_leds(1,0);
             break;
         default:
             break;
@@ -164,17 +174,6 @@ void main(void){
 
     //Indicate initialization success
     set_leds(0,0);
-
-    uint8 alt = 0;
-
-    while(wifi_connected == M2M_WIFI_DISCONNECTED){
-        m2m_wifi_handle_events(NULL);
-        nm_bsp_sleep(100);
-    }
-    //Send one packet after connect
-    generate_test_pkt(1500, 0x01);
-    ret = send_wifi_tx_buf();
-    set_leds(1,0);
 
     while(1){
         m2m_wifi_handle_events(NULL);
