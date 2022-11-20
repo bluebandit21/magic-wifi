@@ -220,8 +220,8 @@ int main(void)
 
 
     bool in_progress_ethernet = false;
-    int ethernet_len;
-    unsigned curr_eth_subframe = 0;
+    int ethernet_len; //We don't actually use this anywhere, funnily enough, which is maybe a problem?
+    // (Do we need to zero-fill the remainder of our Ethernet buffer, or is it ok if we send random garbage following a valid full frame?)
 
     ReceiveLoRa.request();
 
@@ -229,14 +229,20 @@ int main(void)
 
         if(eth_available && !in_progress_ethernet){
             ethernet_len = ether.packetReceive();
+            frameTranslater.initSend(eth_in_buff, ETH_BUFF_SIZE);
             in_progress_ethernet = true;
         }
 
         if(in_progress_ethernet){
-            frameTranslater.initSend(eth_in_buff, ETH_BUFF_SIZE);
-            frameTranslater.sendFrame(eth_in_buff, ETH_BUFF_SIZE);
-            in_progress_ethernet = false;
-            check_set_eth_pending();
+            in_progress_ethernet = frameTranslater.sendNextSubframe(eth_in_buff, ETH_BUFF_SIZE);
+
+            for(volatile uint32_t i=0;i<50000;i++); //Wait so we don't send the LoRa frames too fast!
+
+            if(!in_progress_ethernet){
+                //We just finished fully sending our Ethernet frame :)
+                // Check if we have more to send
+                check_set_eth_pending();
+            }
         }
 
         if(ReceiveLoRa._statusIrq != 0){

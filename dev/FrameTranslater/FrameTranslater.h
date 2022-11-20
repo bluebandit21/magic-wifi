@@ -17,8 +17,13 @@ class FrameTranslater
 
 public:
     FrameTranslater(SX127x *send, SX127x *receive);
+
+    //Prepare for sending of ethernet frame
     void initSend(uint8_t* ptr, uint16_t length);
-    void sendFrame(uint8_t* ptr, uint16_t length);
+
+    //Send the *next* subframe for the ethernet frame currently in progress.
+    //Returns true if this function should be called again, or false if we have fully finished sending the whole ethernet frame.
+    bool sendNextSubframe(uint8_t* ptr, uint16_t length);
 
     void receiveFrame(uint8_t* dest, uint16_t length);
     bool checkFrame(uint8_t* dest, uint16_t length);
@@ -26,6 +31,9 @@ public:
 #ifndef TEST
 private:
 #endif
+
+    unsigned curr_send_subframe = 0;
+
     const uint8_t lora_frame_max = LORA_FRAME_MAX;
     SX127x* const lora_send;
     SX127x* const lora_receive;

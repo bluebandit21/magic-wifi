@@ -6,6 +6,7 @@
  */
 
 #include "FrameTranslater.h"
+#include <cassert>
 
 FrameTranslater::FrameTranslater(SX127x *send, SX127x *receive) :
     lora_send(send), lora_receive(receive)
@@ -23,43 +24,54 @@ void FrameTranslater::initSend(uint8_t* ptr, uint16_t length)
         ptr += lora_frame_max;
     }
 #endif
+
+    curr_send_subframe = 0;
 }
 
-void FrameTranslater::sendFrame(uint8_t* ptr, uint16_t length)
+bool FrameTranslater::sendNextSubframe(uint8_t* ptr, uint16_t length)
 {
-    for(int i = 0; i < (length/lora_frame_max) + 1; i++) {
-        lora_send->beginPacket();
+    //TODO: Refactor length argument and associated divisions/math completely out, it's a constant.
 
-        // packet number
-        lora_send->write(i + (frame_number << SUBFRAMES_NUM_SHIFT));
-
-        // message
-        lora_send->write(ptr, lora_frame_max);
-        ptr += lora_frame_max;
-
-        lora_send->endPacket();
-        lora_send->wait();
-
-        for(volatile uint32_t i=0;i<50000;i++); //Wait so we don't send the LoRa frames too fast!
-
-    }
+    assert(curr_send_subframe <= (length/lora_frame_max));
+    //TODO: Check that asserts actually work!
 
 #ifdef USE_PARITY
-    // send parity frame if applicable
-    lora_send->beginPacket();
-    // packet number
-    lora_send->write(MAX_SUBFRAME_ID + (frame_number << SUBFRAMES_NUM_SHIFT));
+    if(curr_send_subframe == (length/lora_frame_max)){
+        // send parity frame if applicable
+        lora_send->beginPacket();
+        // packet number
+        lora_send->write(MAX_SUBFRAME_ID + (frame_number << SUBFRAMES_NUM_SHIFT));
 
-    // message
-    lora_send->write(parity_frame, lora_frame_max);
-    //lora_send->write('\0');
-    lora_send->endPacket();
-    lora_send->wait();
+        // message
+        lora_send->write(parity_frame, lora_frame_max);
+        //lora_send->write('\0');
+        lora_send->endPacket();
+        lora_send->wait();
+        curr_send_subframe++; //If we re-call this function without re-initializing, this will trigger assert above.
+        frame_number++;
+
+        return false;
+    }
 #endif
 
-    // increment frame number
-    frame_number++;
+    lora_send->beginPacket();
 
+    // packet number
+    lora_send->write(curr_send_subframe + (frame_number << SUBFRAMES_NUM_SHIFT));
+
+    // message
+
+    lora_send->write(ptr + lora_frame_max * curr_send_subframe, lora_frame_max);
+
+    lora_send->endPacket();
+    lora_send->wait();
+    curr_send_subframe++;
+
+#ifdef USE_PARITY
+    return true;
+#else
+    return curr_send_subframe < (length/lora_frame_max);
+#endif
 }
 
 void FrameTranslater::receiveFrame(uint8_t* dest, uint16_t length){
