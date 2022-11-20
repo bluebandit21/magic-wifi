@@ -22,7 +22,7 @@ byte eth_full_tx_buf[ETH_MTU + FAKE_ETH_HDR_LEN];
 byte* eth_rx_buf = eth_full_rx_buf + FAKE_ETH_HDR_LEN;
 byte* eth_tx_buf = eth_full_tx_buf + FAKE_ETH_HDR_LEN;
 
-uint16 eth_rx_full_buf_size, eth_tx_full_buf_size;
+uint16 eth_rx_full_buf_len, eth_tx_full_buf_len;
 
 uint8 wifi_connected;
 
@@ -51,11 +51,11 @@ void eth_rx_cb(uint8 u8MsgType, void* pvMsg, void* pvCtrlBuf){
     tstrM2mIpCtrlBuf *ctrl = (tstrM2mIpCtrlBuf *)pvCtrlBuf;
     switch(u8MsgType){
         case M2M_WIFI_RESP_ETHERNET_RX_PACKET:
-            printf("Pkt total size should be %u, has %u remaining\r\n", ctrl->u16DataSize, ctrl->u16RemainingDataSize);
-            eth_rx_full_buf_size = ctrl->u16DataSize;
+            //printf("Pkt total size should be %u, has %u remaining\r\n", ctrl->u16DataSize, ctrl->u16RemainingDataSize);
+            eth_rx_full_buf_len = ctrl->u16DataSize;
             m2m_wifi_set_receive_buffer(eth_full_rx_buf, ETH_MTU + 14);
-            printf("Pkt says %s \r\n", eth_rx_buf);
-            printf("Pkt is %u long", eth_rx_full_buf_size);
+            //printf("Pkt says %s \r\n", eth_rx_buf);
+            //printf("Pkt is %u long", eth_rx_full_buf_len);
             break;
         default:
             break;
@@ -98,7 +98,7 @@ sint8 init_AP(void){
 //Method to set tx buffer and size.
 void set_wifi_tx_buf(byte* in_buf, uint16 in_buf_len){
     memcpy(eth_tx_buf, in_buf, in_buf_len);
-    eth_tx_full_buf_len = in_buf_len + WINC_FAKE_HDR_LEN;
+    eth_tx_full_buf_len = in_buf_len + FAKE_ETH_HDR_LEN;
 }
 
 sint8 send_wifi_tx_buf(){
@@ -114,7 +114,7 @@ sint8 send_wifi_tx_buf(){
 //TextStart: what first element begins as, so full buffer is replaced in memory browser
 void generate_test_pkt(uint16 length, uint8 textStart){
     if(length < 46 || length > 1500){
-        printf("You goofed - test pkt can't have this length\r\n");
+        //printf("You goofed - test pkt can't have this length\r\n");
         return;
     }
     eth_tx_full_buf_len = 14 + length + 18; //14 for fake headers, 18 for dest/src/len/crc
