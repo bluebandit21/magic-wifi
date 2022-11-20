@@ -110,8 +110,6 @@ void setup_ethernet() {
 
     //Enable all the things
     ether.enablePromiscuous(false);
-    ether.enableMulticast();
-    ether.enableBroadcast(false);
 
     GPIO_setAsInputPin(ETH_IRQ_PORT, ETH_IRQ_PIN);
     GPIO_selectInterruptEdge(ETH_IRQ_PORT, ETH_IRQ_PIN, GPIO_HIGH_TO_LOW_TRANSITION);
