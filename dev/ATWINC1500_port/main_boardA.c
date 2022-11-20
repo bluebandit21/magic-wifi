@@ -35,10 +35,11 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg){
     {
         tstrM2mWifiStateChanged *pstrWifiState = (tstrM2mWifiStateChanged *)pvMsg;
         if (pstrWifiState->u8CurrState == M2M_WIFI_CONNECTED) {
-            GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
+            wifi_connected = M2M_WIFI_CONNECTED;
             //m2m_wifi_request_dhcp_client(); //?
         } else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED) {
             GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
+            wifi_connected = M2M_WIFI_DISCONNECTED;
         }
     }
     break;
@@ -54,6 +55,7 @@ void eth_rx_cb(uint8 u8MsgType, void* pvMsg, void* pvCtrlBuf){
             //printf("Pkt total size should be %u, has %u remaining\r\n", ctrl->u16DataSize, ctrl->u16RemainingDataSize);
             eth_rx_full_buf_len = ctrl->u16DataSize;
             m2m_wifi_set_receive_buffer(eth_full_rx_buf, ETH_MTU + 14);
+            GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
             //printf("Pkt says %s \r\n", eth_rx_buf);
             //printf("Pkt is %u long", eth_rx_full_buf_len);
             break;
