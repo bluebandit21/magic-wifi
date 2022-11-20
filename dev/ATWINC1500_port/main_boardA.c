@@ -26,6 +26,9 @@ uint16 eth_rx_full_buf_len = 0, eth_tx_full_buf_len;
 
 uint8 wifi_connected;
 
+//------- Headers -------
+void set_leds(uint8 red, uint8 green);
+
 //------- Callback functions -------
 void os_hook_isr(){return;}
 
@@ -36,8 +39,10 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg){
         tstrM2mWifiStateChanged *pstrWifiState = (tstrM2mWifiStateChanged *)pvMsg;
         if (pstrWifiState->u8CurrState == M2M_WIFI_CONNECTED) {
             wifi_connected = M2M_WIFI_CONNECTED;
+            set_leds(1,0);
         } else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED) {
             wifi_connected = M2M_WIFI_DISCONNECTED;
+            set_leds(0,0);
         }
     }
     break;
@@ -52,11 +57,12 @@ void eth_rx_cb(uint8 u8MsgType, void* pvMsg, void* pvCtrlBuf){
         case M2M_WIFI_RESP_ETHERNET_RX_PACKET:
             eth_rx_full_buf_len = ctrl->u16DataSize;
             m2m_wifi_set_receive_buffer(eth_full_rx_buf, ETH_MTU + 14);
-            set_leds(1, 0);
+            set_leds(1, 1);
+            nm_bsp_sleep(200);
             //send a packet back
             generate_test_pkt(50, 0x01);
             send_wifi_tx_buf();
-            set_leds(1, 1);
+            set_leds(1, 0);
             break;
         default:
             break;
