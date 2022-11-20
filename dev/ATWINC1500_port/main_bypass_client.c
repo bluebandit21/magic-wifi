@@ -98,6 +98,19 @@ sint8 send_wifi_tx_buf(){
 }
 
 
+//Length: length of data section (46 - 1500)
+void generate_test_pkt(uint16 length, uint8 textStart){
+    if(length < 46 || length > 1500){
+        printf("You goofed - test pkt can't have this length\r\n");
+        return;
+    }
+    eth_tx_full_buf_len = 14 + length + 18; //14 for fake headers, 18 for dest/src/len/crc
+    uint16 i = 0;
+    for (;i < eth_tx_full_buf_len - 14; ++i){
+        eth_tx_buf[i] = ((i + textStart) % 0xFF);
+    }
+}
+
 void main(void) {
     WDTCTL = WDTPW | WDTHOLD;               // Stop watchdog timer
     PM5CTL0 &= ~LOCKLPM5;                   // Disable the GPIO power-on default high-impedance mode
@@ -133,16 +146,22 @@ void main(void) {
     printf("requesting connect\r\n");
     m2m_wifi_connect((char *)MAIN_WLAN_SSID, sizeof(MAIN_WLAN_SSID), MAIN_WLAN_AUTH, (char *)0, M2M_WIFI_CH_ALL);
     GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN0);
-\
 
+    uint8 alt = 0;
 
-    byte msg[68] = {0x44, 0xe5, 0x17, 0xd2, 0xe6, 0xf5, 0x2c, 0x21, 0x31, 0x27, 0x58, 0xf0, 0x08, 0x00, 0x45, 0x80, 0x00, 0x36, 0x00, 0x00, 0x40, 0x00, 0x3b, 0x11, 0xca, 0xf8, 0xac, 0xd9, 0x00, 0xae, 0x23, 0x03, 0xa3, 0xb4, 0x01, 0xbb, 0xe6, 0xfb, 0x00, 0x22, 0xea, 0xec, 0x5e, 0x35, 0x94, 0x2a, 0x16, 0x08, 0x36, 0xb4, 0xc1, 0x12, 0x98, 0xc7, 0x19, 0x5b, 0x3b, 0x67, 0xe3, 0xcf, 0xc8, 0x55, 0x99, 0x38, 0x78, 0xd1, 0x0b, 0xdf};
     while (1) {
         m2m_wifi_handle_events(NULL);
         nm_bsp_sleep(100);
         if(wifi_connected == M2M_WIFI_CONNECTED){
-            set_wifi_tx_buf(msg, 68);
-            sint8 ret = send_wifi_tx_buf();
+            if(alt){
+                generate_test_pkt(1500, 0x01);
+                ret = send_wifi_tx_buf();
+                alt = 0;
+            }else{
+                generate_test_pkt(50, 0x03);
+                ret = send_wifi_tx_buf();
+                alt = 1;
+            }
             if(ret == M2M_SUCCESS){
                 GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
             }else{
