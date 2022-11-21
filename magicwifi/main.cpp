@@ -4,7 +4,12 @@
 #include "SX127x.h"
 #include "FrameTranslater.h"
 #include "defines.h"
-#include "driver/include/m2m_wifi.h"
+
+extern "C" {
+    #include "driver/include/m2m_wifi.h"
+}
+
+
 
 #define DEBUG_ABORT() while(1){}
 
@@ -14,8 +19,10 @@ SX127x TransmitLoRa(LORA::SENDER);
 SX127x ReceiveLoRa(LORA::RECEIVER);
 
 //TODO: Describe thoroughly and possibly give better names!
-byte eth_in_buff[ETH_BACKING_SIZE];
-byte eth_out_buff[ETH_BACKING_SIZE];
+byte eth_in_wifi_buff[ETH_BACKING_SIZE];
+byte* eth_in_buff = eth_in_wifi_buff + ETH_WIFI_HEADER_SIZE;
+byte eth_out_wifi_buff[ETH_BACKING_SIZE];
+byte* eth_out_buff = eth_out_wifi_buff + ETH_WIFI_HEADER_SIZE;
 
 
 //-----------------------------------ISR HANDLING------------------

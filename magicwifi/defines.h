@@ -26,10 +26,13 @@ constexpr long LORA_RECEIVE_FREQ = 916000000;
 // 1514 bytes for the buffer we're using, which does include the Ethernet headers but not the CRC at the end.
 constexpr unsigned ETH_BUFF_SIZE = 1518 - 4;
 
+// The wifi library requires us to have 14 bytes of leading info at the start of our contiguous data array.
+constexpr unsigned ETH_WIFI_HEADER_SIZE = 14;
+
 // However, as our LoRa subframing stuff divides evenly into 7 groups of 217, w/ 7*217 = 1519,
 // we have intentional trailing random garbage at the end that we'll never actually use but that's there so we avoid
 // UB caused by reading random garbage memory past the end of our array.
-constexpr unsigned ETH_BACKING_SIZE = ETH_BUFF_SIZE + 5;
+constexpr unsigned ETH_BACKING_SIZE = ETH_WIFI_HEADER_SIZE + ETH_BUFF_SIZE + 5;
 
 
 
