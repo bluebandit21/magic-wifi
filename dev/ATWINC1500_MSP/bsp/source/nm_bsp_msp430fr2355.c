@@ -37,9 +37,9 @@
 #include "common/include/nm_common.h"
 #include "config/conf_winc.h"
 
-static tpfNmBspIsr gpfIsr;
+tpfNmBspIsr wifi_isr;
 
-
+/*
 #pragma vector=PORT3_VECTOR
 __interrupt void Port_3(void)
 {
@@ -48,6 +48,7 @@ __interrupt void Port_3(void)
 	}
     GPIO_clearInterrupt(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
 }
+*/
 
 /*
  *	@fn		init_chip_pins
@@ -70,7 +71,7 @@ static void init_chip_pins(void)
  */
 sint8 nm_bsp_init(void)
 {
-	gpfIsr = 0; //NULL
+	wifi_isr = 0; //NULL
 
 	/* Initialize chip IOs. */
 	init_chip_pins();
@@ -134,7 +135,7 @@ void nm_bsp_sleep(uint32 u32TimeMsec)
 
 void nm_bsp_register_isr(tpfNmBspIsr pfIsr)
 {
-	gpfIsr = pfIsr;
+	wifi_isr = pfIsr;
 	GPIO_setAsInputPinWithPullUpResistor(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
     GPIO_clearInterrupt(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);
     GPIO_enableInterrupt(CONF_WINC_IRQ_PORT, CONF_WINC_IRQ_PIN);

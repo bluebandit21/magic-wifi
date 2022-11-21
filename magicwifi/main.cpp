@@ -22,7 +22,6 @@ byte eth_out_buff[ETH_BACKING_SIZE];
 
 //3.4 is the Wifi IRQ, 3.1 is the receive LoRa IRQ
 
-void (*wifi_isr)(void) = nullptr;
 
 #pragma vector=PORT3_VECTOR
 __interrupt void port3_ISR(void)

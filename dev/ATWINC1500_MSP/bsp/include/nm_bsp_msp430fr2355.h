@@ -43,4 +43,6 @@
 #define NM_DEBUG				CONF_WINC_DEBUG
 #define NM_BSP_PRINTF			CONF_WINC_PRINTF
 
+extern tpfNmBspIsr wifi_isr;
+
 #endif /* _NM_BSP_SAMD21_H_ */

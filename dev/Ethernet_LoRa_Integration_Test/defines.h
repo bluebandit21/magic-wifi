@@ -4,7 +4,7 @@
 #include "driverlib.h"
 
 
-#define BOARD_A 1
+#define BOARD_B 1
 
 //To handle asymmetric send+receive frequencies, later will also be used for asymmetric host/client wifi
 #ifdef BOARD_A
