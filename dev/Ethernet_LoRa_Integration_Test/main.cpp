@@ -4,7 +4,7 @@
 #include "SX127x.h"
 #include "FrameTranslater.h"
 #include "defines.h"
-
+//hi (x-platform test)
 
 #define DEBUG_ABORT() while(1){}
 
