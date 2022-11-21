@@ -4,6 +4,7 @@
 #include "SX127x.h"
 #include "FrameTranslater.h"
 #include "defines.h"
+#include "driver/include/m2m_wifi.h"
 
 #define DEBUG_ABORT() while(1){}
 

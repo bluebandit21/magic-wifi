@@ -52,6 +52,7 @@
 								<option id="com.ti.ccstudio.buildDefinitions.MSP430_21.6.compilerID.DIAG_WRAP.1635876588" name="Wrap diagnostic messages (--diag_wrap)" superClass="com.ti.ccstudio.buildDefinitions.MSP430_21.6.compilerID.DIAG_WRAP" useByScannerDiscovery="false" value="com.ti.ccstudio.buildDefinitions.MSP430_21.6.compilerID.DIAG_WRAP.off" valueType="enumerated"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.MSP430_21.6.compilerID.INCLUDE_PATH.76015686" name="Add dir to #include search path (--include_path, -I)" superClass="com.ti.ccstudio.buildDefinitions.MSP430_21.6.compilerID.INCLUDE_PATH" valueType="includePath">
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}/../dev/EtherCard_MSP430FR2355/src"/>
+									<listOptionValue builtIn="false" value="${PROJECT_ROOT}/../dev/ATWINC1500_MSP/"/>
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}/../dev/FrameTranslater"/>
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}/../dev/driverlib/MSP430FR2xx_4xx/"/>
 									<listOptionValue builtIn="false" value="${PROJECT_ROOT}/../dev/LoRaRF_2.1.1_driver"/>

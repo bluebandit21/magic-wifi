@@ -26,6 +26,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>ATWINC1500_MSP</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>EtherCard_MSP430FR2355</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -42,6 +47,41 @@
 		</link>
 		<link>
 			<name>driverlib</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/WINC1500_SW_API.chm</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/WINC1500_SW_API.chm</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/bsp</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/bus_wrapper</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/common</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/config</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/spi_flash</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -92,6 +132,61 @@
 		</link>
 		<link>
 			<name>driverlib/MSP430FR2xx_4xx</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/bsp/include</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/bsp/source</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/bus_wrapper/include</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/bus_wrapper/source</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/common/include</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/common/source</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/config/conf_winc.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/config/conf_winc.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/include</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/source</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/spi_flash/include</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/spi_flash/source</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -364,6 +459,136 @@
 			<name>driverlib/MSP430FR2xx_4xx/wdt_a.h</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/dev/driverlib/MSP430FR2xx_4xx/wdt_a.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/bsp/include/nm_bsp.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/bsp/include/nm_bsp.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/bsp/include/nm_bsp_internal.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/bsp/include/nm_bsp_internal.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/bsp/include/nm_bsp_msp430fr2355.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/bsp/include/nm_bsp_msp430fr2355.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/bsp/source/nm_bsp_msp430fr2355.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/bsp/source/nm_bsp_msp430fr2355.c</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/bus_wrapper/include/nm_bus_wrapper.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/bus_wrapper/include/nm_bus_wrapper.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/bus_wrapper/source/nm_bus_wrapper_msp430fr2355.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/bus_wrapper/source/nm_bus_wrapper_msp430fr2355.c</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/common/include/nm_common.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/common/include/nm_common.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/common/include/nm_debug.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/common/include/nm_debug.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/common/source/nm_common.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/common/source/nm_common.c</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/include/m2m_periph.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/driver/include/m2m_periph.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/include/m2m_types.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/driver/include/m2m_types.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/include/m2m_wifi.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/driver/include/m2m_wifi.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/source/m2m_hif.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/driver/source/m2m_hif.c</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/source/m2m_hif.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/driver/source/m2m_hif.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/source/m2m_periph.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/driver/source/m2m_periph.c</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/source/m2m_wifi.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/driver/source/m2m_wifi.c</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/source/nmasic.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/driver/source/nmasic.c</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/source/nmasic.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/driver/source/nmasic.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/source/nmbus.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/driver/source/nmbus.c</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/source/nmbus.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/driver/source/nmbus.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/source/nmdrv.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/driver/source/nmdrv.c</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/source/nmdrv.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/driver/source/nmdrv.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/source/nmspi.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/driver/source/nmspi.c</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/driver/source/nmspi.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/driver/source/nmspi.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/spi_flash/include/spi_flash.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/spi_flash/include/spi_flash.h</locationURI>
+		</link>
+		<link>
+			<name>ATWINC1500_MSP/spi_flash/source/spi_flash.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/dev/ATWINC1500_MSP/spi_flash/source/spi_flash.c</locationURI>
 		</link>
 		<link>
 			<name>driverlib/MSP430FR2xx_4xx/inc/hw_memmap.h</name>
