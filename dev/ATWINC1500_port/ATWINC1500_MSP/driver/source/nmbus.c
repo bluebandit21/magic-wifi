@@ -34,9 +34,7 @@
 #ifndef CORTUS_APP
 
 #include "nmbus.h"
-#include "nmi2c.h"
 #include "nmspi.h"
-#include "nmuart.h"
 
 #define MAX_TRX_CFG_SZ		8
 
