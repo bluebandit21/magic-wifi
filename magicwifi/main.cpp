@@ -1,4 +1,5 @@
 #include <msp430.h> 
+#include <cstring>
 #include "enc28j60.h"
 #include "driverlib.h"
 #include "SX127x.h"
@@ -9,7 +10,13 @@ extern "C" {
     #include "driver/include/m2m_wifi.h"
 }
 
+extern "C" {
+    void eth_rx_cb(uint8 u8MsgType, void *pvMsg, void *pvCtrlBuf);
+}
 
+extern "C" {
+    void wifi_cb(uint8_t u8MsgType, void *pvMsg);
+}
 
 #define DEBUG_ABORT() while(1){}
 
@@ -209,24 +216,38 @@ void setup_Receivelora(){
 
 uint8 wifi_connected;
 
-
 sint8 init_wifi(void)
 {
     nm_bsp_init();
-    tstrWifiInitParam param;
+    tstrWifiInitParam param = {
+       .pfAppWifiCb = wifi_cb,
+       .strEthInitParam.pfAppEthCb = eth_rx_cb,
+       .strEthInitParam.au8ethRcvBuf = eth_out_wifi_buff,
+       .strEthInitParam.u16ethRcvBufSize = ETH_BACKING_SIZE,
+       .strEthInitParam.u8EthernetEnable = 1
+    };
+
+    /* Reworked to make cleaner
     memset((uint8_t *)&param, 0, sizeof(tstrWifiInitParam));
     param.pfAppWifiCb = wifi_cb;
     param.strEthInitParam.pfAppEthCb = eth_rx_cb;
-    param.strEthInitParam.au8ethRcvBuf = eth_full_rx_buf;
-    param.strEthInitParam.u16ethRcvBufSize = ETH_MTU + FAKE_ETH_HDR_LEN;
+    param.strEthInitParam.au8ethRcvBuf = eth_out_wifi_buff;
+    param.strEthInitParam.u16ethRcvBufSize = ETH_BACKING_SIZE;
     param.strEthInitParam.u8EthernetEnable = 1;
+    */
     return m2m_wifi_init(&param);
 }
 
 
 sint8 init_AP(void)
 {
-    tstrM2MAPConfig strM2MAPConfig;
+    tstrM2MAPConfig strM2MAPConfig = {
+        .u8ListenChannel = MAIN_WLAN_CHANNEL,
+        .u8SecType = M2M_WIFI_SEC_OPEN
+    };
+    strcpy((char *)&strM2MAPConfig.au8SSID, MAIN_WLAN_SSID); // TODO:: Fix??
+
+    /*
     memset(&strM2MAPConfig, 0x00, sizeof(tstrM2MAPConfig));
     strcpy((char *)&strM2MAPConfig.au8SSID, MAIN_WLAN_SSID);
     strM2MAPConfig.u8ListenChannel = MAIN_WLAN_CHANNEL;
@@ -235,8 +256,78 @@ sint8 init_AP(void)
     strM2MAPConfig.au8DHCPServerIP[1] = 168;
     strM2MAPConfig.au8DHCPServerIP[2] = 1;
     strM2MAPConfig.au8DHCPServerIP[3] = 1;
+     */
     return m2m_wifi_enable_ap(&strM2MAPConfig);
 }
+
+void eth_rx_cb(uint8 u8MsgType, void *pvMsg, void *pvCtrlBuf){
+    /*
+    tstrM2mIpCtrlBuf *ctrl = (tstrM2mIpCtrlBuf *)pvCtrlBuf;
+    switch (u8MsgType)
+    {
+    case M2M_WIFI_RESP_ETHERNET_RX_PACKET:
+        eth_rx_full_buf_len = ctrl->u16DataSize;
+        m2m_wifi_set_receive_buffer(eth_full_rx_buf, ETH_MTU + 14);
+        set_leds(1, 1);
+        nm_bsp_sleep(200);
+        // send a packet back
+        generate_test_pkt(50, 0x01);
+        send_wifi_tx_buf();
+        set_leds(1, 0);
+        break;
+    default:
+        break;
+    }
+    */
+}
+
+void wifi_cb(uint8_t u8MsgType, void *pvMsg)
+{
+    switch (u8MsgType)
+    {
+    case M2M_WIFI_RESP_CON_STATE_CHANGED:
+    {
+        tstrM2mWifiStateChanged *pstrWifiState = (tstrM2mWifiStateChanged *)pvMsg;
+        if (pstrWifiState->u8CurrState == M2M_WIFI_CONNECTED)
+        {
+            wifi_connected = M2M_WIFI_CONNECTED;
+        }
+        else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED)
+        {
+            wifi_connected = M2M_WIFI_DISCONNECTED;
+        }
+    }
+    break;
+    default:
+        break;
+    }
+}
+
+
+void setup_wifi() {
+    int8_t ret = init_wifi();
+    if(M2M_SUCCESS != ret) {
+        while(1){
+           //Spin - failed to properly initialize Wifi module
+        }
+    }
+
+#ifdef BOARD_A
+    int8_t ret =init_AP();
+    if(M2M_SUCCESS != ret) {
+            while(1){
+               //Spin - failed to properly initialize Wifi module as AP
+            }
+        }
+
+#else
+    m2m_wifi_connect((char *)MAIN_WLAN_SSID, sizeof(MAIN_WLAN_SSID), M2M_WIFI_SEC_OPEN, (char *)0, MAIN_WLAN_CHANNEL);
+#endif
+
+
+
+}
+
 
 
 /**
@@ -249,9 +340,16 @@ int main(void)
 
     clockSetup();
 
+    // Fill the beginning of the special wifi buffer with 0xFF
+    for(int i = 0; i < ETH_WIFI_HEADER_SIZE; ++i) {
+        eth_in_wifi_buff[i] = 0xFF;
+    }
+
+
     setup_ethernet();
     setup_Transmitlora();
     setup_Receivelora();
+    setup_wifi();
 
     FrameTranslater frameTranslater = FrameTranslater(&TransmitLoRa, &ReceiveLoRa);
 

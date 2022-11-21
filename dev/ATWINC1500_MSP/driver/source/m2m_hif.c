@@ -79,7 +79,7 @@ typedef struct {
 volatile tstrHifContext gstrHifCxt;
 
 #ifdef ETH_MODE
-extern void os_hook_isr(void);
+//extern void os_hook_isr(void);
 #endif
 
 static void isr(void)
@@ -89,7 +89,7 @@ static void isr(void)
 	nm_bsp_interrupt_ctrl(0);
 #endif
 #ifdef ETH_MODE
-	os_hook_isr();
+	//os_hook_isr();
 #endif
 }
 static sint8 hif_set_rx_done(void)

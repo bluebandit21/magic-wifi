@@ -4,7 +4,7 @@
 #include "driverlib.h"
 
 
-#define BOARD_A 1
+#define BOARD_B 1
 
 //To handle asymmetric send+receive frequencies, later will also be used for asymmetric host/client wifi
 #ifdef BOARD_A
@@ -54,5 +54,9 @@ constexpr short ETH_IRQ_PIN           = GPIO_PIN1;
 //These live in main.cpp
 extern void (*wifi_isr)(void);
 extern void (*ethernet_isr)(void);
+
+// WiFi channel settings
+#define MAIN_WLAN_SSID "MAGIC_WIFI"
+#define MAIN_WLAN_CHANNEL (6)
 
 #endif

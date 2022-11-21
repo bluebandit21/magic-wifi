@@ -54,12 +54,12 @@ extern "C" {
 #define CONF_WINC_USE_SPI				(1)
 
 /** SPI port and pin as well as module setups. */
-#define CONF_WINC_SPI_BASE				(EUSCI_A0_BASE)
+#define CONF_WINC_SPI_BASE				(EUSCI_A1_BASE)
 
-#define CONF_WINC_SPI_MODULE_PORT       (GPIO_PORT_P1)
-#define CONF_WINC_SPI_MOSI_PIN          (GPIO_PIN7)
-#define CONF_WINC_SPI_MISO_PIN          (GPIO_PIN6)
-#define CONF_WINC_SPI_SCK_PIN           (GPIO_PIN5)
+#define CONF_WINC_SPI_MODULE_PORT       (GPIO_PORT_P4)
+#define CONF_WINC_SPI_MOSI_PIN          (GPIO_PIN3)
+#define CONF_WINC_SPI_MISO_PIN          (GPIO_PIN2)
+#define CONF_WINC_SPI_SCK_PIN           (GPIO_PIN1)
 
 #define CONF_WINC_SPI_CS_PORT           (GPIO_PORT_P4)
 #define CONF_WINC_SPI_CS_PIN			    (GPIO_PIN0)
