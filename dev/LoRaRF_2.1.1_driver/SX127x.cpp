@@ -33,10 +33,6 @@ bool SX127x::begin()
                                    GPIO_PRIMARY_MODULE_FUNCTION);
     }
 
-
-        /* Disable the GPIO power-on default high-impedance mode. */
-             PMM_unlockLPM5();
-
         EUSCI_B_SPI_initMasterParam param = {0};
         param.selectClockSource = EUSCI_B_SPI_CLOCKSOURCE_SMCLK;
         param.clockSourceFrequency = CS_getSMCLK(); //SMCLK capable of up to 24MHz.

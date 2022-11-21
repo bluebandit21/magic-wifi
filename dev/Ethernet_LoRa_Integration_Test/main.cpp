@@ -207,6 +207,7 @@ void setup_Receivelora(){
 int main(void)
 {
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
+    PMM_unlockLPM5(); // Unlock GPIO pins -- WILL NOT work without this line, do not remove
 
     clockSetup();
 

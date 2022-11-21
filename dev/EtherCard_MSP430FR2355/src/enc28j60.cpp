@@ -256,7 +256,7 @@ void ENC28J60::initSPI () {
     uint8_t port = GPIO_PORT_P1;
     uint16_t pins =  GPIO_PIN5 + GPIO_PIN6 + GPIO_PIN7;
     GPIO_setAsPeripheralModuleFunctionInputPin(port, pins, GPIO_PRIMARY_MODULE_FUNCTION);
-    PMM_unlockLPM5();
+    //PMM_unlockLPM5(); // moved to main
 
     const uint32_t CS_SMCLK_DESIRED_FREQUENCY_IN_KHZ = 8000;
     uint16_t base = EUSCI_A0_BASE;
