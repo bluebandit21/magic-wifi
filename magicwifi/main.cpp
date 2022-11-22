@@ -6,6 +6,8 @@
 #include "FrameTranslater.h"
 #include "defines.h"
 
+#include <atomic>
+
 extern "C" {
     #include "driver/include/m2m_wifi.h"
 }
@@ -214,7 +216,8 @@ void setup_Receivelora(){
 
 //-----------------------------------WIFI--------------------------
 
-uint8 wifi_connected = 0;
+volatile uint8 wifi_connected = 0;
+std::atomic<int> pending_received_wifi_frames(0);
 
 sint8 init_wifi(void)
 {
@@ -244,24 +247,18 @@ sint8 init_AP(void)
 }
 
 void eth_rx_cb(uint8 u8MsgType, void *pvMsg, void *pvCtrlBuf){
-    /*
+
     tstrM2mIpCtrlBuf *ctrl = (tstrM2mIpCtrlBuf *)pvCtrlBuf;
     switch (u8MsgType)
     {
     case M2M_WIFI_RESP_ETHERNET_RX_PACKET:
-        eth_rx_full_buf_len = ctrl->u16DataSize;
-        m2m_wifi_set_receive_buffer(eth_full_rx_buf, ETH_MTU + 14);
-        set_leds(1, 1);
-        nm_bsp_sleep(200);
-        // send a packet back
-        generate_test_pkt(50, 0x01);
-        send_wifi_tx_buf();
-        set_leds(1, 0);
+        //TODO: Check if this is actually a pulse
+        pending_received_wifi_frames.fetch_add(1);
         break;
     default:
         break;
     }
-    */
+
 }
 
 void wifi_cb(uint8_t u8MsgType, void *pvMsg)
@@ -341,26 +338,37 @@ int main(void)
        m2m_wifi_handle_events(NULL);
     }
 
-    bool in_progress_ethernet = false;
+    bool in_progress_lora_send = false;
     int ethernet_len; //We don't actually use this anywhere, funnily enough, which is maybe a problem?
     // (Do we need to zero-fill the remainder of our Ethernet buffer, or is it ok if we send random garbage following a valid full frame?)
 
     ReceiveLoRa.request();
 
     while(1){
+        //Updates current wifi connectivity status and also updates pending received wifi frame status
+        m2m_wifi_handle_events(NULL);
 
-        if(eth_available && !in_progress_ethernet){
+        //If there is a frame available and we're not already busy with an old one, handle the next
+        if(eth_available && !in_progress_lora_send){
+            //Read in pending frame
             ethernet_len = ether.packetReceive();
-            frameTranslater.initSend(eth_in_buff, ETH_BUFF_SIZE);
-            in_progress_ethernet = true;
+
+            if(wifi_connected){
+                //We always want to send a full frame over wifi if available, because it's better in every way
+                m2m_wifi_send_ethernet_pkt(eth_in_wifi_buff, ethernet_len + ETH_WIFI_HEADER_SIZE);
+            }else{
+                //Begin process of sending frame over multiple iterations through LoRa.
+                frameTranslater.initSend(eth_in_buff, ETH_BUFF_SIZE);
+                in_progress_lora_send = true;
+            }
         }
 
-        if(in_progress_ethernet){
-            in_progress_ethernet = frameTranslater.sendNextSubframe(eth_in_buff, ETH_BUFF_SIZE);
+        if(in_progress_lora_send){
+            in_progress_lora_send = frameTranslater.sendNextSubframe(eth_in_buff, ETH_BUFF_SIZE);
 
             for(volatile uint32_t i=0;i<50000;i++); //Wait so we don't send the LoRa frames too fast!
 
-            if(!in_progress_ethernet){
+            if(!in_progress_lora_send){
                 //We just finished fully sending our Ethernet frame :)
                 // Check if we have more to send
                 check_set_eth_pending();
@@ -374,6 +382,17 @@ int main(void)
             }
             ReceiveLoRa.request();
         }
+
+        if(pending_received_wifi_frames.load() > 0){
+            eth_rx_full_buf_len = ctrl->u16DataSize;
+            m2m_wifi_set_receive_buffer(eth_full_rx_buf, ETH_MTU + 14);
+            nm_bsp_sleep(200);
+            // send a packet back
+            generate_test_pkt(50, 0x01);
+            send_wifi_tx_buf();
+            set_leds(1, 0);
+        }
+
 
     }
 
