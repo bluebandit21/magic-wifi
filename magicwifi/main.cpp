@@ -214,7 +214,7 @@ void setup_Receivelora(){
 
 //-----------------------------------WIFI--------------------------
 
-uint8 wifi_connected;
+uint8 wifi_connected = 0;
 
 sint8 init_wifi(void)
 {
@@ -227,14 +227,6 @@ sint8 init_wifi(void)
        .strEthInitParam.u8EthernetEnable = 1
     };
 
-    /* Reworked to make cleaner
-    memset((uint8_t *)&param, 0, sizeof(tstrWifiInitParam));
-    param.pfAppWifiCb = wifi_cb;
-    param.strEthInitParam.pfAppEthCb = eth_rx_cb;
-    param.strEthInitParam.au8ethRcvBuf = eth_out_wifi_buff;
-    param.strEthInitParam.u16ethRcvBufSize = ETH_BACKING_SIZE;
-    param.strEthInitParam.u8EthernetEnable = 1;
-    */
     return m2m_wifi_init(&param);
 }
 
@@ -247,22 +239,7 @@ sint8 init_AP(void)
         .u8SecType = M2M_WIFI_SEC_OPEN,
         .au8DHCPServerIP = {192, 168, 1, 1}
     };
-    //strcpy((char *)&strM2MAPConfig.au8SSID, MAIN_WLAN_SSID); // TODO:: Fix??
-    //strM2MAPConfig.au8DHCPServerIP[0] = 192; // TODO do we care?
-    //strM2MAPConfig.au8DHCPServerIP[1] = 168;
-    //strM2MAPConfig.au8DHCPServerIP[2] = 1;
-    //strM2MAPConfig.au8DHCPServerIP[3] = 1;
 
-    /*
-    memset(&strM2MAPConfig, 0x00, sizeof(tstrM2MAPConfig));
-    strcpy((char *)&strM2MAPConfig.au8SSID, MAIN_WLAN_SSID);
-    strM2MAPConfig.u8ListenChannel = MAIN_WLAN_CHANNEL;
-    strM2MAPConfig.u8SecType = M2M_WIFI_SEC_OPEN;
-    strM2MAPConfig.au8DHCPServerIP[0] = 192; // TODO do we care?
-    strM2MAPConfig.au8DHCPServerIP[1] = 168;
-    strM2MAPConfig.au8DHCPServerIP[2] = 1;
-    strM2MAPConfig.au8DHCPServerIP[3] = 1;
-     */
     return m2m_wifi_enable_ap(&strM2MAPConfig);
 }
 
@@ -360,6 +337,9 @@ int main(void)
 
     FrameTranslater frameTranslater = FrameTranslater(&TransmitLoRa, &ReceiveLoRa);
 
+    while (1){
+       m2m_wifi_handle_events(NULL);
+    }
 
     bool in_progress_ethernet = false;
     int ethernet_len; //We don't actually use this anywhere, funnily enough, which is maybe a problem?
