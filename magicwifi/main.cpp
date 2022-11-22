@@ -242,10 +242,16 @@ sint8 init_wifi(void)
 sint8 init_AP(void)
 {
     tstrM2MAPConfig strM2MAPConfig = {
+        .au8SSID = MAIN_WLAN_SSID,
         .u8ListenChannel = MAIN_WLAN_CHANNEL,
-        .u8SecType = M2M_WIFI_SEC_OPEN
+        .u8SecType = M2M_WIFI_SEC_OPEN,
+        .au8DHCPServerIP = {192, 168, 1, 1}
     };
-    strcpy((char *)&strM2MAPConfig.au8SSID, MAIN_WLAN_SSID); // TODO:: Fix??
+    //strcpy((char *)&strM2MAPConfig.au8SSID, MAIN_WLAN_SSID); // TODO:: Fix??
+    //strM2MAPConfig.au8DHCPServerIP[0] = 192; // TODO do we care?
+    //strM2MAPConfig.au8DHCPServerIP[1] = 168;
+    //strM2MAPConfig.au8DHCPServerIP[2] = 1;
+    //strM2MAPConfig.au8DHCPServerIP[3] = 1;
 
     /*
     memset(&strM2MAPConfig, 0x00, sizeof(tstrM2MAPConfig));
@@ -313,9 +319,10 @@ void setup_wifi() {
     }
 
 #ifdef BOARD_A
-    int8_t ret =init_AP();
+    ret = init_AP();
     if(M2M_SUCCESS != ret) {
             while(1){
+
                //Spin - failed to properly initialize Wifi module as AP
             }
         }
