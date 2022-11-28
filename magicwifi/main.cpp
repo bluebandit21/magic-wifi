@@ -6,6 +6,8 @@
 #include "FrameTranslater.h"
 #include "defines.h"
 
+#include <memory> //For placement new
+
 extern "C" {
     #include "driver/include/m2m_wifi.h"
 }
@@ -322,6 +324,7 @@ void setup_wifi() {
 
 }
 
+alignas(FrameTranslater) unsigned char frameTranslaterBuff[sizeof(FrameTranslater)];
 
 
 /**
@@ -340,7 +343,7 @@ int main(void)
     setup_Receivelora();
     setup_wifi();
 
-    FrameTranslater frameTranslater = FrameTranslater(&TransmitLoRa, &ReceiveLoRa);
+    FrameTranslater* frameTranslater = new(frameTranslaterBuff) FrameTranslater (&TransmitLoRa, &ReceiveLoRa);
 
     bool in_progress_lora_send = false;
     int ethernet_len; //We don't actually use this anywhere, funnily enough, which is maybe a problem?
@@ -373,13 +376,13 @@ int main(void)
                 m2m_wifi_send_ethernet_pkt(eth_in_wifi_buff, ethernet_len + ETH_WIFI_HEADER_SIZE);
             }else{
                 //Begin process of sending frame over multiple iterations through LoRa.
-                frameTranslater.initSend(eth_in_buff, ETH_BUFF_SIZE);
+                frameTranslater->initSend(eth_in_buff, ETH_BUFF_SIZE);
                 in_progress_lora_send = true;
             }
         }
 
         if(in_progress_lora_send){
-            in_progress_lora_send = frameTranslater.sendNextSubframe(eth_in_buff, ETH_BUFF_SIZE);
+            in_progress_lora_send = frameTranslater->sendNextSubframe(eth_in_buff, ETH_BUFF_SIZE);
 
             for(volatile uint32_t i=0;i<50000;i++); //Wait so we don't send the LoRa frames too fast!
 
@@ -391,8 +394,8 @@ int main(void)
         }
 
         if(ReceiveLoRa._statusIrq != 0){
-            frameTranslater.receiveFrame(eth_out_buff, ETH_BUFF_SIZE);
-            if(frameTranslater.checkFrame(eth_out_buff, ETH_BUFF_SIZE)){
+            frameTranslater->receiveFrame(eth_out_buff, ETH_BUFF_SIZE);
+            if(frameTranslater->checkFrame(eth_out_buff, ETH_BUFF_SIZE)){
                 ether.packetSend(ETH_BUFF_SIZE);
             }
             ReceiveLoRa.request();
@@ -408,6 +411,8 @@ int main(void)
         }
 #endif
     }
+
+    frameTranslater->~FrameTranslater();
 
     return 0;
 }
