@@ -398,7 +398,10 @@ int main(void)
             ReceiveLoRa.request();
         }
 #ifdef BOARD_B
-        if(!wifi_connected){
+        static int delay = 0;
+        delay++;
+        delay = delay % 64;
+        if(!wifi_connected && (delay == 0)){
             //Attempt to reconnect wifi if we're disconnected
             //TODO: Consider rate-limiting this in some fashion so we don't constantly spam attempts to connect when not doing anything with LoRa
             m2m_wifi_connect((char *)MAIN_WLAN_SSID, sizeof(MAIN_WLAN_SSID), M2M_WIFI_SEC_OPEN, (char *)0, MAIN_WLAN_CHANNEL);
