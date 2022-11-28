@@ -6,8 +6,6 @@
 #include "FrameTranslater.h"
 #include "defines.h"
 
-#include <atomic>
-
 extern "C" {
     #include "driver/include/m2m_wifi.h"
 }
@@ -217,7 +215,8 @@ void setup_Receivelora(){
 //-----------------------------------WIFI--------------------------
 
 volatile uint8 wifi_connected = 0;
-std::atomic<int> pending_received_wifi_frames(0);
+volatile bool pending_received_wifi_frame = false;
+volatile int pending_received_wifi_frame_length;
 
 sint8 init_wifi(void)
 {
@@ -253,7 +252,14 @@ void eth_rx_cb(uint8 u8MsgType, void *pvMsg, void *pvCtrlBuf){
     {
     case M2M_WIFI_RESP_ETHERNET_RX_PACKET:
         //TODO: Check if this is actually a pulse
-        pending_received_wifi_frames.fetch_add(1);
+
+        //After this function is called, the rest of the nightmare stack of m2m_wifi_handle_events
+        // does many things including immediately reading one (all??) pending frames into our buffer
+        // This resets the internal buffer pointer to start of our data.
+        m2m_wifi_set_receive_buffer(eth_out_wifi_buff, ETH_BUFF_SIZE + ETH_WIFI_HEADER_SIZE);
+
+        pending_received_wifi_frame_length = ctrl->u16DataSize;
+        pending_received_wifi_frame = true;
         break;
     default:
         break;
@@ -285,6 +291,13 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
 
 
 void setup_wifi() {
+
+    // Fill the beginning of the special wifi buffer with 0xFF
+    //TODO: Maybe explain why / what that does at some point
+    for(int i = 0; i < ETH_WIFI_HEADER_SIZE; ++i) {
+        eth_in_wifi_buff[i] = 0xFF;
+    }
+
     int8_t ret = init_wifi();
     if(M2M_SUCCESS != ret) {
         while(1){
@@ -321,11 +334,6 @@ int main(void)
 
     clockSetup();
 
-    // Fill the beginning of the special wifi buffer with 0xFF
-    for(int i = 0; i < ETH_WIFI_HEADER_SIZE; ++i) {
-        eth_in_wifi_buff[i] = 0xFF;
-    }
-
 
     setup_ethernet();
     setup_Transmitlora();
@@ -347,6 +355,17 @@ int main(void)
     while(1){
         //Updates current wifi connectivity status and also updates pending received wifi frame status
         m2m_wifi_handle_events(NULL);
+
+        if(pending_received_wifi_frame){
+            ether.packetSend(pending_received_wifi_frame_length); //TODO: Do we need to subtract wifi header length from here?
+            pending_received_wifi_frame = false;
+            //TODO: Reset LoRa frame assembly logic
+        }
+
+        if(wifi_connected && in_progress_lora_send){
+            //TODO: Optionally handle this better here, say by sending our current in-progress-sent LoRa Eth. frame over wifi
+            in_progress_lora_send = false;
+        }
 
         //If there is a frame available and we're not already busy with an old one, handle the next
         if(eth_available && !in_progress_lora_send){
@@ -382,18 +401,6 @@ int main(void)
             }
             ReceiveLoRa.request();
         }
-
-        if(pending_received_wifi_frames.load() > 0){
-            eth_rx_full_buf_len = ctrl->u16DataSize;
-            m2m_wifi_set_receive_buffer(eth_full_rx_buf, ETH_MTU + 14);
-            nm_bsp_sleep(200);
-            // send a packet back
-            generate_test_pkt(50, 0x01);
-            send_wifi_tx_buf();
-            set_leds(1, 0);
-        }
-
-
     }
 
     return 0;
