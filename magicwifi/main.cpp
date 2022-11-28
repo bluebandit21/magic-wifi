@@ -342,10 +342,6 @@ int main(void)
 
     FrameTranslater frameTranslater = FrameTranslater(&TransmitLoRa, &ReceiveLoRa);
 
-    while (1){
-       m2m_wifi_handle_events(NULL);
-    }
-
     bool in_progress_lora_send = false;
     int ethernet_len; //We don't actually use this anywhere, funnily enough, which is maybe a problem?
     // (Do we need to zero-fill the remainder of our Ethernet buffer, or is it ok if we send random garbage following a valid full frame?)
