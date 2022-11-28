@@ -24,7 +24,8 @@ constexpr long LORA_RECEIVE_FREQ = 916000000;
 // The ethernet max MTU is 1518, which includes the 4-byte checksum and all Ethernet headers and all (but not the preamble)
 // As a result, because we are having the chip generate the checksum for us and are not passing it around anywhere, we have
 // 1514 bytes for the buffer we're using, which does include the Ethernet headers but not the CRC at the end.
-constexpr unsigned ETH_BUFF_SIZE = 1518 - 4;
+// However, as our frames may have 801.1Q tagging information added, we need the additional 4 bytes to hold it if present.
+constexpr unsigned ETH_BUFF_SIZE = 1518 - 4 + 4;
 
 // The wifi library requires us to have 14 bytes of leading info at the start of our contiguous data array.
 constexpr unsigned ETH_WIFI_HEADER_SIZE = 14;

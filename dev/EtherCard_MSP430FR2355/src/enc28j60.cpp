@@ -227,8 +227,8 @@ uint16_t ENC28J60::bufferSize;
 #define ENC28J60_SOFT_RESET          0xFF
 
 // max frame length which the controller will accept:
-// (note: maximum ethernet frame length would be 1518)
-#define MAX_FRAMELEN      1518
+// (note: maximum ethernet frame length would be 1518, +4 for 802.1Q VLAN tagging info)
+#define MAX_FRAMELEN      1522
 
 #define FULL_SPEED  1   // switch to full-speed SPI for bulk transfers
 
