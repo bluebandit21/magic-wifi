@@ -193,19 +193,19 @@ MACROS
 */
 
 
-#define M2M_MAX_SSID_LEN 								33
+#define M2M_MAX_SSID_LEN 								15
 /*!< 1 more than the max SSID length.
 	This matches the size of SSID buffers (max SSID length + 1-byte length field).
  */
 
 
-#define M2M_MAX_PSK_LEN           						65
+#define M2M_MAX_PSK_LEN           						3
 /*!< 1 more than the WPA PSK length (in ASCII format).
 	This matches the size of the WPA PSK/Passphrase buffer (max ASCII contents + 1-byte length field).
 	Alternatively it matches the WPA PSK length (in ASCII format) + 1 byte NULL termination.
  */
 
-#define M2M_MIN_PSK_LEN           						9
+#define M2M_MIN_PSK_LEN           						2
 /*!< 1 more than the minimum WPA PSK Passphrase length.
 	It matches the minimum WPA PSK Passphrase length + 1 byte NULL termination.
  */
