@@ -266,7 +266,6 @@ void eth_rx_cb(uint8 u8MsgType, void *pvMsg, void *pvCtrlBuf){
     }
 
 }
-
 void wifi_cb(uint8_t u8MsgType, void *pvMsg)
 {
     switch (u8MsgType)
@@ -276,11 +275,13 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
         tstrM2mWifiStateChanged *pstrWifiState = (tstrM2mWifiStateChanged *)pvMsg;
         if (pstrWifiState->u8CurrState == M2M_WIFI_CONNECTED)
         {
+            GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
             wifi_connected = M2M_WIFI_CONNECTED;
         }
         else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED)
         {
             wifi_connected = M2M_WIFI_DISCONNECTED;
+            GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
         }
     }
     break;
@@ -332,6 +333,8 @@ int main(void)
 {
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
     PMM_unlockLPM5(); // Unlock GPIO pins -- WILL NOT work without this line, do not remove
+    GPIO_setAsOutputPin(GPIO_PORT_P6, GPIO_PIN6);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
 
     clockSetup();
 
@@ -349,6 +352,7 @@ int main(void)
 
     ReceiveLoRa.request();
 
+    static uint16 ctr = 0;
     while(1){
         //Updates current wifi connectivity status and also updates pending received wifi frame status
         m2m_wifi_handle_events(NULL);
@@ -399,18 +403,11 @@ int main(void)
             ReceiveLoRa.request();
         }
 #ifdef BOARD_B
-        static int delay = 0;
-        delay++;
-        delay = delay % 64;
-        if(!wifi_connected && (delay == 0)){
-            //Attempt to reconnect wifi if we're disconnected
-            //TODO: Consider rate-limiting this in some fashion so we don't constantly spam attempts to connect when not doing anything with LoRa
+        ctr++;
+        if(!wifi_connected && ctr == 500){
+            ctr = 0;
             m2m_wifi_connect((char *)MAIN_WLAN_SSID, sizeof(MAIN_WLAN_SSID), M2M_WIFI_SEC_OPEN, (char *)0, MAIN_WLAN_CHANNEL);
         }
 #endif
     }
-
-    frameTranslater->~FrameTranslater();
-
-    return 0;
 }
