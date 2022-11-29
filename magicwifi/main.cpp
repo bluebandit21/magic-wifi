@@ -234,16 +234,14 @@ sint8 init_wifi(void)
     return m2m_wifi_init(&param);
 }
 
-
+tstrM2MAPConfig strM2MAPConfig{
+    .au8SSID = MAIN_WLAN_SSID,
+    .u8ListenChannel = MAIN_WLAN_CHANNEL,
+    .u8SecType = M2M_WIFI_SEC_OPEN,
+    .au8DHCPServerIP = {192, 168, 1, 1}
+};
 sint8 init_AP(void)
 {
-    tstrM2MAPConfig strM2MAPConfig = {
-        .au8SSID = MAIN_WLAN_SSID,
-        .u8ListenChannel = MAIN_WLAN_CHANNEL,
-        .u8SecType = M2M_WIFI_SEC_OPEN,
-        .au8DHCPServerIP = {192, 168, 1, 1}
-    };
-
     return m2m_wifi_enable_ap(&strM2MAPConfig);
 }
 
