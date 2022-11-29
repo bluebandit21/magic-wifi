@@ -376,6 +376,7 @@ int main(void)
             if(wifi_connected){
                 //We always want to send a full frame over wifi if available, because it's better in every way
                 m2m_wifi_send_ethernet_pkt(eth_in_wifi_buff, ethernet_len + ETH_WIFI_HEADER_SIZE);
+                check_set_eth_pending();
             }else{
                 //Begin process of sending frame over multiple iterations through LoRa.
                 frameTranslater->initSend(eth_in_buff, ETH_BUFF_SIZE);
