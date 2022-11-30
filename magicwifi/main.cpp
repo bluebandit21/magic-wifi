@@ -362,7 +362,7 @@ int main(void)
         m2m_wifi_handle_events(NULL);
 
         if(pending_received_wifi_frame){
-            ether.packetSend(pending_received_wifi_frame_length); //TODO: Do we need to subtract wifi header length from here?
+            ether.packetSend(pending_received_wifi_frame_length - ETH_WIFI_HEADER_SIZE); //TODO: Do we need to subtract wifi header length from here?
             pending_received_wifi_frame = false;
             //TODO: Reset LoRa frame assembly logic
         }
