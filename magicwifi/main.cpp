@@ -10,6 +10,7 @@
 
 extern "C" {
     #include "driver/include/m2m_wifi.h"
+    #include "driver/source/m2m_hif.h"
 }
 
 extern "C" {
@@ -260,6 +261,7 @@ void eth_rx_cb(uint8 u8MsgType, void *pvMsg, void *pvCtrlBuf){
 
         pending_received_wifi_frame_length = ctrl->u16DataSize;
         pending_received_wifi_frame = true;
+        hif_yield();
         break;
     default:
         break;
