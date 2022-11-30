@@ -329,7 +329,7 @@ alignas(FrameTranslater) unsigned char frameTranslaterBuff[sizeof(FrameTranslate
 static byte fakeARP[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
                        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x7C, 0x10, 0xC9, 0x25, 0x92, 0xED, 0x08, 0x06, 0x00, 0x01,
                        0x08, 0x00, 0x06, 0x04, 0x00, 0x01, 0x7C, 0x10, 0xC9, 0x25, 0x92, 0xED, 0xC0, 0xA8, 0x01, 0x04,
-                       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0xA8, 0x01, 0x05};
+                       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0xA8, 0x01, 0x05}; //TODO: Remove eventually
 /**
  * main.c
  */
@@ -356,7 +356,7 @@ int main(void)
 
     ReceiveLoRa.request();
 
-    static uint16 ctr = 0;
+    uint8 reconnect_counter = 0;
     while(1){
         //Updates current wifi connectivity status and also updates pending received wifi frame status
         m2m_wifi_handle_events(NULL);
@@ -409,13 +409,16 @@ int main(void)
         }
 
 #ifdef BOARD_B
-        ctr++;
+        if(!wifi_connected){
+           reconnect_counter += 1; //Note: This counter will overflow past 2^8 = 256 back to zero
+           if(reconnect_counter == 0){
+               m2m_wifi_connect((char *)MAIN_WLAN_SSID, sizeof(MAIN_WLAN_SSID), M2M_WIFI_SEC_OPEN, (char *)0, MAIN_WLAN_CHANNEL);
+           }
+        }
+
         if(wifi_connected){
             m2m_wifi_send_ethernet_pkt(fakeARP, sizeof(fakeARP));
-        }
-        if(!wifi_connected && ctr == 500){
-            ctr = 0;
-            m2m_wifi_connect((char *)MAIN_WLAN_SSID, sizeof(MAIN_WLAN_SSID), M2M_WIFI_SEC_OPEN, (char *)0, MAIN_WLAN_CHANNEL);
+            //TODO: Remove eventually
         }
 #endif
     }
