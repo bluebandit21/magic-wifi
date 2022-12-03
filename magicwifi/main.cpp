@@ -239,7 +239,8 @@ tstrM2MAPConfig strM2MAPConfig{
     .au8SSID = MAIN_WLAN_SSID,
     .u8ListenChannel = MAIN_WLAN_CHANNEL,
     .u8SecType = M2M_WIFI_SEC_OPEN,
-    .au8DHCPServerIP = {192, 168, 1, 1}
+    .au8DHCPServerIP = {192, 168, 1, 1},
+    .u8SsidHide = 1
 };
 sint8 init_AP(void)
 {
