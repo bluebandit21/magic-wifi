@@ -34,8 +34,21 @@ byte* eth_in_buff = eth_in_wifi_buff + ETH_WIFI_HEADER_SIZE;
 byte eth_out_wifi_buff[ETH_BACKING_SIZE];
 byte* eth_out_buff = eth_out_wifi_buff + ETH_WIFI_HEADER_SIZE;
 
+// This should be in units of secondss
+volatile uint32_t time_elapsed = 0;
+
 
 //-----------------------------------ISR HANDLING------------------
+
+// For real time clock
+
+#pragma vector=RTC_VECTOR
+__interrupt void rtc_ISR(void)
+{
+    time_elapsed++;
+    RTC_clearInterrupt(RTC_BASE,  RTC_OVERFLOW_INTERRUPT_FLAG);
+}
+
 
 //3.4 is the Wifi IRQ, 3.1 is the receive LoRa IRQ
 
@@ -97,6 +110,16 @@ void clockSetup(void){
 
     // SMCLK = DCOCLK / 2 = 8M
     CS_initClockSignal(CS_SMCLK, CS_DCOCLKDIV_SELECT, CS_CLOCK_DIVIDER_4);
+}
+
+void initRTC(void) {
+    // Setup Real-Time Clock, for 100ms intervals
+    RTC_init(RTC_BASE, 4000, RTC_CLOCKPREDIVIDER_100);
+    RTC_clearInterrupt(RTC_BASE,  RTC_OVERFLOW_INTERRUPT_FLAG);
+    RTC_enableInterrupt(RTC_BASE, RTC_OVERFLOW_INTERRUPT);
+    RTC_start(RTC_BASE, RTC_CLOCKSOURCE_SMCLK);
+    __enable_interrupt();
+
 }
 
 //-----------------------------------ETHERNET----------------------
@@ -339,6 +362,7 @@ int main(void)
     GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
 
     clockSetup();
+    initRTC();
 
 
     setup_ethernet();
