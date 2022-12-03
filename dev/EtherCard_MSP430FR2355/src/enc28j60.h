@@ -49,14 +49,11 @@ using byte = unsigned char;
 #define ENC_HEAP_END        0x2000
 
 //TODO: Take as arguments instead of hardcoding.
-//TODO: Hardcode at all!
-/*
-static uint_fast8_t SS_Port, MOSI_Port, SCK_Port, MISO_Port, select_Port;
-static uint_fast16_t SS_Pin, MOSI_Pin, SCK_Pin, MISO_Pin, select_Pin;
-*/
-
 static uint_fast8_t select_Port = GPIO_PORT_P1;
 static uint_fast8_t select_Pin = GPIO_PIN4;
+
+static uint_fast8_t reset_Port = GPIO_PORT_P2;
+static uint_fast8_t reset_Pin  = GPIO_PIN0;
 
 /** This class provide low-level interfacing with the ENC28J60 network interface. This is used by the EtherCard class and not intended for use by (normal) end users. */
 class ENC28J60 {
@@ -66,6 +63,11 @@ public:
     static uint16_t bufferSize; //!< Size of data buffer
     static bool broadcast_enabled; //!< True if broadcasts enabled (used to allow temporary disable of broadcast for DHCP or other internal functions)
     static bool promiscuous_enabled; //!< True if promiscuous mode enabled (used to allow temporary disable of promiscuous mode)
+
+    /**   @brief  Reset device using reset pin
+    *
+    */
+    static void resetDevice ();
 
     /**   @brief  Initialise SPI interface
     *     @note   Configures Arduino pins as input / output, etc.

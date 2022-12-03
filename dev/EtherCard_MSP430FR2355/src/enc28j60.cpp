@@ -277,6 +277,13 @@ void ENC28J60::initSPI () {
     //EUSCI_A_SPI_enableInterrupt(base, EUSCI_A_SPI_RECEIVE_INTERRUPT); //TODO: FIXME
 }
 
+void ENC28J60::resetDevice () {
+    GPIO_setAsOutputPin(reset_Port, reset_Pin);
+    GPIO_setOutputLowOnPin(reset_Port, reset_Pin);
+    for(volatile uint_fast16_t i=0;i<1000;i++); //Wait a bit
+    GPIO_setOutputHighOnPin(reset_Port, reset_Pin);
+}
+
 static void enableChip () {
     //cli(); //TODO: This is ... questionable
 
@@ -410,6 +417,7 @@ byte ENC28J60::initialize (uint16_t size, const byte* macaddr, uint8_t* send_buf
 
     if(!is_initialized){
         is_initialized = true;
+        resetDevice();
         initSPI();
     }
 
