@@ -56,6 +56,9 @@ __interrupt void Port_3(void)
 */
 static void init_chip_pins(void)
 {
+    GPIO_setAsOutputPin(CONF_WINC_EN_PORT, CONF_WINC_EN_PIN);
+    GPIO_setOutputHighOnPin(CONF_WINC_EN_PORT, CONF_WINC_EN_PIN);
+
 	GPIO_setAsOutputPin(CONF_WINC_RST_PORT, CONF_WINC_RST_PIN);
 	GPIO_setOutputHighOnPin(CONF_WINC_RST_PORT, CONF_WINC_RST_PIN);
 

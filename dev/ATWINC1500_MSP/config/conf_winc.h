@@ -71,6 +71,9 @@ extern "C" {
 #define CONF_WINC_RST_PORT              (GPIO_PORT_P3)
 #define CONF_WINC_RST_PIN               (GPIO_PIN2)
 
+#define CONF_WINC_EN_PORT              (GPIO_PORT_P2)
+#define CONF_WINC_EN_PIN               (GPIO_PIN6)
+
 // SPI frequency (for init)
 #define CONF_WINC_SPI_CLOCK				(1000000)
 // CPU frequency (for delay func)
