@@ -280,8 +280,9 @@ void ENC28J60::initSPI () {
 void ENC28J60::resetDevice () {
     GPIO_setAsOutputPin(reset_Port, reset_Pin);
     GPIO_setOutputLowOnPin(reset_Port, reset_Pin);
-    for(volatile uint_fast16_t i=0;i<1000;i++); //Wait a bit
+    for(volatile uint_fast16_t i=0;i<500;i++); //Wait a bit
     GPIO_setOutputHighOnPin(reset_Port, reset_Pin);
+    for(volatile uint_fast16_t i=0;i<500;i++); //Wait a bit
 }
 
 static void enableChip () {
