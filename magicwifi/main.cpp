@@ -114,7 +114,7 @@ void clockSetup(void){
 
 void initRTC(void) {
     // Setup Real-Time Clock, for 100ms intervals
-    RTC_init(RTC_BASE, 4000, RTC_CLOCKPREDIVIDER_100);
+    RTC_init(RTC_BASE, 4000, RTC_CLOCKPREDIVIDER_100); //4000 will take our 4 MHz clock above 0.1 seconds to tick to
     RTC_clearInterrupt(RTC_BASE,  RTC_OVERFLOW_INTERRUPT_FLAG);
     RTC_enableInterrupt(RTC_BASE, RTC_OVERFLOW_INTERRUPT);
     RTC_start(RTC_BASE, RTC_CLOCKSOURCE_SMCLK);
