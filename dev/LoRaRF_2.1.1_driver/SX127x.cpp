@@ -731,14 +731,14 @@ uint8_t SX127x::sx127x_transfer(uint8_t address, uint8_t data)
 
     //delay(10);
     GPIO_setOutputLowOnPin(sx127x_nss_port, sx127x_nss_pin);
-    //delay(1);
+    delay(1);
 
     EUSCI_B_SPI_transmitData(baseAddress, address);
     EUSCI_B_SPI_transmitData(baseAddress, data);
     while(EUSCI_A_SPI_isBusy(baseAddress));  //delay(10);
     uint8_t response = *(volatile uint8_t*)EUSCI_B_SPI_getReceiveBufferAddress(baseAddress);
 
-    //delay(1);
+    delay(1);
     GPIO_setOutputHighOnPin(sx127x_nss_port, sx127x_nss_pin);
 
     return response;
