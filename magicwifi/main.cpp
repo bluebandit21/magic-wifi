@@ -278,7 +278,7 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
         if (pstrWifiState->u8CurrState == M2M_WIFI_CONNECTED)
         {
             GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
-            //wifi_connected = M2M_WIFI_CONNECTED;
+            wifi_connected = M2M_WIFI_CONNECTED;
         }
         else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED)
         {
