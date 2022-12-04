@@ -52,7 +52,7 @@ INCLUDES
 
 #ifndef _lint
 #endif
-
+#include "defines.h"
 
 /*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 MACROS
@@ -128,7 +128,13 @@ MACROS
 
 #ifndef BLDTESTVERSION1
 // the real version number must appear first as the release script greps it out to create folder.
-#define M2M_RELEASE_VERSION_MINOR_NO                        (6)//(7)
+#ifdef PCB
+
+#define M2M_RELEASE_VERSION_MINOR_NO                         (5)//5 for PCB, 6 for dev board//(6)//(7)
+#else
+#define M2M_RELEASE_VERSION_MINOR_NO                         (6)
+#endif
+
 #else
 #define M2M_RELEASE_VERSION_MINOR_NO                        (8)
 #endif
