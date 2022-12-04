@@ -378,7 +378,8 @@ int main(void)
 
     ReceiveLoRa.request();
 
-    uint8 reconnect_counter = 0;
+    uint32_t last_wifi_connection_attempt_timestamp = 0;
+
     while(1){
         //Updates current wifi connectivity status and also updates pending received wifi frame status
         m2m_wifi_handle_events(NULL);
@@ -432,10 +433,10 @@ int main(void)
 
 #ifdef BOARD_B
         if(!wifi_connected){
-           reconnect_counter += 1; //Note: This counter will overflow past 2^8 = 256 back to zero
-           if(reconnect_counter == 0){
-               m2m_wifi_connect((char *)MAIN_WLAN_SSID, sizeof(MAIN_WLAN_SSID), M2M_WIFI_SEC_OPEN, (char *)0, MAIN_WLAN_CHANNEL);
-           }
+            if((time_elapsed - last_wifi_connection_attempt_timestamp) > delay_between_wifi_connect_attempts_ts){
+                m2m_wifi_connect((char *)MAIN_WLAN_SSID, sizeof(MAIN_WLAN_SSID), M2M_WIFI_SEC_OPEN, (char *)0, MAIN_WLAN_CHANNEL);
+                last_wifi_connection_attempt_timestamp = time_elapsed;
+            }
         }
 #endif
     }
