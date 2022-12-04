@@ -300,12 +300,6 @@ void eth_rx_cb(uint8 u8MsgType, void *pvMsg, void *pvCtrlBuf){
     }
 
 }
-
-void update_wifi_disconnected(){
-    wifi_connected = M2M_WIFI_DISCONNECTED;
-    GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
-}
-
 void wifi_cb(uint8_t u8MsgType, void *pvMsg)
 {
     switch (u8MsgType)
@@ -324,7 +318,8 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
         }
         else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED)
         {
-           update_wifi_disconnected();
+            wifi_connected = M2M_WIFI_DISCONNECTED;
+            GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
         }
     }
     break;
@@ -457,7 +452,7 @@ int main(void)
         }
 #else //BOARD_A
         if(wifi_connected && ((time_elapsed - last_received_wifi_frame_timestamp) > wifi_connection_timeout)){
-            update_wifi_disconnected();
+            m2m_wifi_disconnect();
         }
 #endif
     }
