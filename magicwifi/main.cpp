@@ -451,7 +451,7 @@ int main(void)
             }
         }
 #else //BOARD_A
-        if(wifi_connected && ((time_elapsed - last_received_wifi_frame_timestamp) > wifi_connection_timeout)){
+        if(wifi_connected && ((time_elapsed - last_received_wifi_frame_timestamp) > wifi_connection_timeout){
             m2m_wifi_disconnect();
         }
 #endif
