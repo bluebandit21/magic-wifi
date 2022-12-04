@@ -68,8 +68,16 @@ extern "C" {
 #define CONF_WINC_IRQ_PIN               (GPIO_PIN4)
 //Changing IRQ port/pin? Also see nm_bsp_msp430fr2355.c -> change port and pin and vector.
 
+// These lines are different, accessing 2.3 is difficult on the devboard
+#ifdef PCB
+#pragma warning "PCB config"
+#define CONF_WINC_RST_PORT              (GPIO_PORT_P2)
+#define CONF_WINC_RST_PIN               (GPIO_PIN3)
+#else
+#pragma warning "Not PCB config"
 #define CONF_WINC_RST_PORT              (GPIO_PORT_P3)
 #define CONF_WINC_RST_PIN               (GPIO_PIN2)
+#endif
 
 #define CONF_WINC_EN_PORT              (GPIO_PORT_P2)
 #define CONF_WINC_EN_PIN               (GPIO_PIN6)
