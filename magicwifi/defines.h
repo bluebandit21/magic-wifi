@@ -1,11 +1,13 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
-#include "driverlib.h"
-
 
 #define BOARD_A 1
 #define PCB 1
+
+#ifdef __cplusplus
+
+#include "driverlib.h"
 
 //To handle asymmetric send+receive frequencies, later will also be used for asymmetric host/client wifi
 #ifdef BOARD_A
@@ -61,4 +63,5 @@ extern void (*ethernet_isr)(void);
 #define MAIN_WLAN_SSID "MAGIC_WIFI"
 #define MAIN_WLAN_CHANNEL (6)
 
-#endif
+#endif //#ifdef __cplusplus
+#endif //#ifndef DEFINES_H
