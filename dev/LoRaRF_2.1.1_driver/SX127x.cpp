@@ -1,10 +1,10 @@
 #include <SX127x.h>
 
+
 // TOD0:: replace mock with MSP timer
 // Times will not be accurate but mock should mimic behavior, will need to setup timer for this
 uint32_t millis() {
-  static uint32_t i = 0;
-  return i++;
+  return time_elapsed * 100;
 }
 
 
@@ -480,7 +480,7 @@ bool SX127x::wait(uint32_t timeout)
         // only check IRQ status register for non interrupt operation
         if (_irq == -1) irqFlag = sx127x_readRegister(SX127X_REG_IRQ_FLAGS);
         // return when timeout reached
-        //if (millis() - t > timeout && timeout != 0) return false;
+        if (millis() - t > timeout && timeout != 0) return false;
         //yield();
     }
 

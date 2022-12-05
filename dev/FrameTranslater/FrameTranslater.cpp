@@ -46,7 +46,7 @@ bool FrameTranslater::sendNextSubframe(uint8_t* ptr, uint16_t length)
         lora_send->write(parity_frame, lora_frame_max);
         //lora_send->write('\0');
         lora_send->endPacket();
-        lora_send->wait();
+        lora_send->wait(1000);
         curr_send_subframe++; //If we re-call this function without re-initializing, this will trigger assert above.
         frame_number++;
 
@@ -64,7 +64,7 @@ bool FrameTranslater::sendNextSubframe(uint8_t* ptr, uint16_t length)
     lora_send->write(ptr + lora_frame_max * curr_send_subframe, lora_frame_max);
 
     lora_send->endPacket();
-    lora_send->wait();
+    lora_send->wait(1000);
     curr_send_subframe++;
 
 #ifdef USE_PARITY

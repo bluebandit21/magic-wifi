@@ -9,6 +9,8 @@
 
 #include "driverlib.h"
 
+extern volatile uint32_t time_elapsed;
+
 //To handle asymmetric send+receive frequencies, later will also be used for asymmetric host/client wifi
 #ifdef BOARD_A
 
