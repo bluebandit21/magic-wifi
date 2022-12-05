@@ -244,9 +244,7 @@ volatile uint8 wifi_connected = 0;
 volatile bool pending_received_wifi_frame = false;
 volatile int pending_received_wifi_frame_length;
 
-#ifdef BOARD_A
     volatile uint32_t last_received_wifi_frame_timestamp = 0;
-#endif
 
 sint8 init_wifi(void)
 {
@@ -291,9 +289,7 @@ void eth_rx_cb(uint8 u8MsgType, void *pvMsg, void *pvCtrlBuf){
         pending_received_wifi_frame = true;
         hif_yield();
 
-#ifdef BOARD_A
         last_received_wifi_frame_timestamp = time_elapsed;
-#endif
         break;
     default:
         break;
@@ -318,9 +314,7 @@ void wifi_cb(uint8_t u8MsgType, void *pvMsg)
             GPIO_setOutputHighOnPin(GPIO_PORT_P6, GPIO_PIN6);
             wifi_connected = M2M_WIFI_CONNECTED;
 
-#ifdef BOARD_A
             last_received_wifi_frame_timestamp = time_elapsed;
-#endif
         }
         else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED)
         {
@@ -455,10 +449,9 @@ int main(void)
                 last_wifi_connection_attempt_timestamp = time_elapsed;
             }
         }
-#else //BOARD_A
+#endif
         if(wifi_connected && ((time_elapsed - last_received_wifi_frame_timestamp) > wifi_connection_timeout)){
             update_wifi_disconnected();
         }
-#endif
     }
 }
