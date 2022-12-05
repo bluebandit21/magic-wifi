@@ -244,7 +244,8 @@ volatile uint8 wifi_connected = 0;
 volatile bool pending_received_wifi_frame = false;
 volatile int pending_received_wifi_frame_length;
 
-    volatile uint32_t last_received_wifi_frame_timestamp = 0;
+volatile uint32_t last_received_wifi_frame_timestamp = 0;
+volatile uint32_t last_wifi_heartbeat_sent = 0;
 
 sint8 init_wifi(void)
 {
@@ -362,6 +363,9 @@ void setup_wifi() {
 
 alignas(FrameTranslater) unsigned char frameTranslaterBuff[sizeof(FrameTranslater)];
 
+
+uint8 HEARTBEAT_FRAME[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+
 /**
  * main.c
  */
@@ -396,7 +400,10 @@ int main(void)
         m2m_wifi_handle_events(NULL);
 
         if(pending_received_wifi_frame){
-            ether.packetSend(pending_received_wifi_frame_length - ETH_WIFI_HEADER_SIZE); //TODO: Do we need to subtract wifi header length from here?
+            // If we received less than this, it's not a valid Ethernet frame. Possibly a control frame/heartbeat, possibly random garbage.
+            if(pending_received_wifi_frame_length >= 14){
+                ether.packetSend(pending_received_wifi_frame_length - ETH_WIFI_HEADER_SIZE); //TODO: Do we need to subtract wifi header length from here?
+            }
             pending_received_wifi_frame = false;
             //TODO: Reset LoRa frame assembly logic
         }
@@ -452,6 +459,11 @@ int main(void)
 #endif
         if(wifi_connected && ((time_elapsed - last_received_wifi_frame_timestamp) > wifi_connection_timeout)){
             update_wifi_disconnected();
+        }
+
+        if(wifi_connected && ((time_elapsed - last_wifi_heartbeat_sent) > wifi_heartbeat_period)){
+            m2m_wifi_send_ethernet_pkt(HEARTBEAT_FRAME, sizeof(HEARTBEAT_FRAME));
+            last_wifi_heartbeat_sent = time_elapsed;
         }
     }
 }

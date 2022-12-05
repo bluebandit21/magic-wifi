@@ -43,6 +43,7 @@ constexpr unsigned ETH_BACKING_SIZE = ETH_WIFI_HEADER_SIZE + ETH_BUFF_SIZE + 5;
 constexpr uint16_t delay_between_wifi_connect_attempts_ts = 10 * 1; //1 second * 10 ticks / second
 
 constexpr uint16_t wifi_connection_timeout = 10 * 5; //5 seconds * 10 ticks / second
+constexpr uint16_t wifi_heartbeat_period = 10 * 4; //4 seconds * 10 ticks / second
 
 
 constexpr short WIFI_IRQ_PORT         = GPIO_PORT_P3;
