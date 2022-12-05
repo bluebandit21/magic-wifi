@@ -401,7 +401,7 @@ int main(void)
 
         if(pending_received_wifi_frame){
             // If we received less than this, it's not a valid Ethernet frame. Possibly a control frame/heartbeat, possibly random garbage.
-            if(pending_received_wifi_frame_length >= 14){
+            if(pending_received_wifi_frame_length >= ETH_HEADER_SIZE + ETH_WIFI_HEADER_SIZE){
                 ether.packetSend(pending_received_wifi_frame_length - ETH_WIFI_HEADER_SIZE); //TODO: Do we need to subtract wifi header length from here?
             }
             pending_received_wifi_frame = false;

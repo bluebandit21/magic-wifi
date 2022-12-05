@@ -38,6 +38,8 @@ constexpr unsigned ETH_WIFI_HEADER_SIZE = 14;
 // UB caused by reading random garbage memory past the end of our array.
 constexpr unsigned ETH_BACKING_SIZE = ETH_WIFI_HEADER_SIZE + ETH_BUFF_SIZE + 5;
 
+constexpr unsigned ETH_HEADER_SIZE = 14; //The minimum size a valid Ethernet frame could be
+
 
 
 constexpr uint16_t delay_between_wifi_connect_attempts_ts = 10 * 1; //1 second * 10 ticks / second
