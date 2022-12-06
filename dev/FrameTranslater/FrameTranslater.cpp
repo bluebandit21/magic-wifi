@@ -53,7 +53,7 @@ bool FrameTranslater::sendNextSubframe(uint8_t* ptr, uint16_t length)
 
 
 #ifdef USE_PARITY
-    if(curr_send_subframe == (length/lora_frame_max)){
+    if(curr_send_subframe == (ETH_BUFF_SIZE/lora_frame_max)){
         // send parity frame if applicable
         lora_send->beginPacket();
         // packet number
@@ -87,7 +87,7 @@ bool FrameTranslater::sendNextSubframe(uint8_t* ptr, uint16_t length)
 #ifdef USE_PARITY
     return true;
 #else
-    return curr_send_subframe < (length/lora_frame_max);
+    return curr_send_subframe < (ETH_BUFF_SIZE/lora_frame_max);
 #endif
 }
 
