@@ -30,10 +30,26 @@ void FrameTranslater::initSend(uint8_t* ptr, uint16_t length)
 
 bool FrameTranslater::sendNextSubframe(uint8_t* ptr, uint16_t length)
 {
-    //TODO: Refactor length argument and associated divisions/math completely out, it's a constant.
-
     assert(curr_send_subframe <= (length/lora_frame_max));
     //TODO: Check that asserts actually work!
+
+    //TODO: check if can be sent single
+    if(length <= LORA_FRAME_MAX) {
+        // send as single instead
+        lora_send->beginPacket();
+        // send packet number with single bit flag
+        lora_send->write(curr_send_subframe + (frame_number << SUBFRAMES_NUM_SHIFT) + SINGLE_FRAME_MASK);
+
+        // message
+        lora_send->write(ptr , lora_frame_max);
+
+        lora_send->endPacket();
+        lora_send->wait(1000);
+
+        // always done if sent as a single
+        return false; // NO need to call again
+    }
+
 
 #ifdef USE_PARITY
     if(curr_send_subframe == (length/lora_frame_max)){
@@ -89,6 +105,10 @@ void FrameTranslater::receiveFrame(uint8_t* dest, uint16_t length){
     active_frames[subFrameNum & SUBFRAMES_NUM_MASK] = ((subFrameNum &~ SUBFRAMES_NUM_MASK) >> SUBFRAMES_NUM_SHIFT) + 1;
     subFrameNum &= SUBFRAMES_NUM_MASK; // remove packet number for ease of use
 
+    // check whether to set single flag
+    if(!(subFrameNum & SUBFRAMES_NUM_MASK) && (subFrameNum & SINGLE_FRAME_MASK)) {
+        received_single = true;
+    }
 
     // read into the appropriate segment of the ethernet frame
     dest_ptr = dest + (subFrameNum * lora_frame_max);
@@ -105,7 +125,17 @@ void FrameTranslater::receiveFrame(uint8_t* dest, uint16_t length){
 }
 
 
-bool FrameTranslater::checkFrame(uint8_t* dest, uint16_t length) {
+bool FrameTranslater::checkFrame(uint8_t* dest, uint16_t &length) {
+    // TODO:: check if single received
+    if(received_single) {
+        received_single = false;
+        length = LORA_FRAME_MAX;
+        return true;
+    }
+
+    // if not single, then length is full
+    length = ETH_BUFF_SIZE;
+
     // TODO:: clear the active frame or  something
     bool parity_needed = false;
     uint8_t defective_frame;

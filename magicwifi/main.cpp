@@ -463,8 +463,9 @@ int main(void)
 
         if(ReceiveLoRa._statusIrq != 0){
             frameTranslater->receiveFrame(eth_out_buff, ETH_BUFF_SIZE);
-            if(frameTranslater->checkFrame(eth_out_buff, ETH_BUFF_SIZE)){
-                ether.packetSend(ETH_BUFF_SIZE);
+            uint16_t lora_received_len = 0;
+            if(frameTranslater->checkFrame(eth_out_buff, lora_received_len)){
+                ether.packetSend(ETH_BUFF_SIZE); // TODO:: replace with var
             }
             ReceiveLoRa.request();
         }
