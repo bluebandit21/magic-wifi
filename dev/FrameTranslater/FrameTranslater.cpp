@@ -102,14 +102,16 @@ void FrameTranslater::receiveFrame(uint8_t* dest, uint16_t length){
     uint8_t subFrameNum = 0;
     lora_receive->read(&subFrameNum, 1);
 
+    // check whether to set single flag
+    if(subFrameNum & SINGLE_FRAME_MASK) {
+           received_single = true;
+    }
+
     // update segment tracker array, note offset of 1 to ensure correct initialization
     active_frames[subFrameNum & SUBFRAMES_NUM_MASK] = ((subFrameNum &~ SUBFRAMES_NUM_MASK) >> SUBFRAMES_NUM_SHIFT) + 1;
     subFrameNum &= SUBFRAMES_NUM_MASK; // remove packet number for ease of use
 
-    // check whether to set single flag
-    if(!(subFrameNum & SUBFRAMES_NUM_MASK) && (subFrameNum & SINGLE_FRAME_MASK)) {
-        received_single = true;
-    }
+
 
     // read into the appropriate segment of the ethernet frame
     dest_ptr = dest + (subFrameNum * lora_frame_max);
