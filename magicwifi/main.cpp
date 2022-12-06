@@ -361,6 +361,22 @@ void setup_wifi() {
 
 }
 
+//-----------------------------------MISC--------------------------
+
+bool isFrameHighPriority(const byte* frame){
+    //If 802.1Q field present, location where Ethernet length field would usually be will have 0x8100
+    if(frame[12] == 0x81 && frame[13] == 0x00){
+        //802.1Q tagging information is present
+        //Read priority field
+        uint8_t priority = frame[14] >> 5;
+        return (priority >= 2); //1 and 0 correspond to low-priority items as given by 802.1p
+    }
+    //Assume that if host isn't tagging priority, we can't safely drop anything.
+    return true;
+}
+
+
+
 alignas(FrameTranslater) unsigned char frameTranslaterBuff[sizeof(FrameTranslater)];
 
 
@@ -423,9 +439,13 @@ int main(void)
                 m2m_wifi_send_ethernet_pkt(eth_in_wifi_buff, ethernet_len + ETH_WIFI_HEADER_SIZE);
                 check_set_eth_pending();
             }else{
-                //Begin process of sending frame over multiple iterations through LoRa.
-                frameTranslater->initSend(eth_in_buff, ETH_BUFF_SIZE);
-                in_progress_lora_send = true;
+                //Only send high-priority traffic when we're in LoRa mode due to bandwidth constraints.
+                //TODO: We can be a little more clever here and not drop stuff if we don't have any pending Ethernet frames
+                if(isFrameHighPriority(eth_in_buff)){
+                    //Begin process of sending frame over multiple iterations through LoRa.
+                    frameTranslater->initSend(eth_in_buff, ETH_BUFF_SIZE);
+                    in_progress_lora_send = true;
+                }
             }
         }
 
