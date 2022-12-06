@@ -15,6 +15,7 @@ FrameTranslater::FrameTranslater(SX127x *send, SX127x *receive) :
 
 void FrameTranslater::initSend(uint8_t* ptr, uint16_t length)
 {
+    //TODO: Fixme -- length here isn't actually used and breaks if correctly supplied!
 
 #ifdef USE_PARITY
     for(int i = 0; i < (length/lora_frame_max) + 1; i++) {

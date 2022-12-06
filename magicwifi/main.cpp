@@ -443,14 +443,14 @@ int main(void)
                 //TODO: We can be a little more clever here and not drop stuff if we don't have any pending Ethernet frames
                 if(isFrameHighPriority(eth_in_buff)){
                     //Begin process of sending frame over multiple iterations through LoRa.
-                    frameTranslater->initSend(eth_in_buff, ETH_BUFF_SIZE);
+                    frameTranslater->initSend(eth_in_buff, ETH_BUFF_SIZE); //TODO: Fixme
                     in_progress_lora_send = true;
                 }
             }
         }
 
         if(in_progress_lora_send){
-            in_progress_lora_send = frameTranslater->sendNextSubframe(eth_in_buff, ETH_BUFF_SIZE);
+            in_progress_lora_send = frameTranslater->sendNextSubframe(eth_in_buff, ethernet_len);
 
             for(volatile uint32_t i=0;i<50000;i++); //Wait so we don't send the LoRa frames too fast!
 
@@ -465,7 +465,7 @@ int main(void)
             frameTranslater->receiveFrame(eth_out_buff, ETH_BUFF_SIZE);
             uint16_t lora_received_len = 0;
             if(frameTranslater->checkFrame(eth_out_buff, lora_received_len)){
-                ether.packetSend(ETH_BUFF_SIZE); // TODO:: replace with var
+                ether.packetSend(lora_received_len);
             }
             ReceiveLoRa.request();
         }
