@@ -389,6 +389,31 @@ int main(void)
 {
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
     PMM_unlockLPM5(); // Unlock GPIO pins -- WILL NOT work without this line, do not remove
+
+
+    GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN6); //ATC_EN
+    GPIO_setAsOutputPin(GPIO_PORT_P2, GPIO_PIN3); //ATC_RESET
+
+    GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN6); //ATC_EN
+    GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN3); //ATC_RESET
+
+    for(volatile int i=0;i<20000;i++); //Delay
+
+
+    GPIO_setOutputHighOnPin(GPIO_PORT_P2, GPIO_PIN6); //ATC_EN
+
+    for(volatile int i=0;i<20000;i++); //Delay
+
+    GPIO_setOutputHighOnPin(GPIO_PORT_P2, GPIO_PIN3); //ATC_RESET
+
+
+
+
+
+    while(1); //Spin
+
+
+
     GPIO_setAsOutputPin(GPIO_PORT_P6, GPIO_PIN6);
     GPIO_setOutputLowOnPin(GPIO_PORT_P6, GPIO_PIN6);
 
