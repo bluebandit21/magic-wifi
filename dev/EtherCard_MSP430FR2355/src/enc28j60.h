@@ -49,24 +49,25 @@ using byte = unsigned char;
 #define ENC_HEAP_END        0x2000
 
 //TODO: Take as arguments instead of hardcoding.
-//TODO: Hardcode at all!
-/*
-static uint_fast8_t SS_Port, MOSI_Port, SCK_Port, MISO_Port, select_Port;
-static uint_fast16_t SS_Pin, MOSI_Pin, SCK_Pin, MISO_Pin, select_Pin;
-*/
-
 static uint_fast8_t select_Port = GPIO_PORT_P1;
 static uint_fast8_t select_Pin = GPIO_PIN4;
+
+static uint_fast8_t reset_Port = GPIO_PORT_P2;
+static uint_fast8_t reset_Pin  = GPIO_PIN0;
 
 /** This class provide low-level interfacing with the ENC28J60 network interface. This is used by the EtherCard class and not intended for use by (normal) end users. */
 class ENC28J60 {
 public:
-    static uint8_t buffer[]; //!< Data buffer (shared by receive and transmit)
+    static uint8_t* send_buffer; //!< Send buffer used for transmission
+    static uint8_t* receive_buffer; //!< Receive buffer
     static uint16_t bufferSize; //!< Size of data buffer
     static bool broadcast_enabled; //!< True if broadcasts enabled (used to allow temporary disable of broadcast for DHCP or other internal functions)
     static bool promiscuous_enabled; //!< True if promiscuous mode enabled (used to allow temporary disable of promiscuous mode)
 
-    static uint8_t* tcpOffset () { return buffer + 0x36; } //!< Pointer to the start of TCP payload
+    /**   @brief  Reset device using reset pin
+    *
+    */
+    static void resetDevice ();
 
     /**   @brief  Initialise SPI interface
     *     @note   Configures Arduino pins as input / output, etc.
@@ -79,7 +80,7 @@ public:
     *     @param  csPin Arduino pin used for chip select (enable network interface SPI bus). Default = 8
     *     @return <i>uint8_t</i> ENC28J60 firmware version or zero on failure.
     */
-    static uint8_t initialize (const uint16_t size, const uint8_t* macaddr);
+    static uint8_t initialize (uint16_t size, const byte* macaddr, uint8_t* send_buf, uint8_t* receive_buf);
 
     /**   @brief  Check if network link is connected
     *     @return <i>bool</i> True if link is up
