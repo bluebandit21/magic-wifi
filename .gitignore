@@ -4,5 +4,7 @@
 .vscode/*
 .vscode
 *.o
-Debug/*
-
+**/.DS_Store
+/Debug
+.DS_Store
+magicwifi/Debug
