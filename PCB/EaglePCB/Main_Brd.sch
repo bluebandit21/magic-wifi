@@ -5563,6 +5563,11 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <wire x1="119.38" y1="91.44" x2="129.54" y2="91.44" width="0.1524" layer="91"/>
 <label x="124.46" y="91.44" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U1" gate="A" pin="VBAT"/>
+<wire x1="-22.86" y1="-91.44" x2="-17.78" y2="-91.44" width="0.1524" layer="91"/>
+<label x="-22.86" y="-91.44" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="N$4" class="0">
 <segment>
