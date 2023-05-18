@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "Main_Brd")(type "KiCad")(uri "$(KIPRJMOD)/Main_Brd.pretty")(options "")(descr ""))
+)

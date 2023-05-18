@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.6.2">
+<eagle version="9.7.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -66,7 +66,7 @@
 <layer number="57" name="tCAD" color="7" fill="1" visible="no" active="no"/>
 <layer number="59" name="tCarbon" color="7" fill="1" visible="no" active="no"/>
 <layer number="60" name="bCarbon" color="7" fill="1" visible="no" active="no"/>
-<layer number="88" name="SimResults" color="9" fill="1" visible="no" active="yes"/>
+<layer number="88" name="SimResults" color="9" fill="1" visible="yes" active="yes"/>
 <layer number="89" name="SimProbes" color="9" fill="1" visible="yes" active="yes"/>
 <layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
@@ -230,25 +230,25 @@
 <wire x1="7.493" y1="-1.8288" x2="7.493" y2="-4.3942" width="0.1524" layer="21"/>
 <text x="8.5598" y="-9.271" size="1.27" layer="21" ratio="6" rot="SR0">*</text>
 <text x="-1.7272" y="-0.635" size="1.27" layer="21" ratio="6" rot="SR0">&gt;Value</text>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-2.2392" y="-4.49"/>
 <vertex x="-0.585" y="-4.49"/>
 <vertex x="-0.585" y="-2.8358"/>
 <vertex x="-2.2392" y="-2.8358"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-2.2392" y="-6.3442"/>
 <vertex x="-0.585" y="-6.3442"/>
 <vertex x="-0.585" y="-4.69"/>
 <vertex x="-2.2392" y="-4.69"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-0.385" y="-4.49"/>
 <vertex x="1.2692" y="-4.49"/>
 <vertex x="1.2692" y="-2.8358"/>
 <vertex x="-0.385" y="-2.8358"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-0.385" y="-6.3442"/>
 <vertex x="1.2692" y="-6.3442"/>
 <vertex x="1.2692" y="-4.69"/>
@@ -730,13 +730,13 @@
 <wire x1="2.4384" y1="-3.175" x2="3.175" y2="-3.175" width="0.1524" layer="21"/>
 <wire x1="3.175" y1="2.4384" x2="3.175" y2="3.175" width="0.1524" layer="21"/>
 <wire x1="-2.4384" y1="3.175" x2="-3.175" y2="3.175" width="0.1524" layer="21"/>
-<polygon width="0.0254" layer="21">
+<polygon width="0.0254" layer="21" pour="solid">
 <vertex x="-0.8405" y="-3.8608"/>
 <vertex x="-0.4595" y="-3.8608"/>
 <vertex x="-0.4595" y="-3.6068"/>
 <vertex x="-0.8405" y="-3.6068"/>
 </polygon>
-<polygon width="0.0254" layer="21">
+<polygon width="0.0254" layer="21" pour="solid">
 <vertex x="3.6068" y="1.1095"/>
 <vertex x="3.8608" y="1.1095"/>
 <vertex x="3.8608" y="1.4905"/>
@@ -744,55 +744,55 @@
 </polygon>
 <text x="-4.572" y="1.651" size="1.27" layer="21" ratio="6" rot="SR0">*</text>
 <text x="-1.7272" y="-0.635" size="1.27" layer="21" ratio="6" rot="SR0">&gt;Value</text>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-2.3384" y="0.9128"/>
 <vertex x="-0.9128" y="0.9128"/>
 <vertex x="-0.9128" y="2.3384"/>
 <vertex x="-2.3384" y="2.3384"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-2.3384" y="-0.7128"/>
 <vertex x="-0.9128" y="-0.7128"/>
 <vertex x="-0.9128" y="0.7128"/>
 <vertex x="-2.3384" y="0.7128"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-2.3384" y="-2.3384"/>
 <vertex x="-0.9128" y="-2.3384"/>
 <vertex x="-0.9128" y="-0.9128"/>
 <vertex x="-2.3384" y="-0.9128"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-0.7128" y="0.9128"/>
 <vertex x="0.7128" y="0.9128"/>
 <vertex x="0.7128" y="2.3384"/>
 <vertex x="-0.7128" y="2.3384"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-0.7128" y="-0.7128"/>
 <vertex x="0.7128" y="-0.7128"/>
 <vertex x="0.7128" y="0.7128"/>
 <vertex x="-0.7128" y="0.7128"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-0.7128" y="-2.3384"/>
 <vertex x="0.7128" y="-2.3384"/>
 <vertex x="0.7128" y="-0.9128"/>
 <vertex x="-0.7128" y="-0.9128"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="0.9128" y="0.9128"/>
 <vertex x="2.3384" y="0.9128"/>
 <vertex x="2.3384" y="2.3384"/>
 <vertex x="0.9128" y="2.3384"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="0.9128" y="-0.7128"/>
 <vertex x="2.3384" y="-0.7128"/>
 <vertex x="2.3384" y="0.7128"/>
 <vertex x="0.9128" y="0.7128"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="0.9128" y="-2.3384"/>
 <vertex x="2.3384" y="-2.3384"/>
 <vertex x="2.3384" y="-0.9128"/>
@@ -951,13 +951,13 @@
 <wire x1="2.4384" y1="-3.175" x2="3.175" y2="-3.175" width="0.1524" layer="21"/>
 <wire x1="3.175" y1="2.4384" x2="3.175" y2="3.175" width="0.1524" layer="21"/>
 <wire x1="-2.4384" y1="3.175" x2="-3.175" y2="3.175" width="0.1524" layer="21"/>
-<polygon width="0.0254" layer="21">
+<polygon width="0.0254" layer="21" pour="solid">
 <vertex x="-0.8405" y="-3.9624"/>
 <vertex x="-0.4595" y="-3.9624"/>
 <vertex x="-0.4595" y="-3.7084"/>
 <vertex x="-0.8405" y="-3.7084"/>
 </polygon>
-<polygon width="0.0254" layer="21">
+<polygon width="0.0254" layer="21" pour="solid">
 <vertex x="3.7084" y="1.1095"/>
 <vertex x="3.9624" y="1.1095"/>
 <vertex x="3.9624" y="1.4905"/>
@@ -965,55 +965,55 @@
 </polygon>
 <text x="-4.6736" y="1.651" size="1.27" layer="21" ratio="6" rot="SR0">*</text>
 <text x="-1.7272" y="-0.635" size="1.27" layer="21" ratio="6" rot="SR0">&gt;Value</text>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-2.3384" y="0.9128"/>
 <vertex x="-0.9128" y="0.9128"/>
 <vertex x="-0.9128" y="2.3384"/>
 <vertex x="-2.3384" y="2.3384"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-2.3384" y="-0.7128"/>
 <vertex x="-0.9128" y="-0.7128"/>
 <vertex x="-0.9128" y="0.7128"/>
 <vertex x="-2.3384" y="0.7128"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-2.3384" y="-2.3384"/>
 <vertex x="-0.9128" y="-2.3384"/>
 <vertex x="-0.9128" y="-0.9128"/>
 <vertex x="-2.3384" y="-0.9128"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-0.7128" y="0.9128"/>
 <vertex x="0.7128" y="0.9128"/>
 <vertex x="0.7128" y="2.3384"/>
 <vertex x="-0.7128" y="2.3384"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-0.7128" y="-0.7128"/>
 <vertex x="0.7128" y="-0.7128"/>
 <vertex x="0.7128" y="0.7128"/>
 <vertex x="-0.7128" y="0.7128"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-0.7128" y="-2.3384"/>
 <vertex x="0.7128" y="-2.3384"/>
 <vertex x="0.7128" y="-0.9128"/>
 <vertex x="-0.7128" y="-0.9128"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="0.9128" y="0.9128"/>
 <vertex x="2.3384" y="0.9128"/>
 <vertex x="2.3384" y="2.3384"/>
 <vertex x="0.9128" y="2.3384"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="0.9128" y="-0.7128"/>
 <vertex x="2.3384" y="-0.7128"/>
 <vertex x="2.3384" y="0.7128"/>
 <vertex x="0.9128" y="0.7128"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="0.9128" y="-2.3384"/>
 <vertex x="2.3384" y="-2.3384"/>
 <vertex x="2.3384" y="-0.9128"/>
@@ -1172,13 +1172,13 @@
 <wire x1="2.4384" y1="-3.175" x2="3.175" y2="-3.175" width="0.1524" layer="21"/>
 <wire x1="3.175" y1="2.4384" x2="3.175" y2="3.175" width="0.1524" layer="21"/>
 <wire x1="-2.4384" y1="3.175" x2="-3.175" y2="3.175" width="0.1524" layer="21"/>
-<polygon width="0.0254" layer="21">
+<polygon width="0.0254" layer="21" pour="solid">
 <vertex x="-0.8405" y="-3.7592"/>
 <vertex x="-0.4595" y="-3.7592"/>
 <vertex x="-0.4595" y="-3.5052"/>
 <vertex x="-0.8405" y="-3.5052"/>
 </polygon>
-<polygon width="0.0254" layer="21">
+<polygon width="0.0254" layer="21" pour="solid">
 <vertex x="3.5052" y="1.1095"/>
 <vertex x="3.7592" y="1.1095"/>
 <vertex x="3.7592" y="1.4905"/>
@@ -1186,55 +1186,55 @@
 </polygon>
 <text x="-4.4704" y="1.651" size="1.27" layer="21" ratio="6" rot="SR0">*</text>
 <text x="-1.7272" y="-0.635" size="1.27" layer="21" ratio="6" rot="SR0">&gt;Value</text>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-2.3384" y="0.9128"/>
 <vertex x="-0.9128" y="0.9128"/>
 <vertex x="-0.9128" y="2.3384"/>
 <vertex x="-2.3384" y="2.3384"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-2.3384" y="-0.7128"/>
 <vertex x="-0.9128" y="-0.7128"/>
 <vertex x="-0.9128" y="0.7128"/>
 <vertex x="-2.3384" y="0.7128"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-2.3384" y="-2.3384"/>
 <vertex x="-0.9128" y="-2.3384"/>
 <vertex x="-0.9128" y="-0.9128"/>
 <vertex x="-2.3384" y="-0.9128"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-0.7128" y="0.9128"/>
 <vertex x="0.7128" y="0.9128"/>
 <vertex x="0.7128" y="2.3384"/>
 <vertex x="-0.7128" y="2.3384"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-0.7128" y="-0.7128"/>
 <vertex x="0.7128" y="-0.7128"/>
 <vertex x="0.7128" y="0.7128"/>
 <vertex x="-0.7128" y="0.7128"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="-0.7128" y="-2.3384"/>
 <vertex x="0.7128" y="-2.3384"/>
 <vertex x="0.7128" y="-0.9128"/>
 <vertex x="-0.7128" y="-0.9128"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="0.9128" y="0.9128"/>
 <vertex x="2.3384" y="0.9128"/>
 <vertex x="2.3384" y="2.3384"/>
 <vertex x="0.9128" y="2.3384"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="0.9128" y="-0.7128"/>
 <vertex x="2.3384" y="-0.7128"/>
 <vertex x="2.3384" y="0.7128"/>
 <vertex x="0.9128" y="0.7128"/>
 </polygon>
-<polygon width="0.0254" layer="31">
+<polygon width="0.0254" layer="31" pour="solid">
 <vertex x="0.9128" y="-2.3384"/>
 <vertex x="2.3384" y="-2.3384"/>
 <vertex x="2.3384" y="-0.9128"/>
@@ -1593,16 +1593,6 @@
 <wire x1="-1.27" y1="6.35" x2="-1.27" y2="3.81" width="0.127" layer="21"/>
 <wire x1="2.54" y1="1.27" x2="0" y2="1.27" width="0.127" layer="21"/>
 </package>
-<package name="PIN_MARKER">
-<wire x1="-1.0886" y1="0.654096875" x2="0" y2="0" width="0.127" layer="21"/>
-<wire x1="-0.36775" y1="1.187465625" x2="-0.060509375" y2="-0.044809375" width="0.127" layer="21"/>
-<wire x1="0.519115625" y1="1.054890625" x2="-0.134984375" y2="-0.033709375" width="0.127" layer="21"/>
-<wire x1="1.052484375" y1="0.334040625" x2="-0.17979375" y2="0.0268" width="0.127" layer="21"/>
-<wire x1="0.919909375" y1="-0.552825" x2="-0.16869375" y2="0.101271875" width="0.127" layer="21"/>
-<wire x1="0.1990625" y1="-1.086190625" x2="-0.10818125" y2="0.146084375" width="0.127" layer="21"/>
-<wire x1="-0.68780625" y1="-0.953615625" x2="-0.033709375" y2="0.134984375" width="0.127" layer="21"/>
-<wire x1="-1.221175" y1="-0.23276875" x2="0.0111" y2="0.074471875" width="0.127" layer="21"/>
-</package>
 </packages>
 <symbols>
 <symbol name="ATWINC15X0-MR210">
@@ -1887,10 +1877,6 @@
 <wire x1="5.08" y1="0" x2="12.7" y2="0" width="0.1651" layer="94"/>
 <pin name="OUTER" x="-25.4" y="0" length="middle"/>
 <pin name="INNER" x="17.78" y="0" length="middle" rot="R180"/>
-</symbol>
-<symbol name="FIDUCIAL">
-<circle x="0" y="0" radius="2.54" width="0.254" layer="94"/>
-<text x="-2.54" y="-5.08" size="1.778" layer="96">&gt;value</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -2411,18 +2397,6 @@
 <connect gate="G$1" pin="INNER" pad="POS"/>
 <connect gate="G$1" pin="OUTER" pad="GND"/>
 </connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="PIN_MARKER">
-<gates>
-<gate name="G$1" symbol="FIDUCIAL" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="PIN_MARKER">
 <technologies>
 <technology name=""/>
 </technologies>
@@ -3494,7 +3468,7 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <description>Resistor, Chip; 1.60 mm L X 0.80 mm W X 0.45 mm H body&lt;p&gt;&lt;i&gt;PCB Libraries Packages&lt;/i&gt;</description>
 <smd name="1" x="-0.795" y="0" dx="0.74" dy="0.93" layer="1" roundness="51" rot="R180"/>
 <smd name="2" x="0.795" y="0" dx="0.74" dy="0.93" layer="1" roundness="51"/>
-<polygon width="0.01" layer="29">
+<polygon width="0.01" layer="29" pour="solid">
 <vertex x="-0.975003125" y="-0.465"/>
 <vertex x="-0.614996875" y="-0.465"/>
 <vertex x="-0.5853125" y="-0.4627"/>
@@ -3538,7 +3512,7 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <vertex x="-1.033703125" y="-0.455696875"/>
 <vertex x="-1.0046875" y="-0.4627"/>
 </polygon>
-<polygon width="0.01" layer="31">
+<polygon width="0.01" layer="31" pour="solid">
 <vertex x="-0.975003125" y="-0.465"/>
 <vertex x="-0.614996875" y="-0.465"/>
 <vertex x="-0.5853125" y="-0.4627"/>
@@ -3582,7 +3556,7 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <vertex x="-1.033703125" y="-0.455696875"/>
 <vertex x="-1.0046875" y="-0.4627"/>
 </polygon>
-<polygon width="0.01" layer="29">
+<polygon width="0.01" layer="29" pour="solid">
 <vertex x="0.614996875" y="-0.465"/>
 <vertex x="0.975003125" y="-0.465"/>
 <vertex x="1.0046875" y="-0.4627"/>
@@ -3626,7 +3600,7 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <vertex x="0.556296875" y="-0.455696875"/>
 <vertex x="0.5853125" y="-0.4627"/>
 </polygon>
-<polygon width="0.01" layer="31">
+<polygon width="0.01" layer="31" pour="solid">
 <vertex x="0.614996875" y="-0.465"/>
 <vertex x="0.975003125" y="-0.465"/>
 <vertex x="1.0046875" y="-0.4627"/>
@@ -3864,7 +3838,7 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <text x="5.08" y="-7.62" size="0.8128" layer="27" ratio="10" rot="R180">&gt;VALUE</text>
 <text x="5.08" y="-6.35" size="1.016" layer="25" ratio="18" rot="R180">&gt;LABEL</text>
 <rectangle x1="0" y1="-0.3175" x2="3.175" y2="0.3175" layer="51"/>
-<polygon width="0.127" layer="51">
+<polygon width="0.127" layer="51" pour="solid">
 <vertex x="3.81" y="-3.048"/>
 <vertex x="3.81" y="-2.032"/>
 <vertex x="0.05086875" y="-2.032"/>
@@ -3880,7 +3854,7 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <vertex x="-1.524" y="3.048"/>
 <vertex x="-1.524" y="-3.048"/>
 </polygon>
-<polygon width="0.127" layer="51">
+<polygon width="0.127" layer="51" pour="solid">
 <vertex x="-1.524" y="-5.08"/>
 <vertex x="0" y="-5.08"/>
 <vertex x="0" y="5.08"/>
@@ -3950,7 +3924,7 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <rectangle x1="0.9906" y1="-1.8018" x2="3.1242" y2="-0.989" layer="31" rot="R180"/>
 <rectangle x1="0.9144" y1="-0.8636" x2="3.2004" y2="-0.635" layer="41"/>
 <rectangle x1="0.9144" y1="0.635" x2="3.2004" y2="0.8636" layer="41"/>
-<polygon width="0.127" layer="51">
+<polygon width="0.127" layer="51" pour="solid">
 <vertex x="3.81" y="-3.048"/>
 <vertex x="3.81" y="-2.032"/>
 <vertex x="0.05086875" y="-2.032"/>
@@ -3966,19 +3940,19 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <vertex x="-1.524" y="3.048"/>
 <vertex x="-1.524" y="-3.048"/>
 </polygon>
-<polygon width="0.127" layer="51">
+<polygon width="0.127" layer="51" pour="solid">
 <vertex x="-1.524" y="-5.08"/>
 <vertex x="0" y="-5.08"/>
 <vertex x="0" y="5.08"/>
 <vertex x="-1.524" y="5.08"/>
 </polygon>
-<polygon width="0.2032" layer="1">
+<polygon width="0.2032" layer="1" pour="solid">
 <vertex x="1.016" y="1.0652"/>
 <vertex x="3.0988" y="1.0652"/>
 <vertex x="3.0988" y="3.175"/>
 <vertex x="1.016" y="3.175"/>
 </polygon>
-<polygon width="0.2032" layer="1">
+<polygon width="0.2032" layer="1" pour="solid">
 <vertex x="1.016" y="-3.175"/>
 <vertex x="3.0988" y="-3.175"/>
 <vertex x="3.0988" y="-1.0652"/>
@@ -4480,127 +4454,6 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 </deviceset>
 </devicesets>
 </library>
-<library name="Fiducial">
-<description>Fiducial Marks
-&lt;br&gt;Alignment marks for fabrication and placement.
-&lt;p&gt;
-&lt;i&gt;05/24/17 - Changed circles to smd pads so locations show up in XY files. C. Nicks</description>
-<packages>
-<package name="FID_020">
-<description>Fiducial 20mil</description>
-<circle x="0" y="0" radius="0.508" width="0" layer="29"/>
-<circle x="0" y="0" radius="0.508" width="0" layer="30"/>
-<circle x="0" y="0" radius="0.635" width="0" layer="41"/>
-<circle x="0" y="0" radius="0.635" width="0" layer="42"/>
-<smd name="FIDT" x="0" y="0" dx="0.508" dy="0.508" layer="1" roundness="100" stop="no" thermals="no" cream="no"/>
-<smd name="FIDB" x="0" y="0" dx="0.508" dy="0.508" layer="16" roundness="100" stop="no" thermals="no" cream="no"/>
-</package>
-<package name="FID_040">
-<description>Fiducial 40mil</description>
-<circle x="0" y="0" radius="1.016" width="0" layer="29"/>
-<circle x="0" y="0" radius="1.016" width="0" layer="30"/>
-<circle x="0" y="0" radius="1.27" width="0" layer="41"/>
-<circle x="0" y="0" radius="1.27" width="0" layer="42"/>
-<smd name="FIDT" x="0" y="0" dx="1.016" dy="1.016" layer="1" roundness="100" stop="no" thermals="no" cream="no"/>
-<smd name="FIDB" x="0" y="0" dx="1.016" dy="1.016" layer="16" roundness="100" stop="no" thermals="no" cream="no"/>
-</package>
-<package name="FID_060">
-<description>Fiducial 60mil</description>
-<circle x="0" y="0" radius="1.27" width="0" layer="30"/>
-<circle x="0" y="0" radius="1.27" width="0" layer="29"/>
-<circle x="0" y="0" radius="1.524" width="0" layer="41"/>
-<circle x="0" y="0" radius="1.524" width="0" layer="42"/>
-<smd name="FIDT" x="0" y="0" dx="1.524" dy="1.524" layer="1" roundness="100" stop="no" thermals="no"/>
-<smd name="FIDB" x="0" y="0" dx="1.524" dy="1.524" layer="16" roundness="100" stop="no" thermals="no"/>
-</package>
-<package name="FID_020_P">
-<description>Fiducial 20mil with paste for alignment</description>
-<circle x="0" y="0" radius="0.508" width="0" layer="29"/>
-<circle x="0" y="0" radius="0.508" width="0" layer="30"/>
-<circle x="0" y="0" radius="0.635" width="0" layer="41"/>
-<circle x="0" y="0" radius="0.635" width="0" layer="42"/>
-<smd name="FIDT" x="0" y="0" dx="0.508" dy="0.508" layer="1" roundness="100" stop="no" thermals="no"/>
-<smd name="FIDB" x="0" y="0" dx="0.508" dy="0.508" layer="16" roundness="100" stop="no" thermals="no"/>
-</package>
-<package name="FID_040_P">
-<description>Fiducial 40mil with paste for alignment</description>
-<circle x="0" y="0" radius="1.016" width="0" layer="29"/>
-<circle x="0" y="0" radius="1.016" width="0" layer="30"/>
-<circle x="0" y="0" radius="1.27" width="0" layer="41"/>
-<circle x="0" y="0" radius="1.27" width="0" layer="42"/>
-<smd name="FIDT" x="0" y="0" dx="1.016" dy="1.016" layer="1" roundness="100" stop="no" thermals="no"/>
-<smd name="FIDB" x="0" y="0" dx="1.016" dy="1.016" layer="16" roundness="100" stop="no" thermals="no"/>
-</package>
-<package name="FID_060_P">
-<description>Fiducial 60mil with paste for alignment</description>
-<circle x="0" y="0" radius="1.27" width="0" layer="30"/>
-<circle x="0" y="0" radius="1.27" width="0" layer="29"/>
-<circle x="0" y="0" radius="1.524" width="0" layer="41"/>
-<circle x="0" y="0" radius="1.524" width="0" layer="42"/>
-<smd name="FIDT" x="0" y="0" dx="1.524" dy="1.524" layer="1" roundness="100" stop="no" thermals="no"/>
-<smd name="FIDB" x="0" y="0" dx="1.524" dy="1.524" layer="16" roundness="100" stop="no" thermals="no"/>
-</package>
-</packages>
-<symbols>
-<symbol name="FIDUCIAL">
-<description>Empty symbol so a blank device can be made. Sometimes when working with scripts and ULPs they error when there are board-only elements</description>
-<circle x="0" y="0" radius="0.254" width="0" layer="94"/>
-<text x="0" y="1.27" size="1.016" layer="95" font="vector" ratio="12">&gt;NAME</text>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="FID" prefix="FD">
-<description>Fiducial marks. Top and Bottom copper with stop mask</description>
-<gates>
-<gate name="G$2" symbol="FIDUCIAL" x="0" y="0"/>
-</gates>
-<devices>
-<device name="_20MIL" package="FID_020">
-<technologies>
-<technology name="">
-<attribute name="BOM" value="" constant="no"/>
-</technology>
-</technologies>
-</device>
-<device name="_40MIL" package="FID_040">
-<technologies>
-<technology name="">
-<attribute name="BOM" value="" constant="no"/>
-</technology>
-</technologies>
-</device>
-<device name="_60MIL" package="FID_060">
-<technologies>
-<technology name="">
-<attribute name="BOM" value="" constant="no"/>
-</technology>
-</technologies>
-</device>
-<device name="_20MIL_P" package="FID_020_P">
-<technologies>
-<technology name="">
-<attribute name="BOM" value="" constant="no"/>
-</technology>
-</technologies>
-</device>
-<device name="_40MIL_P" package="FID_040_P">
-<technologies>
-<technology name="">
-<attribute name="BOM" value="" constant="no"/>
-</technology>
-</technologies>
-</device>
-<device name="_60MIL_P" package="FID_060_P">
-<technologies>
-<technology name="">
-<attribute name="BOM" value="" constant="no"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 </libraries>
 <attributes>
 </attributes>
@@ -4631,6 +4484,9 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <part name="RFO-VR_PA" library="microbuilder" deviceset="INDUCTOR" device="_0402" value="33nH"/>
 <part name="VR_PA-PA_BOOST" library="microbuilder" deviceset="INDUCTOR" device="_0402" value="33nH"/>
 <part name="RFO-33PF" library="microbuilder" deviceset="INDUCTOR" device="_0402" value="10nH"/>
+<part name="L2" library="microbuilder" deviceset="INDUCTOR" device="_0402"/>
+<part name="C1" library="microbuilder" deviceset="CAP_CERAMIC" device="0402"/>
+<part name="R1" library="microbuilder" deviceset="RESISTOR" device="0402"/>
 <part name="10NH-ANT1" library="microbuilder" deviceset="CAP_CERAMIC" device="0402"/>
 <part name="ANT1-GND" library="microbuilder" deviceset="CAP_CERAMIC" device="0402" value="4.7pF"/>
 <part name="ANT1-ANT2\" library="microbuilder" deviceset="INDUCTOR" device="_0402" value="8.2nH"/>
@@ -4689,17 +4545,6 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <part name="X2" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="SMACONNECTOR" device="_EDGE" package3d_urn="urn:adsk.eagle:package:6240945/1"/>
 <part name="U$7" library="473" deviceset="BARREL_CONN_EXTERN" device=""/>
 <part name="U$8" library="473" library_urn="urn:adsk.wipprod:fs.file:vf.lBtoW6XlTqmMxyMuKqhWUA" deviceset="MAGICWIFI_X10" device="" value="MAGICWIFI_X10"/>
-<part name="U$9" library="473" deviceset="PIN_MARKER" device=""/>
-<part name="U$10" library="473" deviceset="PIN_MARKER" device=""/>
-<part name="U$11" library="473" deviceset="PIN_MARKER" device=""/>
-<part name="U$12" library="473" deviceset="PIN_MARKER" device=""/>
-<part name="FD1" library="Fiducial" deviceset="FID" device="_40MIL"/>
-<part name="FD2" library="Fiducial" deviceset="FID" device="_40MIL"/>
-<part name="FD3" library="Fiducial" deviceset="FID" device="_40MIL"/>
-<part name="FD4" library="Fiducial" deviceset="FID" device="_40MIL"/>
-<part name="FD5" library="Fiducial" deviceset="FID" device="_40MIL"/>
-<part name="FD6" library="Fiducial" deviceset="FID" device="_40MIL"/>
-<part name="FD7" library="Fiducial" deviceset="FID" device="_40MIL"/>
 </parts>
 <sheets>
 <sheet>
@@ -4758,6 +4603,18 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <instance part="RFO-33PF" gate="G$1" x="-38.1" y="198.12" smashed="yes" grouprefs="ANTENNA1">
 <attribute name="NAME" x="-40.64" y="200.66" size="1.27" layer="95"/>
 <attribute name="VALUE" x="-40.64" y="195.58" size="1.27" layer="96"/>
+</instance>
+<instance part="L2" gate="G$1" x="-210.82" y="55.88" smashed="yes" grouprefs="0402">
+<attribute name="NAME" x="-213.36" y="58.42" size="1.27" layer="95"/>
+<attribute name="VALUE" x="-213.36" y="53.34" size="1.27" layer="96"/>
+</instance>
+<instance part="C1" gate="G$1" x="-210.82" y="45.72" smashed="yes" grouprefs="0402">
+<attribute name="NAME" x="-208.28" y="48.26" size="1.27" layer="95" font="vector"/>
+<attribute name="VALUE" x="-208.28" y="45.72" size="1.27" layer="96" font="vector"/>
+</instance>
+<instance part="R1" gate="G$1" x="-210.82" y="35.56" smashed="yes" grouprefs="0402">
+<attribute name="NAME" x="-213.36" y="37.592" size="1.27" layer="95" font="vector"/>
+<attribute name="VALUE" x="-213.36" y="32.385" size="1.27" layer="96" font="vector"/>
 </instance>
 <instance part="10NH-ANT1" gate="G$1" x="-50.8" y="198.12" smashed="yes" rot="R90" grouprefs="ANTENNA1">
 <attribute name="NAME" x="-53.34" y="200.66" size="1.27" layer="95" font="vector" rot="R90"/>
@@ -4966,39 +4823,6 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 </instance>
 <instance part="U$7" gate="G$1" x="101.6" y="91.44" smashed="yes"/>
 <instance part="U$8" gate="G$1" x="-137.16" y="-43.18" smashed="yes"/>
-<instance part="U$9" gate="G$1" x="-190.5" y="-60.96" smashed="yes">
-<attribute name="VALUE" x="-193.04" y="-66.04" size="1.778" layer="96"/>
-</instance>
-<instance part="U$10" gate="G$1" x="-190.5" y="-73.66" smashed="yes">
-<attribute name="VALUE" x="-193.04" y="-78.74" size="1.778" layer="96"/>
-</instance>
-<instance part="U$11" gate="G$1" x="-190.5" y="-86.36" smashed="yes">
-<attribute name="VALUE" x="-193.04" y="-91.44" size="1.778" layer="96"/>
-</instance>
-<instance part="U$12" gate="G$1" x="-190.5" y="-99.06" smashed="yes">
-<attribute name="VALUE" x="-193.04" y="-104.14" size="1.778" layer="96"/>
-</instance>
-<instance part="FD1" gate="G$2" x="-162.56" y="-63.5" smashed="yes">
-<attribute name="NAME" x="-162.56" y="-62.23" size="1.016" layer="95" font="vector" ratio="12"/>
-</instance>
-<instance part="FD2" gate="G$2" x="-162.56" y="-73.66" smashed="yes">
-<attribute name="NAME" x="-162.56" y="-72.39" size="1.016" layer="95" font="vector" ratio="12"/>
-</instance>
-<instance part="FD3" gate="G$2" x="-162.56" y="-88.9" smashed="yes">
-<attribute name="NAME" x="-162.56" y="-87.63" size="1.016" layer="95" font="vector" ratio="12"/>
-</instance>
-<instance part="FD4" gate="G$2" x="-162.56" y="-104.14" smashed="yes">
-<attribute name="NAME" x="-162.56" y="-102.87" size="1.016" layer="95" font="vector" ratio="12"/>
-</instance>
-<instance part="FD5" gate="G$2" x="-154.94" y="-104.14" smashed="yes">
-<attribute name="NAME" x="-154.94" y="-102.87" size="1.016" layer="95" font="vector" ratio="12"/>
-</instance>
-<instance part="FD6" gate="G$2" x="-154.94" y="-88.9" smashed="yes">
-<attribute name="NAME" x="-154.94" y="-87.63" size="1.016" layer="95" font="vector" ratio="12"/>
-</instance>
-<instance part="FD7" gate="G$2" x="-154.94" y="-73.66" smashed="yes">
-<attribute name="NAME" x="-154.94" y="-72.39" size="1.016" layer="95" font="vector" ratio="12"/>
-</instance>
 </instances>
 <busses>
 </busses>
@@ -5739,6 +5563,11 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 <wire x1="119.38" y1="91.44" x2="129.54" y2="91.44" width="0.1524" layer="91"/>
 <label x="124.46" y="91.44" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U1" gate="A" pin="VBAT"/>
+<wire x1="-22.86" y1="-91.44" x2="-17.78" y2="-91.44" width="0.1524" layer="91"/>
+<label x="-22.86" y="-91.44" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="N$4" class="0">
 <segment>
@@ -5921,26 +5750,26 @@ Feel free to contact us at &lt;a href="mailto:Support@PCBLayout.com"&gt;Support@
 </net>
 <net name="LORA1_MISO" class="0">
 <segment>
-<pinref part="LORA1" gate="A" pin="MOSI"/>
-<wire x1="-27.94" y1="76.2" x2="-20.32" y2="76.2" width="0.1524" layer="91"/>
-<label x="-27.94" y="76.2" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="U3" gate="A" pin="P4.7_UCB1SOMI_UCB1SCL"/>
 <wire x1="182.88" y1="-81.28" x2="190.5" y2="-81.28" width="0.1524" layer="91"/>
 <label x="182.88" y="-81.28" size="1.778" layer="95"/>
 </segment>
-</net>
-<net name="LORA1_MOSI" class="0">
 <segment>
 <pinref part="LORA1" gate="A" pin="MISO"/>
 <wire x1="-27.94" y1="73.66" x2="-20.32" y2="73.66" width="0.1524" layer="91"/>
 <label x="-27.94" y="73.66" size="1.778" layer="95"/>
 </segment>
+</net>
+<net name="LORA1_MOSI" class="0">
 <segment>
 <pinref part="U3" gate="A" pin="P4.6_UCB1SIMO_UCB1SDA"/>
 <wire x1="182.88" y1="-78.74" x2="193.04" y2="-78.74" width="0.1524" layer="91"/>
 <label x="182.88" y="-78.74" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="LORA1" gate="A" pin="MOSI"/>
+<wire x1="-27.94" y1="76.2" x2="-20.32" y2="76.2" width="0.1524" layer="91"/>
+<label x="-27.94" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="LORA1_SCK" class="0">
