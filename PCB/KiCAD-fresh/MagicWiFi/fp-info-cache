@@ -1,4 +1,4 @@
-21581189491597530
+21587930070210133
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -60722,8 +60722,8 @@ ARJM11C7-114-BA-EW2_ABR
 
 ARJM11C7-114-BA-EW2 
 0
-18
-18
+16
+16
 MagicWiFi
 ATWINC15x0-MR210_MCH
 
@@ -60731,6 +60731,13 @@ ATWINC1500-MR210PB1952-T
 0
 29
 29
+MagicWiFi
+Barrel_Conn
+
+
+0
+2
+2
 MagicWiFi
 DBT0038A_MSP430_L
 
@@ -60773,6 +60780,27 @@ SX1272IMLTRT
 0
 29
 29
+MagicWiFi
+SMA_EDGELAUNCH
+
+
+0
+5
+5
+MagicWiFi
+TCXO
+
+
+0
+4
+4
+MagicWiFi
+Xosc
+
+
+0
+2
+2
 Module
 A20_OLINUXINO_LIME2
 A20 Olinuxino LIME2, 1.2GHz, 512-1024MB RAM, Micro-SD, NAND or eMMC, 1000Mbit Ethernet
