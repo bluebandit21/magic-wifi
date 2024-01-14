@@ -6,11 +6,9 @@
 
 Magic Wifi is a system that creates a flexible and dependable wireless connection between two devices at variable ranges. All the technology behind Magic Wifi is hidden from the two user devices which believe they are simply connected with an Ethernet cable at both ends. Underneath, Magic Wifi employs both LoRa and Wifi technologies to create a dynamic connection that seamlessly switches between long-range, low-bandwidth rates for critical data like telemetry and short-range, high-bandwidth rates for large data dumps. 
 
-Magic Wifi can be used in various different settings where two devices need to be connected at different distances. One example application is endurance racing, like Le Mans. Critical data is needed at all times to inform the pit crew of components that require maintenance at the next pit stop. High volume data, by contrast, would include detailed engine diagnostics or telemetry logs. The detailed data would be helpful to the technicians during pit stops to complete repairs and tune the cars for future laps but is not as critical.  Racing is not the only important application. For farms in remote areas, cellular coverage can often be poor to non-existent, making internet connectivity scarce outside of the farmer’s home. Magic Wifi provides a low-speed connection over multiple miles so that the farmer can communicate with others inside the house. The close-range connectivity allows the farmer to transfer large volumes of important statistics and pictures of crops without the hassle of removing internal storage cards or connecting Ethernet cables. These two are just a few examples of where Magic Wifi would be useful. 
+Magic Wifi can be used in various different settings where two devices need to be connected at different distances. One example application is endurance racing, like Le Mans. Critical data is needed at all times to inform the pit crew of components that require maintenance at the next pit stop. High volume data, by contrast, would include detailed engine diagnostics or telemetry logs. The detailed data would be helpful to the technicians during pit stops to complete repairs and tune the cars for future laps but is not as critical.  Racing is not the only important application. For farms in remote areas, cellular coverage can often be poor to non-existent, making internet connectivity scarce outside of the farmer’s home. Magic Wifi provides a low-speed connection over multiple miles so that the farmer can communicate with others inside the house. The close-range connectivity allows the farmer to transfer large volumes of important statistics and pictures of crops without the hassle of removing internal storage cards or connecting Ethernet cables.
 
-The final Magic Wifi product can successfully send Ethernet frames over both Wifi and LoRa. However, it remains very susceptible to interference, both on Wifi and LoRa which led to our live demo not working properly at the expo. Even at our later instructor demo, this remained an issue in campus buildings so we had to show a recording of certain features.  At the beginning we had concerns about sending frames over LoRa due to the low bandwidth and need for subframing due to a small maximum LoRa frame size.
-
-we implemented logic to prioritize data in accordance with the IEEE 802.1Q standard. While so far there is not a completed program that could generate frames with the priority field, we still completed the code on the embedded device to handle this. We successfully implemented the logic to switch between Wifi and LoRa seamlessly.
+magicWiFi implements logic to prioritize data in accordance with the IEEE 802.1Q standard. While so far there is not a completed program that could generate frames with the priority field, we still completed the code on the embedded device to handle this. We successfully implemented the logic to switch between Wifi and LoRa seamlessly.
 
 ## Overview
 
@@ -42,7 +40,7 @@ Fig: Program Flow
 
 ## Building the Project
 
-At the moment the PCB design and Bill of Materials are being redesigned. There is no release version of the PCB at the moment.
+The PCB design and Bill of Materials are being redesigned. There is no release version of the PCB at present moment.
 
 ## Setting up a dev environment
 
@@ -97,74 +95,4 @@ All necessary Components are listed in [docs/BillsOfMaterials/PCB-BOM](docs/Bill
 
 ### Major Issues
 
-One major issue is At time of writing Jan 10, 2024. The ATWINC1500 modules for sale on DigiKey have an earlier version of firmware than is necessary. On the module there is not a method of flashing new firmware. This was overcome in the development process by desoldering the ATWINC1500 from the module and soldering on an ATWINC1500 from a dev board that could have the firmware updated. A new method must be decided upon as this requires more specialized tools and is no user friendly.
-
-## Interface Code For reference
-
-### LoRa Interface
-```cpp
-// This class handles dividing the ethernet frames into subframes.
-// It handles interfaces with the LoRa module library.
-class FrameTranslater
-{
-
-public:
-   FrameTranslater(SX127x *send, SX127x *receive);
-
-   //Prepare for sending of ethernet frame
-   void initSend(uint8_t* ptr, uint16_t length);
-
-   //Send the *next* subframe for the ethernet frame currently in progress.
-   //Returns true if this function should be called again, or false if we have fully finished sending the whole ethernet frame.
-   bool sendNextSubframe(uint8_t* ptr, uint16_t length);
-
-   void receiveFrame(uint8_t* dest, uint16_t length);
-   bool checkFrame(uint8_t* dest, uint16_t &length);
-}
-// We also have the following two functions that wrap the library that
-// are used to initialize the LoRa chip that are separate from the class
-void setup_Receivelora();
-void setup_Transmitlora()
-```
-
-### Ethernet Interface
-
-```cpp
-
- // Our ethernet interface runs on top of the existing library
-
-// Initialize the chip properly 
-void setup_ethernet();
-
-// Checks if ethernet frames are available
-void check_set_eth_pending();
-
-// Function directly from the ethernet library, used to send frame
-void ether.packetSend();
-
-// Function directly from the ethernet library, used to receive frame
-void ether.packetReceive();
-```
-
-### WiFi Interface
-
-```cpp
-
- // Our wifi interface also runs on top of the existing library
-
-// Initialize the chip properly 
-void setup_wifi();
-
-// Handles all wifi related interrupts from library
-// This includes change in both change in connection state and received data
-void m2m_wifi_handle_events();
-
-// Sends ethernet packet over Wifi - from library
-void m2m_wifi_send_ethernet_pkt();
-
-// Attempts to reconnect Wifi
-void m2m_wifi_connect();
-
-// Variable to check if wifi is available
-bool wifi_connected;
-```
+One major issue is At time of writing Jan 10, 2024. The ATWINC1500 modules for sale on DigiKey have an earlier version of firmware than is necessary. On the module there is not a method of flashing new firmware. This was overcome in the development process by desoldering the ATWINC1500 from the module and soldering on an ATWINC1500 from a dev board that could have the firmware updated. A new method must be decided upon as this requires more specialized tools and is not user friendly.
